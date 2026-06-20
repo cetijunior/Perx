@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { SitePage, PageHero, Section } from '@/components/site/Site'
 
 /**
@@ -6,12 +7,13 @@ import { SitePage, PageHero, Section } from '@/components/site/Site'
  * `sections` = [{ id, heading, body: string[] }]
  */
 export default function LegalLayout({ eyebrow, title, accent, updated, intro, sections }) {
+  const { t } = useTranslation()
   return (
     <SitePage>
       <PageHero eyebrow={eyebrow} title={title} accent={accent} subtitle={intro} />
 
       <Section className="py-8">
-        <p className="mx-auto max-w-3xl text-center text-xs text-faint">Last updated: {updated}</p>
+        <p className="mx-auto max-w-3xl text-center text-xs text-faint">{t('legal.lastUpdated')}: {updated}</p>
       </Section>
 
       <Section className="pt-0">
@@ -19,7 +21,7 @@ export default function LegalLayout({ eyebrow, title, accent, updated, intro, se
           {/* Table of contents */}
           <aside className="hidden lg:block">
             <div className="sticky top-28">
-              <p className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-faint">On this page</p>
+              <p className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-faint">{t('legal.onThisPage')}</p>
               <nav className="flex flex-col gap-1.5 border-l border-line">
                 {sections.map((s) => (
                   <a key={s.id} href={`#${s.id}`} className="-ml-px border-l-2 border-transparent pl-3 text-sm text-muted transition-colors hover:border-ember hover:text-text">
@@ -60,8 +62,8 @@ export default function LegalLayout({ eyebrow, title, accent, updated, intro, se
             </div>
 
             <div className="mt-12 rounded-lg border border-line bg-bg-elevated p-6 text-sm text-muted shadow-e2">
-              Questions about this document? Email{' '}
-              <a href="mailto:privacy@perx.al" className="text-ember hover:underline">privacy@perx.al</a> and we’ll help.
+              {t('legal.questions')} {' '}
+              <a href="mailto:privacy@perx.al" className="text-ember hover:underline">privacy@perx.al</a>.
             </div>
           </div>
         </div>

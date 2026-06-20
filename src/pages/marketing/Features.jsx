@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   Wallet, Compass, Sparkles, CheckCircle2, Gamepad2, BarChart3,
   MapPin, Users, Building2, Store, ShieldCheck, Bell, Heart,
@@ -7,43 +8,26 @@ import {
 import Button from '@/components/ui/Button'
 import { SitePage, PageHero, Section, SectionHeading, Reveal, CtaBand } from '@/components/site/Site'
 
-const CORE = [
-  { icon: Wallet, title: 'Flexible benefit budgets', body: 'HR funds a yearly wallet per employee. No reimbursements, no spreadsheets — just a balance people can spend on what they love.' },
-  { icon: Compass, title: 'Curated marketplace', body: 'A hand-picked catalog of local Albanian partners across wellness, food, sport, travel, learning and more — all in one beautiful place.' },
-  { icon: Sparkles, title: 'Perky AI concierge', body: 'A conversational assistant that matches benefits to each person’s lifestyle and remaining budget, and answers questions instantly.' },
-  { icon: CheckCircle2, title: 'One-tap approvals', body: 'Requests flow straight to HR, get approved in a tap, and the benefit goes live immediately — with a clean audit trail.' },
-  { icon: Gamepad2, title: 'Games & rewards', body: 'Streaks, scratch cards and spin-to-win turn staying healthy and engaged into extra budget. Benefits that feel like a gift.' },
-  { icon: BarChart3, title: 'Insightful analytics', body: 'See exactly what your people love, spend by category, and engagement over time — the data HR has always wanted.' },
-  { icon: MapPin, title: 'Smart Deals Engine', body: 'AI ranks nearby partners by how well they match your team’s tastes, so you discover the right local deals automatically.' },
-  { icon: ShieldCheck, title: 'Policy & controls', body: 'Per-department budgets, category rules and approval policies keep finance in control without slowing anyone down.' },
-  { icon: Bell, title: 'Timely nudges', body: 'Seasonal offers, approval updates and streak reminders keep employees engaged — never spammy, always opt-in.' },
-]
-
-const CATEGORIES = [
-  { icon: Heart, label: 'Wellness', color: 'var(--cat-wellness)' },
-  { icon: Utensils, label: 'Food', color: 'var(--cat-food)' },
-  { icon: Dumbbell, label: 'Sport', color: 'var(--cat-sport)' },
-  { icon: Plane, label: 'Travel', color: 'var(--cat-travel)' },
-  { icon: GraduationCap, label: 'Learning', color: 'var(--cat-learning)' },
-  { icon: Sparkles, label: 'Self-care', color: 'var(--cat-selfcare)' },
-]
-
-const PERSONAS = [
-  { icon: Users, title: 'For Employees', body: 'Your benefits, your call. Spend your budget on what actually matters — and earn more through streaks and games.', accent: 'var(--ember)' },
-  { icon: Building2, title: 'For Companies', body: 'See what your people love, control budgets per department, and discover new local partners with the AI Deals Engine.', accent: 'var(--gold)' },
-  { icon: Store, title: 'For Providers', body: 'Reach engaged employees across Albania. Get matched to the companies whose teams want exactly what you offer.', accent: 'var(--cat-travel)' },
-]
-
 export default function Features() {
+  const { t } = useTranslation()
+  const coreIcons = [Wallet, Compass, Sparkles, CheckCircle2, Gamepad2, BarChart3, MapPin, ShieldCheck, Bell]
+  const CORE = t('features.core', { returnObjects: true }).map((item, i) => ({ ...item, icon: coreIcons[i] }))
+  const categoryIcons = [Heart, Utensils, Dumbbell, Plane, GraduationCap, Sparkles]
+  const categoryColors = ['var(--cat-wellness)', 'var(--cat-food)', 'var(--cat-sport)', 'var(--cat-travel)', 'var(--cat-learning)', 'var(--cat-selfcare)']
+  const CATEGORIES = t('features.categories', { returnObjects: true }).map((label, i) => ({ icon: categoryIcons[i], label, color: categoryColors[i] }))
+  const personaIcons = [Users, Building2, Store]
+  const personaAccents = ['var(--ember)', 'var(--gold)', 'var(--cat-travel)']
+  const PERSONAS = t('features.personas', { returnObjects: true }).map((item, i) => ({ ...item, icon: personaIcons[i], accent: personaAccents[i] }))
+
   return (
     <SitePage>
       <PageHero
-        eyebrow="Features"
-        title="Everything benefits"
-        accent="should have been."
-        subtitle="PERX turns a company’s budget into experiences employees actually love — powered by a curated marketplace, an AI concierge, and a little bit of play."
+        eyebrow={t('features.eyebrow')}
+        title={t('features.title')}
+        accent={t('features.accent')}
+        subtitle={t('features.subtitle')}
       >
-        <Button as={Link} to="/login" size="lg">Enter PERX <ArrowRight className="h-4 w-4" /></Button>
+        <Button as={Link} to="/login" size="lg">{t('landing.ctaPrimary')} <ArrowRight className="h-4 w-4" /></Button>
       </PageHero>
 
       <Section>
@@ -64,9 +48,9 @@ export default function Features() {
 
       <Section className="py-12">
         <SectionHeading
-          eyebrow="One marketplace"
-          title="Benefits across every part of life"
-          subtitle="Category accents you’ll recognise from pins, chips and charts throughout the product."
+          eyebrow={t('features.marketEyebrow')}
+          title={t('features.marketTitle')}
+          subtitle={t('features.marketSubtitle')}
         />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {CATEGORIES.map((c, i) => (
@@ -83,7 +67,7 @@ export default function Features() {
       </Section>
 
       <Section>
-        <SectionHeading eyebrow="Built for everyone" title="One platform, three points of view" />
+        <SectionHeading eyebrow={t('features.personasEyebrow')} title={t('features.personasTitle')} />
         <div className="grid gap-4 md:grid-cols-3">
           {PERSONAS.map((c, i) => (
             <Reveal key={c.title} delay={i * 0.1}>
@@ -101,8 +85,8 @@ export default function Features() {
       </Section>
 
       <CtaBand
-        title="See it for yourself in eight seconds"
-        body="Sign in with a demo account and explore the full PERX experience — marketplace, Perky AI, games and the admin Deals Engine."
+        title={t('features.ctaTitle')}
+        body={t('features.ctaBody')}
       />
     </SitePage>
   )

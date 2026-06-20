@@ -34,6 +34,7 @@
     "stat2": "Buxhet i përdorur",
     "stat3": "Pëlqim nga punonjësit",
     "howTitle": "Nga buxheti te përfitimi me katër prekje",
+    "howSubtitle": "PERX e mban rrjedhën të thjeshtë për punonjësit, ndërsa HR merr kontrollin, miratimet dhe pasqyrën që i duhen prapa skenës.",
     "how1Title": "Kompania financon",
     "how1": "HR cakton një buxhet vjetor përfitimesh për çdo punonjës — pa Excel, pa rimbursime.",
     "how2Title": "Punonjësit eksplorojnë",
@@ -42,14 +43,211 @@
     "how3": "Një concierge me AI përputh përfitimet me stilin e jetës dhe buxhetin e mbetur.",
     "how4Title": "Miratim me një prekje",
     "how4": "Kërkesat shkojnë te HR, miratohen menjëherë dhe përfitimi aktivizohet.",
+    "marketEyebrow": "Treg i kuruar",
+    "marketTitle": "Një katalog përfitimesh që ndihet vendor, i dobishëm dhe i gjallë.",
+    "marketBody": "Punonjësit mund të kombinojnë nevojat e përditshme me përvoja që i presin me dëshirë: drekë, terapi, palestër, udhëtime fundjave, mësim dhe kujdes për veten.",
+    "marketPoint1Title": "Jo më buxhete të harruara",
+    "marketPoint1": "Buxhetet janë të dukshme, të lehta për t’u përdorur dhe të lidhura me oferta reale vendore.",
+    "marketPoint2Title": "Perky udhëzon çdo zgjedhje",
+    "marketPoint2": "Asistenti shpjegon opsionet, krahason çmimet dhe ndihmon punonjësit ta përdorin buxhetin me mençuri.",
+    "marketPoint3Title": "Shpërblimet i rikthejnë njerëzit",
+    "marketPoint3": "Streak-et, rrotullimet dhe bonuset surprizë e kthejnë angazhimin në vlerë shtesë.",
+    "categoryWellness": "Mirëqenie",
+    "categoryFood": "Ushqim",
+    "categorySport": "Sport",
+    "categoryTravel": "Udhëtime",
+    "categoryLearning": "Mësim",
+    "categorySelfCare": "Kujdes për veten",
+    "personasEyebrow": "Ndërtuar për të gjithë ciklin",
+    "personasTitle": "Punonjësit, kompanitë dhe ofruesit marrin një rrugë më të qartë.",
+    "personasSubtitle": "Tregu funksionon vetëm kur fiton çdo palë: njerëzit gjejnë vlerë, HR ka kontroll dhe partnerët vendorë takojnë audiencën e duhur.",
     "forEmployeesTitle": "Për Punonjësit",
     "forEmployeesBody": "Përfitimet e tua, zgjedhja jote. Shpenzoje buxhetin për atë që ka rëndësi — dhe fito më shumë me streak-e e lojëra.",
     "forCompaniesTitle": "Për Kompanitë",
     "forCompaniesBody": "Shiko saktësisht çfarë duan njerëzit, kontrollo buxhetet sipas departamenteve dhe zbulo partnerë të rinj me Deals Engine me AI.",
     "forProvidersTitle": "Për Ofruesit",
     "forProvidersBody": "Arri te punonjës aktivë në mbarë Shqipërinë. Përputhu me kompanitë ekipet e të cilave duan pikërisht atë që ofron.",
+    "controlEyebrow": "Kontroll për HR",
+    "controlTitle": "Pjesa miqësore për punonjësit ka një shtresë serioze operimi.",
+    "controlBody": "PERX e bën përvojën e punonjësit të ndihet bujare pa humbur kontrollin e politikave. Financa dhe HR shohin shpenzimet, vendosin rregulla dhe miratojnë kërkesa pa e kthyer përfitimin në dokumentacion.",
+    "control1Title": "Buxhete dhe politika",
+    "control1": "Vendos buxhete vjetore, kufij kategorish dhe rregulla departamentesh nga një hapësirë admini.",
+    "control2Title": "Analitika të qarta",
+    "control2": "Ndiq shpenzimet sipas kategorisë, statusin e kërkesave, angazhimin dhe përfitimet më të dashura.",
+    "control3Title": "Zbulim më i mençur partnerësh",
+    "control3": "Deals Engine rendit ofruesit pranë teje sipas përputhjes, distancës dhe përdorimit të parashikuar.",
     "footerCta": "Gati ta bësh përfitimin të ndihet si dhuratë?",
     "footerNote": "Ndërtuar për JunctionX Tirana 2026 · Sfidë e TeamSystem"
+  },
+  "heroCards": {
+    "wellness": "Mirëqenie",
+    "food": "Ushqim",
+    "sport": "Sport",
+    "travel": "Udhëtime",
+    "learning": "Mësim",
+    "selfCare": "Kujdes",
+    "health": "Shëndet",
+    "yoga": "Yoga"
+  },
+  "features": {
+    "eyebrow": "Veçoritë",
+    "title": "Gjithçka që përfitimet",
+    "accent": "duhej të ishin.",
+    "subtitle": "PERX e kthen buxhetin e kompanisë në përvoja që punonjësit i duan vërtet — me një treg të kuruar, concierge me AI dhe pak lojë.",
+    "core": [
+      { "title": "Buxhete fleksibël përfitimesh", "body": "HR financon një portofol vjetor për çdo punonjës. Pa rimbursime, pa Excel — vetëm një balancë që njerëzit e shpenzojnë për atë që duan." },
+      { "title": "Treg i kuruar", "body": "Një katalog partnerësh shqiptarë të zgjedhur me kujdes në mirëqenie, ushqim, sport, udhëtime, mësim e më shumë — të gjitha në një vend." },
+      { "title": "Concierge Perky AI", "body": "Një asistent bisedues që përputh përfitimet me stilin e jetës dhe buxhetin e mbetur të çdo personi, dhe përgjigjet menjëherë." },
+      { "title": "Miratime me një prekje", "body": "Kërkesat shkojnë direkt te HR, miratohen me një prekje dhe përfitimi aktivizohet menjëherë — me gjurmë të pastër auditimi." },
+      { "title": "Lojëra dhe shpërblime", "body": "Streak-et, kartat gërvishtëse dhe rrotullimet e kthejnë shëndetin dhe angazhimin në buxhet shtesë. Përfitime që ndihen si dhuratë." },
+      { "title": "Analitika të dobishme", "body": "Shiko saktësisht çfarë do ekipi, shpenzimet sipas kategorisë dhe angazhimin me kalimin e kohës — të dhënat që HR ka kërkuar gjithmonë." },
+      { "title": "Smart Deals Engine", "body": "AI rendit partnerët pranë sipas përputhjes me shijet e ekipit, që të zbulosh automatikisht ofertat e duhura vendore." },
+      { "title": "Politika dhe kontroll", "body": "Buxhete sipas departamentit, rregulla kategorish dhe politika miratimi e mbajnë financën në kontroll pa ngadalësuar askënd." },
+      { "title": "Nxitje në kohën e duhur", "body": "Oferta sezonale, përditësime miratimi dhe kujtues streak-u e mbajnë punonjësin të angazhuar — kurrë spam, gjithmonë me zgjedhje." }
+    ],
+    "marketEyebrow": "Një treg",
+    "marketTitle": "Përfitime për çdo pjesë të jetës",
+    "marketSubtitle": "Thekset e kategorive i sheh në pin-e, etiketa dhe grafikë në gjithë produktin.",
+    "categories": ["Mirëqenie", "Ushqim", "Sport", "Udhëtime", "Mësim", "Kujdes për veten"],
+    "personasEyebrow": "Ndërtuar për të gjithë",
+    "personasTitle": "Një platformë, tre këndvështrime",
+    "personas": [
+      { "title": "Për Punonjësit", "body": "Përfitimet e tua, zgjedhja jote. Shpenzo buxhetin për atë që ka rëndësi — dhe fito më shumë me streak-e e lojëra." },
+      { "title": "Për Kompanitë", "body": "Shiko çfarë do ekipi, kontrollo buxhetet sipas departamentit dhe zbulo partnerë të rinj me AI Deals Engine." },
+      { "title": "Për Ofruesit", "body": "Arri te punonjës të angazhuar në gjithë Shqipërinë. Përputhu me kompanitë ekipet e të cilave duan pikërisht atë që ofron." }
+    ],
+    "ctaTitle": "Shikoje vetë në tetë sekonda",
+    "ctaBody": "Hyr me një llogari demo dhe eksploro përvojën e plotë PERX — tregun, Perky AI, lojërat dhe Deals Engine për adminët."
+  },
+  "about": {
+    "eyebrow": "Historia jonë",
+    "title": "Përfitime, të rimenduara për",
+    "accent": "Tiranën në muzg.",
+    "subtitle": "PERX është një treg dy-palësh për përfitimet e punonjësve në Shqipëri — fintech premium me concierge të ngrohtë. Ne i kthejmë buxhetet në përvoja që njerëzit i duan vërtet.",
+    "stats": [
+      { "value": "12+", "label": "Partnerë vendorë të shtuar" },
+      { "value": "92%", "label": "Përdorim mesatar i buxhetit" },
+      { "value": "4.8★", "label": "Kënaqësi punonjësish" },
+      { "value": "6", "label": "Kategori përfitimesh" }
+    ],
+    "missionEyebrow": "Misioni ynë",
+    "missionTitle": "Ta bëjmë përfitimin të ndihet si dhuratë.",
+    "missionParagraphs": [
+      "Shumica e programeve të përfitimeve janë labirinte rimbursimesh, kuponësh dhe buxhetesh të harruara. Paratë janë aty — por përvoja është e ftohtë dhe gjysma e buxhetit mbetet pa përdorur.",
+      "PERX e përmbys këtë. Kompanitë financojnë një portofol, punonjësit eksplorojnë një treg të kuruar partnerësh vendorë dhe një concierge me AI, Perky, i ndihmon të shpenzojnë me mençuri. Pak lojë — streak-e, karta gërvishtëse, rrotullime — e kthen angazhimin në buxhet shtesë.",
+      "Rezultati ndihet si Tirana në muzg: sipërfaqe të errëta, drita të ngrohta, shkëlqime ari dhe ember mbi gur. Identitet shqiptar, pa klishe."
+    ],
+    "brand": [
+      { "title": "Gur dhe muzg", "body": "Baza neutrale merr frymëzim nga Alpet Shqiptare — slate i thellë, thuajse i zi, dhe gri të ftohta në dritën e fundit." },
+      { "title": "Ember", "body": "Një pasardhës i sofistikuar dhe pak i zbutur i të kuqes së flamurit. Trashëgimi e sinjalizuar — jo e bërtitur." },
+      { "title": "Ari i vjetëruar", "body": "Shqiponja dykrenare si theks metalik premium për shpërblime, streak-e dhe fitore." }
+    ],
+    "valuesEyebrow": "Çfarë besojmë",
+    "valuesTitle": "Parimet pas çdo ekrani",
+    "values": [
+      { "title": "Njeriu i pari", "body": "Përfitimet duhet të ndihen si dhuratë, jo si formular. Çdo vendim nis nga personi që hap aplikacionin, jo nga tabela pas tij." },
+      { "title": "Premium i qetë", "body": "I qetë, i sigurt dhe me ndjesi cilësore — kurrë i ftohtë korporativ. Kujdesemi për radiusin, shkëlqimin dhe ritmin e çdo lëvizjeje." },
+      { "title": "Vendor nga dizajni", "body": "Ne nxisim ofruesit shqiptarë dhe përvojat që e bëjnë jetën këtu të mirë. Zbulimi nis nga rrugët e Tiranës." },
+      { "title": "Dy-palësh në natyrë", "body": "Punonjësit, kompanitë dhe ofruesit duhet të fitojnë njëkohësisht — përndryshe tregu nuk funksionon. Ne ndërtojmë për të gjithë ciklin." }
+    ],
+    "timelineEyebrow": "Udhëtimi",
+    "timelineTitle": "Nga skica te produkti",
+    "timeline": [
+      { "when": "2026 · T1", "title": "Ideja", "body": "Ekipet shqiptare meritonin përfitime që ndihen moderne. Skicuam një treg dy-palësh, dark-first dhe mobile-first." },
+      { "when": "JunctionX", "title": "Ndërtuar në 48 orë", "body": "PERX mori jetë për JunctionX Tirana 2026 si sfidë e TeamSystem — një produkt real që gjyqtari mund ta donte në tetë sekonda." },
+      { "when": "Më pas", "title": "Përtej demos", "body": "Zbulim më i thellë partnerësh, rekomandime më të pasura nga Perky dhe analitika që çdo ekip HR ka dashur gjithmonë." }
+    ],
+    "ctaTitle": "Dëshiron ta sjellësh PERX te ekipi yt?",
+    "ctaBody": "Do të na pëlqente të të tregojmë si ndihen përfitimet moderne. Na kontakto dhe do ta nisim bashkë."
+  },
+  "pricing": {
+    "eyebrow": "Çmimet",
+    "title": "Çmime të thjeshta,",
+    "accent": "përfitime bujare.",
+    "subtitle": "Paguaj për platformën, jo për dokumentacionin. Çdo plan përfshin tregun e plotë dhe Perky AI — ti zgjedh kontrollin dhe shkallën.",
+    "popular": "Popullor",
+    "plans": [
+      { "name": "Starter", "price": "€0", "cadence": "përgjithmonë", "tagline": "Për ekipe të vogla që provojnë përfitimet moderne.", "cta": "Fillo falas", "features": ["Deri në 15 punonjës", "Tregu i plotë i përfitimeve", "Concierge Perky AI", "Miratime me një prekje", "Analitika bazë"] },
+      { "name": "Growth", "price": "€3", "cadence": "për punonjës / muaj", "tagline": "Për kompani në rritje që duan kontroll dhe pasqyrë.", "cta": "Zgjidh Growth", "featured": true, "features": ["Punonjës pa limit", "Buxhete sipas departamentit", "Motor lojërash dhe shpërblimesh", "Analitika dhe eksporte të avancuara", "Zbulim me AI Deals Engine", "Mbështetje me prioritet"] },
+      { "name": "Enterprise", "price": "Me porosi", "cadence": "flasim bashkë", "tagline": "Për organizata më të mëdha me politika të personalizuara.", "cta": "Kontakto shitjet", "features": ["Gjithçka në Growth", "Politika miratimi të personalizuara", "SSO dhe siguri e avancuar", "Menaxher suksesi i dedikuar", "Onboarding partnerësh me porosi", "SLA dhe rezidencë të dhënash"] }
+    ],
+    "faqEyebrow": "Pyetje",
+    "faqTitle": "Çmimet, të shpjeguara",
+    "faq": [
+      { "q": "Si funksionon buxheti?", "a": "Kompanitë financojnë një portofol vjetor për çdo punonjës. Punonjësit e shpenzojnë në treg — pa rimbursime, pa kuponë, pa buxhet të humbur në letra." },
+      { "q": "A i tarifoni ofruesit?", "a": "Partnerët vendorë bashkohen falas dhe përfitojnë duke arritur punonjës të angazhuar. Ne nuk i tarifojmë kurrë punonjësit — kompania financon gjithçka." },
+      { "q": "A mund të vendosim buxhete sipas departamentit?", "a": "Po. Në Growth dhe Enterprise, financa vendos buxhete dhe politika miratimi sipas departamentit, me gjurmë të pastër auditimi për çdo kërkesë." },
+      { "q": "A ka kontratë?", "a": "Starter është falas përgjithmonë. Planet me pagesë janë mujore pa bllokim — rriten ose ulen sipas ekipit." }
+    ],
+    "ctaTitle": "Gati ta bësh përfitimin të ndihet si dhuratë?",
+    "ctaBody": "Fillo falas në pak minuta, ose fol me ne për ta sjellë PERX në të gjithë kompaninë."
+  },
+  "contact": {
+    "eyebrow": "Kontakt",
+    "title": "Le të flasim",
+    "accent": "për përfitime.",
+    "subtitle": "Qofsh punonjës, kompani apo partner vendor — do të donim të dëgjonim prej teje. Na thuaj çfarë të duhet dhe e marrim prej aty.",
+    "channels": [
+      { "title": "Na shkruaj", "body": "hello@perx.al", "note": "Përgjigjemi brenda një dite pune." },
+      { "title": "Na vizito", "body": "Rruga e Kavajës, Tiranë", "note": "Shqipëri — me takim." },
+      { "title": "Mbështetje", "body": "support@perx.al", "note": "Për klientë dhe partnerë ekzistues." }
+    ],
+    "topics": ["Jam punonjës", "Përfaqësoj një kompani", "Jam ofrues"],
+    "demoNotePrefix": "Ndërtuar për",
+    "demoNoteSuffix": "— sfidë e TeamSystem. PERX është një demo produkti nga një ekip i vogël që kujdeset për ndjesinë e përfitimeve.",
+    "sentTitle": "Mesazhi u dërgua",
+    "sentBody": "Faleminderit që na kontaktove. Do të të kthejmë përgjigje brenda një dite pune.",
+    "sendAnother": "Dërgo një tjetër",
+    "topicLabel": "Unë jam…",
+    "name": "Emri",
+    "namePlaceholder": "Emri yt",
+    "email": "Email",
+    "company": "Kompania",
+    "optional": "(opsionale)",
+    "companyPlaceholder": "Emri i kompanisë",
+    "message": "Mesazhi",
+    "messagePlaceholder": "Na thuaj çfarë kërkon…",
+    "submit": "Dërgo mesazhin"
+  },
+  "legal": {
+    "lastUpdated": "Përditësuar së fundmi",
+    "onThisPage": "Në këtë faqe",
+    "questions": "Pyetje rreth këtij dokumenti? Na shkruaj"
+  },
+  "privacy": {
+    "eyebrow": "Ligjore",
+    "title": "Politika e",
+    "accent": "Privatësisë.",
+    "updated": "Qershor 2026",
+    "intro": "Të dhënat janë të tuat. Ja saktësisht çfarë mbledhim, pse dhe çfarë kontrolli ke mbi to — me gjuhë të thjeshtë.",
+    "sections": [
+      { "id": "overview", "heading": "Përmbledhje", "body": ["PERX (“ne”) operon një treg dy-palësh për përfitimet e punonjësve. Kjo politikë shpjegon çfarë të dhënash mbledhim, pse i mbledhim dhe çfarë zgjedhjesh ke. E mbajmë të qartë — pa truke, pa surpriza.", "Ky është një produkt demonstrues i ndërtuar për JunctionX Tirana 2026. Në prodhim, kjo politikë do të rishikohej nga juristë dhe do të përshtatej me juridiksionin përkatës."] },
+      { "id": "data-we-collect", "heading": "Të dhënat që mbledhim", "body": ["Mbledhim vetëm atë që na duhet për të drejtuar programin e përfitimeve:", ["Detaje llogarie — emër, email pune, kompani dhe departament.", "Aktivitet përfitimesh — buxhet, kërkesa, miratime dhe partnerët që zgjedh.", "Preferenca — kategoritë që të interesojnë dhe cilësimet dietike ose të stilit të jetës.", "Përdorim produkti — të dhëna bazë dhe të agreguara për të përmirësuar përvojën."]] },
+      { "id": "how-we-use", "heading": "Si i përdorim", "body": ["Të dhënat e tua fuqizojnë produktin dhe asgjë më shumë:", ["Për të drejtuar tregun, përpunuar miratime dhe ndjekur buxhetet.", "Që Perky, concierge ynë me AI, të rekomandojë përfitime që përshtaten me jetën dhe buxhetin tënd.", "Që HR të shohë në mënyrë të agreguar çfarë pëlqejnë ekipet — kurrë mbikëqyrje individuale.", "Për ta mbajtur shërbimin të sigurt dhe për të respektuar detyrimet ligjore."], "Ne nuk i shesim të dhënat personale. Kurrë."] },
+      { "id": "sharing", "heading": "Ndarja dhe partnerët", "body": ["Punëdhënësi yt mund të shohë të dhëna të agreguara të programit dhe kërkesat që ia dërgon për miratim — kështu funksionojnë miratimet. Partnerët vendorë marrin vetëm atë që duhet për të ofruar përfitimin që zgjodhe.", "Përdorim disa ofrues infrastrukture të besuar (hosting, analitika) me kushte përpunimi të dhënash. Ata veprojnë vetëm sipas udhëzimeve tona."] },
+      { "id": "your-rights", "heading": "Të drejtat e tua", "body": ["Ti ke kontroll mbi të dhënat. Sipas ligjit të zbatueshëm mund të:", ["Aksesosh të dhënat personale që mbajmë për ty.", "Korrigjosh pasaktësi nga preferencat dhe profili.", "Kërkosh fshirjen e llogarisë dhe të dhënave të lidhura.", "Kundërshtosh ose kufizosh përpunime të caktuara dhe të eksportosh të dhënat."], "Për këto kërkesa, kontakto privacy@perx.al."] },
+      { "id": "security", "heading": "Siguria dhe ruajtja", "body": ["I mbrojmë të dhënat me enkriptim gjatë transmetimit, kontrolle aksesi dhe parimin e privilegjit minimal. Asnjë sistem nuk është perfekt, por i trajtojmë të dhënat e tua si tonat.", "I ruajmë të dhënat për sa kohë llogaria është aktive ose sa duhet për të ofruar shërbimin dhe për të përmbushur kërkesat ligjore. Kur fshin llogarinë, i heqim ose anonimizojmë të dhënat personale brenda një periudhe të arsyeshme."] },
+      { "id": "cookies", "heading": "Cookies", "body": ["Përdorim cookies thelbësore për të të mbajtur të kyçur dhe për të kujtuar gjuhën dhe preferencat. Nuk përdorim gjurmues reklamash. Mund t’i pastrosh cookies në çdo kohë nga cilësimet e shfletuesit."] },
+      { "id": "changes", "heading": "Ndryshime dhe kontakt", "body": ["Mund ta përditësojmë këtë politikë ndërsa produkti evoluon. Ndryshimet materiale do të theksohen në aplikacion. Përdorimi pas përditësimit do të thotë se e pranon politikën e rishikuar.", "Pyetje ose kërkesa? Shkruaj privacy@perx.al dhe do të të përgjigjet një njeri."] }
+    ]
+  },
+  "terms": {
+    "eyebrow": "Ligjore",
+    "title": "Kushtet e",
+    "accent": "Shërbimit.",
+    "updated": "Qershor 2026",
+    "intro": "Marrëveshja mes teje dhe PERX. E qartë, e drejtë dhe e shkruar për t’u lexuar — jo për t’u fshehur.",
+    "sections": [
+      { "id": "acceptance", "heading": "Pranimi i kushteve", "body": ["Duke aksesuar ose përdorur PERX, ti pranon këto Kushte Shërbimi. Nëse përdor PERX në emër të një kompanie, konfirmon se ke autoritet ta lidhësh atë kompani me këto kushte.", "PERX është produkt demonstrues i ndërtuar për JunctionX Tirana 2026. Një version prodhimi do t’i përshtaste këto kushte me juridiksionin dhe kontratat përkatëse."] },
+      { "id": "the-service", "heading": "Shërbimi", "body": ["PERX është një treg dy-palësh që u lejon kompanive të financojnë buxhete përfitimesh, punonjësve t’i shpenzojnë në një katalog partnerësh vendorë, dhe ofron concierge me AI dhe analitika.", "Mund të përmirësojmë, ndryshojmë ose ndërpresim veçori me kalimin e kohës. Synojmë të japim njoftim të arsyeshëm për ndryshime të rëndësishme."] },
+      { "id": "accounts", "heading": "Llogaritë dhe përshtatshmëria", "body": ["Ti je përgjegjës për saktësinë e informacionit të llogarisë dhe për mbajtjen e sigurt të kredencialeve. Duhet të na njoftosh për çdo përdorim të paautorizuar.", "Llogaritë krijohen përmes programit të punëdhënësit. Llogaritë demo ofrohen vetëm për vlerësim."] },
+      { "id": "acceptable-use", "heading": "Përdorimi i pranueshëm", "body": ["Për ta mbajtur PERX të sigurt dhe të drejtë për të gjithë, pranon të mos:", ["Keqpërdorësh buxhete, të tentosh mashtrim ndaj partnerëve ose të abuzosh shpërblimet dhe lojërat.", "Rikonstruktosh, scrape-osh ose ndërpresësh shërbimin apo sigurinë e tij.", "Ngarkosh përmbajtje të paligjshme ose të shkelësh të drejtat e të tjerëve.", "Përdorësh shërbimin për të ngacmuar përdorues, partnerë ose staf."]] },
+      { "id": "budgets", "heading": "Buxhetet, përfitimet dhe pagesat", "body": ["Buxhetet e përfitimeve financohen dhe qeverisen nga punëdhënësi yt. Balanca, rregullat e miratimit dhe politikat e kategorive vendosen nga administratorët e kompanisë.", "Përfitimet dorëzohen nga partnerë vendorë të pavarur. Edhe pse i kurojmë me kujdes, përvoja ofrohet prej tyre dhe i nënshtrohet kushteve të tyre.", "Shpërblimet nga streak-et dhe lojërat nuk kanë vlerë monetare dhe mund të skadojnë ose ndryshojnë sipas gjykimit tonë."] },
+      { "id": "ip", "heading": "Pronësia intelektuale", "body": ["PERX, dizajni, marka dhe softueri i tij janë pronë e jona dhe mbrohen nga ligji i zbatueshëm. Këto kushte të japin një të drejtë të kufizuar, jo-ekskluzive dhe jo të transferueshme për ta përdorur shërbimin — asgjë më shumë.", "Emrat dhe logot e partnerëve u përkasin pronarëve përkatës dhe përdoren për të identifikuar ofertat e tyre."] },
+      { "id": "disclaimers", "heading": "Deklarime dhe përgjegjësi", "body": ["Shërbimi ofrohet “siç është”. Në masën maksimale të lejuar nga ligji, ne përjashtojmë garancitë e nënkuptuara dhe nuk mbajmë përgjegjësi për humbje indirekte ose pasuese nga përdorimi i shërbimit.", "Asgjë në këto kushte nuk kufizon përgjegjësi që nuk mund të kufizohet me ligj."] },
+      { "id": "termination", "heading": "Përfundimi", "body": ["Mund ta ndalosh përdorimin e PERX në çdo kohë. Ne mund të pezullojmë ose ndërpresim aksesin nëse shkelen këto kushte ose nëse duhet të mbrojmë shërbimin apo përdoruesit e tjerë.", "Pas përfundimit, e drejta jote për të përdorur shërbimin mbaron; dispozitat që nga natyra duhet të mbijetojnë (si IP dhe përgjegjësia) do të vazhdojnë."] },
+      { "id": "governing-law", "heading": "Ligji zbatues dhe kontakti", "body": ["Këto kushte qeverisen nga ligjet e Republikës së Shqipërisë, pa marrë parasysh rregullat e konfliktit të ligjeve. Mosmarrëveshjet trajtohen nga gjykatat kompetente të Tiranës.", "Pyetje rreth këtyre kushteve? Shkruaj legal@perx.al."] }
+    ]
   },
   "login": {
     "title": "Mirë se erdhe",

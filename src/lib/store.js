@@ -261,7 +261,13 @@ export function completeTask(userId, taskId, reward) {
   })
 }
 
-export function setLang(lang) { set(() => ({ lang })) }
+export function setLang(lang) {
+  set(() => ({ lang }))
+  try {
+    const saved = JSON.parse(localStorage.getItem('perx:v1') || '{}')
+    localStorage.setItem('perx:v1', JSON.stringify({ ...saved, lang }))
+  } catch {}
+}
 
 // ── daily surprise (still local-only) ──
 const SURPRISE_KEY = 'perx:daily-surprise'

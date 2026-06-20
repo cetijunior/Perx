@@ -25,8 +25,8 @@
     }
   },
   "landing": {
-    "headline": "Përfitimet që dëshironi.",
-    "headline2": "Talenti që meritoni.",
+    "headline": "Benefits your people choose.",
+    "headline2": "Talent you keep.",
     "subtitle": "PERX is the benefits marketplace that turns a company's budget into experiences employees actually love — wellness, food, sport, travel and more, all in one beautiful place.",
     "ctaPrimary": "Enter PERX",
     "ctaSecondary": "See how it works",
@@ -34,6 +34,7 @@
     "stat2": "Avg. budget used",
     "stat3": "Employee love",
     "howTitle": "From budget to benefit in four taps",
+    "howSubtitle": "PERX keeps the flow simple for employees while giving HR the controls, approvals, and insight they need behind the scenes.",
     "how1Title": "Companies fund",
     "how1": "HR sets a yearly benefits budget per employee — no spreadsheets, no reimbursements.",
     "how2Title": "Employees explore",
@@ -42,14 +43,211 @@
     "how3": "An AI concierge matches benefits to each person's lifestyle and remaining budget.",
     "how4Title": "One-tap approval",
     "how4": "Requests flow to HR, get approved instantly, and the benefit goes live.",
+    "marketEyebrow": "Curated marketplace",
+    "marketTitle": "A benefit catalog that feels local, useful, and alive.",
+    "marketBody": "Employees can mix everyday needs with experiences they would actually look forward to: lunch, therapy, fitness, weekend travel, learning, and moments of self-care.",
+    "marketPoint1Title": "No more forgotten allowances",
+    "marketPoint1": "Budgets are visible, easy to spend, and tied to real local offers.",
+    "marketPoint2Title": "Perky guides every choice",
+    "marketPoint2": "The assistant explains options, compares prices, and helps employees use their budget wisely.",
+    "marketPoint3Title": "Rewards keep people coming back",
+    "marketPoint3": "Streaks, spins, and surprise bonuses turn engagement into extra value.",
+    "categoryWellness": "Wellness",
+    "categoryFood": "Food",
+    "categorySport": "Sport",
+    "categoryTravel": "Travel",
+    "categoryLearning": "Learning",
+    "categorySelfCare": "Self-care",
+    "personasEyebrow": "Built for the full loop",
+    "personasTitle": "Employees, companies, and providers all get a clearer path.",
+    "personasSubtitle": "The marketplace only works when every side wins: people find value, HR gets control, and local partners meet the right audience.",
     "forEmployeesTitle": "For Employees",
     "forEmployeesBody": "Your benefits, your call. Spend your budget on what actually matters to you — and earn more through streaks and games.",
     "forCompaniesTitle": "For Companies",
     "forCompaniesBody": "See exactly what your people love, control budgets per department, and discover new local partners with the AI Deals Engine.",
     "forProvidersTitle": "For Providers",
     "forProvidersBody": "Reach engaged employees across Albania. Get matched to the companies whose teams want exactly what you offer.",
+    "controlEyebrow": "HR control",
+    "controlTitle": "The friendly front end has a serious operating layer.",
+    "controlBody": "PERX makes the employee experience feel generous without losing policy control. Finance and HR can see spend, set rules, and approve requests without turning benefits into paperwork.",
+    "control1Title": "Budgets and policy",
+    "control1": "Set annual budgets, category limits, and department rules from one admin workspace.",
+    "control2Title": "Clear analytics",
+    "control2": "Track spend by category, request status, engagement, and the benefits people love most.",
+    "control3Title": "Smarter partner discovery",
+    "control3": "The Deals Engine ranks nearby providers by fit, distance, and predicted usage.",
     "footerCta": "Ready to make benefits feel like a gift?",
     "footerNote": "Built for JunctionX Tirana 2026 · A TeamSystem challenge"
+  },
+  "heroCards": {
+    "wellness": "Wellness",
+    "food": "Food",
+    "sport": "Sport",
+    "travel": "Travel",
+    "learning": "Learning",
+    "selfCare": "Self-care",
+    "health": "Health",
+    "yoga": "Yoga"
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "Everything benefits",
+    "accent": "should have been.",
+    "subtitle": "PERX turns a company’s budget into experiences employees actually love — powered by a curated marketplace, an AI concierge, and a little bit of play.",
+    "core": [
+      { "title": "Flexible benefit budgets", "body": "HR funds a yearly wallet per employee. No reimbursements, no spreadsheets — just a balance people can spend on what they love." },
+      { "title": "Curated marketplace", "body": "A hand-picked catalog of local Albanian partners across wellness, food, sport, travel, learning and more — all in one beautiful place." },
+      { "title": "Perky AI concierge", "body": "A conversational assistant that matches benefits to each person’s lifestyle and remaining budget, and answers questions instantly." },
+      { "title": "One-tap approvals", "body": "Requests flow straight to HR, get approved in a tap, and the benefit goes live immediately — with a clean audit trail." },
+      { "title": "Games & rewards", "body": "Streaks, scratch cards and spin-to-win turn staying healthy and engaged into extra budget. Benefits that feel like a gift." },
+      { "title": "Insightful analytics", "body": "See exactly what your people love, spend by category, and engagement over time — the data HR has always wanted." },
+      { "title": "Smart Deals Engine", "body": "AI ranks nearby partners by how well they match your team’s tastes, so you discover the right local deals automatically." },
+      { "title": "Policy & controls", "body": "Per-department budgets, category rules and approval policies keep finance in control without slowing anyone down." },
+      { "title": "Timely nudges", "body": "Seasonal offers, approval updates and streak reminders keep employees engaged — never spammy, always opt-in." }
+    ],
+    "marketEyebrow": "One marketplace",
+    "marketTitle": "Benefits across every part of life",
+    "marketSubtitle": "Category accents you’ll recognise from pins, chips and charts throughout the product.",
+    "categories": ["Wellness", "Food", "Sport", "Travel", "Learning", "Self-care"],
+    "personasEyebrow": "Built for everyone",
+    "personasTitle": "One platform, three points of view",
+    "personas": [
+      { "title": "For Employees", "body": "Your benefits, your call. Spend your budget on what actually matters — and earn more through streaks and games." },
+      { "title": "For Companies", "body": "See what your people love, control budgets per department, and discover new local partners with the AI Deals Engine." },
+      { "title": "For Providers", "body": "Reach engaged employees across Albania. Get matched to the companies whose teams want exactly what you offer." }
+    ],
+    "ctaTitle": "See it for yourself in eight seconds",
+    "ctaBody": "Sign in with a demo account and explore the full PERX experience — marketplace, Perky AI, games and the admin Deals Engine."
+  },
+  "about": {
+    "eyebrow": "Our story",
+    "title": "Benefits, reimagined for",
+    "accent": "Tirana at dusk.",
+    "subtitle": "PERX is a two-sided employee benefits marketplace for Albania — premium fintech meets warm concierge. We turn budgets into experiences people actually love.",
+    "stats": [
+      { "value": "12+", "label": "Local partners onboard" },
+      { "value": "92%", "label": "Average budget used" },
+      { "value": "4.8★", "label": "Employee satisfaction" },
+      { "value": "6", "label": "Benefit categories" }
+    ],
+    "missionEyebrow": "Our mission",
+    "missionTitle": "Make benefits feel like a gift.",
+    "missionParagraphs": [
+      "Most benefits programs are a maze of reimbursements, vouchers and forgotten allowances. The money is there — but the experience is cold, and half the budget goes unused.",
+      "PERX flips that. Companies fund a wallet, employees explore a curated marketplace of local partners, and an AI concierge named Perky helps everyone spend wisely. A little play — streaks, scratch cards, spins — turns staying engaged into extra budget.",
+      "The result reads like Tirana at dusk: dark, warm light sources, gold and ember glows on stone. Albanian identity, without the cliché."
+    ],
+    "brand": [
+      { "title": "Stone & dusk", "body": "The neutral base is pulled from the Albanian Alps — deep slate, near-black and cool greys at last light." },
+      { "title": "Ember", "body": "A sophisticated, slightly desaturated descendant of flag red. Heritage, signalled — never shouted." },
+      { "title": "Aged gold", "body": "The double-headed eagle rendered as a premium metallic accent for rewards, streaks and wins." }
+    ],
+    "valuesEyebrow": "What we believe",
+    "valuesTitle": "The principles behind every screen",
+    "values": [
+      { "title": "People first", "body": "Benefits should feel like a gift, not a form. Every decision starts with the person opening the app, not the spreadsheet behind it." },
+      { "title": "Quiet premium", "body": "Calm, confident and expensive-looking — never corporate-cold. We sweat the radius, the glow and the curve of every motion." },
+      { "title": "Local by design", "body": "We champion Albanian providers and the experiences that make life here good. Discovery is rooted in the streets of Tirana." },
+      { "title": "Two-sided by nature", "body": "Employees, companies and providers all win at once — or the marketplace doesn’t work. We build for the whole loop." }
+    ],
+    "timelineEyebrow": "The journey",
+    "timelineTitle": "From sketch to shippable",
+    "timeline": [
+      { "when": "2026 · Q1", "title": "The idea", "body": "Albanian teams deserved benefits that felt modern. We sketched a two-sided marketplace built dark-first and mobile-first." },
+      { "when": "JunctionX", "title": "Built in 48 hours", "body": "PERX came to life for JunctionX Tirana 2026 as a TeamSystem challenge — a real product a judge could love in eight seconds." },
+      { "when": "Next", "title": "Beyond the demo", "body": "Deeper partner discovery, richer Perky recommendations, and the analytics every HR team has always wanted." }
+    ],
+    "ctaTitle": "Want to bring PERX to your team?",
+    "ctaBody": "We’d love to show you what modern benefits feel like. Reach out and we’ll set you up."
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Simple pricing,",
+    "accent": "generous benefits.",
+    "subtitle": "Pay for the platform, not the paperwork. Every plan includes the full marketplace and Perky AI — you choose the controls and scale.",
+    "popular": "Popular",
+    "plans": [
+      { "name": "Starter", "price": "€0", "cadence": "forever", "tagline": "For small teams trying benefits the modern way.", "cta": "Start free", "features": ["Up to 15 employees", "Full benefits marketplace", "Perky AI concierge", "One-tap approvals", "Basic analytics"] },
+      { "name": "Growth", "price": "€3", "cadence": "per employee / mo", "tagline": "For growing companies that want control and insight.", "cta": "Choose Growth", "featured": true, "features": ["Unlimited employees", "Per-department budgets", "Games & rewards engine", "Advanced analytics & exports", "AI Deals Engine discovery", "Priority support"] },
+      { "name": "Enterprise", "price": "Custom", "cadence": "let’s talk", "tagline": "For larger organisations with bespoke policy needs.", "cta": "Contact sales", "features": ["Everything in Growth", "Custom approval policies", "SSO & advanced security", "Dedicated success manager", "Custom partner onboarding", "SLA & data residency"] }
+    ],
+    "faqEyebrow": "Questions",
+    "faqTitle": "Pricing, answered",
+    "faq": [
+      { "q": "How does the budget work?", "a": "Companies fund a yearly wallet per employee. Employees spend it across the marketplace — no reimbursements, no vouchers, no leftover allowance lost to paperwork." },
+      { "q": "Do you charge providers?", "a": "Local partners join free and only benefit from reaching engaged employees. We never charge employees a cent — the company funds everything." },
+      { "q": "Can we set per-department budgets?", "a": "Yes. On Growth and Enterprise, finance can set budgets and approval policies per department, with a clean audit trail on every request." },
+      { "q": "Is there a contract?", "a": "Starter is free forever. Paid plans are monthly with no lock-in — scale up or down as your team changes." }
+    ],
+    "ctaTitle": "Ready to make benefits feel like a gift?",
+    "ctaBody": "Start free in minutes, or talk to us about rolling PERX out across your whole company."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let’s talk",
+    "accent": "benefits.",
+    "subtitle": "Whether you’re an employee, a company or a local partner — we’d love to hear from you. Tell us what you need and we’ll take it from there.",
+    "channels": [
+      { "title": "Email us", "body": "hello@perx.al", "note": "We reply within one business day." },
+      { "title": "Visit", "body": "Rruga e Kavajës, Tirana", "note": "Albania — by appointment." },
+      { "title": "Support", "body": "support@perx.al", "note": "For existing customers & partners." }
+    ],
+    "topics": ["I’m an employee", "I represent a company", "I’m a provider"],
+    "demoNotePrefix": "Built for",
+    "demoNoteSuffix": "— a TeamSystem challenge. PERX is a product demo by a small team who care about how benefits feel.",
+    "sentTitle": "Message sent",
+    "sentBody": "Thanks for reaching out. We’ll get back to you within one business day.",
+    "sendAnother": "Send another",
+    "topicLabel": "I am…",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "company": "Company",
+    "optional": "(optional)",
+    "companyPlaceholder": "Company name",
+    "message": "Message",
+    "messagePlaceholder": "Tell us what you’re looking for…",
+    "submit": "Send message"
+  },
+  "legal": {
+    "lastUpdated": "Last updated",
+    "onThisPage": "On this page",
+    "questions": "Questions about this document? Email"
+  },
+  "privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy",
+    "accent": "Policy.",
+    "updated": "June 2026",
+    "intro": "Your data is yours. Here’s exactly what we collect, why, and the control you have over it — in plain language.",
+    "sections": [
+      { "id": "overview", "heading": "Overview", "body": ["PERX (“we”, “us”) operates a two-sided employee benefits marketplace. This policy explains what data we collect, why we collect it, and the choices you have. We keep it plain — no dark patterns, no surprises.", "This is a demonstration product built for JunctionX Tirana 2026. In a production deployment, this policy would be reviewed by counsel and adapted to your jurisdiction."] },
+      { "id": "data-we-collect", "heading": "Data we collect", "body": ["We collect only what we need to run your benefits program:", ["Account details — name, work email, company and department.", "Benefit activity — budget, requests, approvals and the partners you choose.", "Preferences — categories you care about and dietary or lifestyle settings you set.", "Product usage — basic, aggregated interaction data to improve the experience."]] },
+      { "id": "how-we-use", "heading": "How we use it", "body": ["Your data powers the product and nothing more:", ["To run the marketplace, process approvals and track budgets.", "To let Perky, our AI concierge, recommend benefits that fit your life and remaining budget.", "To give your HR team aggregated insight into what teams love — never individual surveillance.", "To keep the service secure and to comply with legal obligations."], "We do not sell your personal data. Ever."] },
+      { "id": "sharing", "heading": "Sharing & partners", "body": ["Your employer can see aggregated program data and the approval requests you submit to them — that is how approvals work. Local partners receive only what is needed to deliver a benefit you chose.", "We use a small number of trusted infrastructure providers (hosting, analytics) bound by data-processing terms. They act on our instructions only."] },
+      { "id": "your-rights", "heading": "Your rights", "body": ["You are in control of your data. Subject to applicable law you can:", ["Access the personal data we hold about you.", "Correct anything inaccurate from your preferences and profile.", "Request deletion of your account and associated data.", "Object to or restrict certain processing, and export your data."], "To exercise any of these, contact us at privacy@perx.al."] },
+      { "id": "security", "heading": "Security & retention", "body": ["We protect data with encryption in transit, access controls and the principle of least privilege. No system is perfectly secure, but we treat your data as we would our own.", "We retain data for as long as your account is active or as needed to provide the service and meet legal requirements. When you delete your account, we remove or anonymise your personal data within a reasonable period."] },
+      { "id": "cookies", "heading": "Cookies", "body": ["We use essential cookies to keep you signed in and remember your language and preferences. We do not use advertising trackers. You can clear cookies at any time in your browser settings."] },
+      { "id": "changes", "heading": "Changes & contact", "body": ["We may update this policy as the product evolves. Material changes will be highlighted in-app. Continued use after an update means you accept the revised policy.", "Questions or requests? Email privacy@perx.al and a human will respond."] }
+    ]
+  },
+  "terms": {
+    "eyebrow": "Legal",
+    "title": "Terms of",
+    "accent": "Service.",
+    "updated": "June 2026",
+    "intro": "The agreement between you and PERX. Clear, fair, and written to be read — not buried.",
+    "sections": [
+      { "id": "acceptance", "heading": "Acceptance of terms", "body": ["By accessing or using PERX, you agree to these Terms of Service. If you are using PERX on behalf of a company, you confirm you have authority to bind that company to these terms.", "PERX is a demonstration product built for JunctionX Tirana 2026. A production deployment would adapt these terms to the relevant jurisdiction and contracts."] },
+      { "id": "the-service", "heading": "The service", "body": ["PERX is a two-sided marketplace that lets companies fund employee benefit budgets, lets employees spend them across a curated catalog of local partners, and provides an AI concierge and analytics.", "We may improve, change or discontinue features over time. We aim to give reasonable notice of significant changes."] },
+      { "id": "accounts", "heading": "Accounts & eligibility", "body": ["You are responsible for the accuracy of your account information and for keeping your credentials secure. You must notify us of any unauthorised use of your account.", "Accounts are provisioned through your employer’s program. Demo accounts are provided for evaluation only."] },
+      { "id": "acceptable-use", "heading": "Acceptable use", "body": ["To keep PERX safe and fair for everyone, you agree not to:", ["Misuse budgets, attempt to defraud partners, or abuse rewards and games.", "Reverse-engineer, scrape, or disrupt the service or its security.", "Upload unlawful content or infringe the rights of others.", "Use the service to harass other users, partners or staff."]] },
+      { "id": "budgets", "heading": "Budgets, benefits & payments", "body": ["Benefit budgets are funded and governed by your employer. Available balance, approval rules and category policies are set by your company’s administrators.", "Benefits are delivered by independent local partners. While we curate partners carefully, the experience itself is provided by them, subject to their own terms.", "Rewards earned through streaks and games have no cash value and may expire or change at our discretion."] },
+      { "id": "ip", "heading": "Intellectual property", "body": ["PERX, its design, brand and software are owned by us and protected by applicable law. These terms grant you a limited, non-exclusive, non-transferable right to use the service — nothing more.", "Partner names and logos belong to their respective owners and are used to identify their offerings."] },
+      { "id": "disclaimers", "heading": "Disclaimers & liability", "body": ["The service is provided “as is”. To the maximum extent permitted by law we disclaim implied warranties and are not liable for indirect or consequential losses arising from your use of the service.", "Nothing in these terms limits liability that cannot be limited by law."] },
+      { "id": "termination", "heading": "Termination", "body": ["You may stop using PERX at any time. We may suspend or terminate access if these terms are breached or if required to protect the service or other users.", "On termination, your right to use the service ends; provisions that by nature should survive (such as IP and liability) will continue."] },
+      { "id": "governing-law", "heading": "Governing law & contact", "body": ["These terms are governed by the laws of the Republic of Albania, without regard to conflict-of-law rules. Disputes will be handled by the competent courts of Tirana.", "Questions about these terms? Email legal@perx.al."] }
+    ]
   },
   "login": {
     "title": "Welcome back",

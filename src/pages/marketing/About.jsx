@@ -1,40 +1,24 @@
+import { useTranslation } from 'react-i18next'
 import { Mountain, Flame, Gem, Heart, Compass, Users } from 'lucide-react'
 import { SitePage, PageHero, Section, SectionHeading, Reveal, CtaBand } from '@/components/site/Site'
 
-const STATS = [
-  { value: '12+', label: 'Local partners onboard' },
-  { value: '92%', label: 'Average budget used' },
-  { value: '4.8★', label: 'Employee satisfaction' },
-  { value: '6', label: 'Benefit categories' },
-]
-
-const VALUES = [
-  { icon: Heart, title: 'People first', body: 'Benefits should feel like a gift, not a form. Every decision starts with the person opening the app, not the spreadsheet behind it.' },
-  { icon: Gem, title: 'Quiet premium', body: 'Calm, confident and expensive-looking — never corporate-cold. We sweat the radius, the glow and the curve of every motion.' },
-  { icon: Compass, title: 'Local by design', body: 'We champion Albanian providers and the experiences that make life here good. Discovery is rooted in the streets of Tirana.' },
-  { icon: Users, title: 'Two-sided by nature', body: 'Employees, companies and providers all win at once — or the marketplace doesn’t work. We build for the whole loop.' },
-]
-
-const BRAND = [
-  { icon: Mountain, title: 'Stone & dusk', body: 'The neutral base is pulled from the Albanian Alps — deep slate, near-black and cool greys at last light.' },
-  { icon: Flame, title: 'Ember', body: 'A sophisticated, slightly desaturated descendant of flag red. Heritage, signalled — never shouted.' },
-  { icon: Gem, title: 'Aged gold', body: 'The double-headed eagle rendered as a premium metallic accent for rewards, streaks and wins.' },
-]
-
-const TIMELINE = [
-  { when: '2026 · Q1', title: 'The idea', body: 'Albanian teams deserved benefits that felt modern. We sketched a two-sided marketplace built dark-first and mobile-first.' },
-  { when: 'JunctionX', title: 'Built in 48 hours', body: 'PERX came to life for JunctionX Tirana 2026 as a TeamSystem challenge — a real product a judge could love in eight seconds.' },
-  { when: 'Next', title: 'Beyond the demo', body: 'Deeper partner discovery, richer Perky recommendations, and the analytics every HR team has always wanted.' },
-]
-
 export default function About() {
+  const { t } = useTranslation()
+  const STATS = t('about.stats', { returnObjects: true })
+  const valueIcons = [Heart, Gem, Compass, Users]
+  const VALUES = t('about.values', { returnObjects: true }).map((item, i) => ({ ...item, icon: valueIcons[i] }))
+  const brandIcons = [Mountain, Flame, Gem]
+  const BRAND = t('about.brand', { returnObjects: true }).map((item, i) => ({ ...item, icon: brandIcons[i] }))
+  const TIMELINE = t('about.timeline', { returnObjects: true })
+  const missionParagraphs = t('about.missionParagraphs', { returnObjects: true })
+
   return (
     <SitePage>
       <PageHero
-        eyebrow="Our story"
-        title="Benefits, reimagined for"
-        accent="Tirana at dusk."
-        subtitle="PERX is a two-sided employee benefits marketplace for Albania — premium fintech meets warm concierge. We turn budgets into experiences people actually love."
+        eyebrow={t('about.eyebrow')}
+        title={t('about.title')}
+        accent={t('about.accent')}
+        subtitle={t('about.subtitle')}
       />
 
       <Section className="py-10">
@@ -53,12 +37,10 @@ export default function About() {
       <Section>
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <Reveal>
-            <p className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-ember">Our mission</p>
-            <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">Make benefits feel like a gift.</h2>
+            <p className="mb-3 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-ember">{t('about.missionEyebrow')}</p>
+            <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">{t('about.missionTitle')}</h2>
             <div className="mt-5 space-y-4 text-muted">
-              <p>Most benefits programs are a maze of reimbursements, vouchers and forgotten allowances. The money is there — but the experience is cold, and half the budget goes unused.</p>
-              <p>PERX flips that. Companies fund a wallet, employees explore a curated marketplace of local partners, and an AI concierge named Perky helps everyone spend wisely. A little play — streaks, scratch cards, spins — turns staying engaged into extra budget.</p>
-              <p>The result reads like <em>Tirana at dusk</em>: dark, warm light sources, gold and ember glows on stone. Albanian identity, without the cliché.</p>
+              {missionParagraphs.map((p) => <p key={p}>{p}</p>)}
             </div>
           </Reveal>
           <Reveal delay={0.1}>
@@ -81,7 +63,7 @@ export default function About() {
       </Section>
 
       <Section>
-        <SectionHeading eyebrow="What we believe" title="The principles behind every screen" />
+        <SectionHeading eyebrow={t('about.valuesEyebrow')} title={t('about.valuesTitle')} />
         <div className="grid gap-4 sm:grid-cols-2">
           {VALUES.map((v, i) => (
             <Reveal key={v.title} delay={(i % 2) * 0.08}>
@@ -98,7 +80,7 @@ export default function About() {
       </Section>
 
       <Section>
-        <SectionHeading eyebrow="The journey" title="From sketch to shippable" />
+        <SectionHeading eyebrow={t('about.timelineEyebrow')} title={t('about.timelineTitle')} />
         <div className="mx-auto max-w-2xl">
           {TIMELINE.map((tl, i) => (
             <Reveal key={tl.title} delay={i * 0.08}>
@@ -119,8 +101,8 @@ export default function About() {
       </Section>
 
       <CtaBand
-        title="Want to bring PERX to your team?"
-        body="We’d love to show you what modern benefits feel like. Reach out and we’ll set you up."
+        title={t('about.ctaTitle')}
+        body={t('about.ctaBody')}
       />
     </SitePage>
   )

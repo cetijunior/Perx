@@ -1,17 +1,18 @@
 import { useMemo, useRef, Suspense } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, RoundedBox, Billboard, Text, AdaptiveDpr } from '@react-three/drei'
 import * as THREE from 'three'
 
-const CARDS = [
-  { label: 'Wellness', color: '#34D399', glyph: '✦' },
-  { label: 'Food', color: '#F59E0B', glyph: '◆' },
-  { label: 'Sport', color: '#3B82F6', glyph: '▲' },
-  { label: 'Travel', color: '#A78BFA', glyph: '✈' },
-  { label: 'Learning', color: '#22D3EE', glyph: '✚' },
-  { label: 'Self-care', color: '#F472B6', glyph: '❤' },
-  { label: 'Health', color: '#2DD4BF', glyph: '✚' },
-  { label: 'Yoga', color: '#34D399', glyph: '✦' },
+const CARD_META = [
+  { key: 'heroCards.wellness', color: '#34D399', glyph: '✦' },
+  { key: 'heroCards.food', color: '#F59E0B', glyph: '◆' },
+  { key: 'heroCards.sport', color: '#3B82F6', glyph: '▲' },
+  { key: 'heroCards.travel', color: '#A78BFA', glyph: '✈' },
+  { key: 'heroCards.learning', color: '#22D3EE', glyph: '✚' },
+  { key: 'heroCards.selfCare', color: '#F472B6', glyph: '❤' },
+  { key: 'heroCards.health', color: '#2DD4BF', glyph: '✚' },
+  { key: 'heroCards.yoga', color: '#34D399', glyph: '✦' },
 ]
 
 function BenefitCard({ color, label, glyph, radius, angle, y, speed }) {
@@ -77,18 +78,18 @@ function Particles({ count }) {
   )
 }
 
-function Cluster({ mobile }) {
+function Cluster({ mobile, cards }) {
   const group = useRef()
-  const cards = mobile ? CARDS.slice(0, 5) : CARDS
+  const visibleCards = mobile ? cards.slice(0, 5) : cards
   useFrame((state, delta) => { if (group.current) group.current.rotation.y += delta * 0.06 })
   return (
     <group ref={group}>
-      {cards.map((c, i) => (
+      {visibleCards.map((c, i) => (
         <BenefitCard
           key={c.label + i}
           {...c}
           radius={mobile ? 2.6 : 3.4}
-          angle={(i / cards.length) * Math.PI * 2}
+          angle={(i / visibleCards.length) * Math.PI * 2}
           y={(i % 3 - 1) * 0.7}
           speed={0.12}
         />
@@ -98,8 +99,10 @@ function Cluster({ mobile }) {
 }
 
 export default function Hero3D() {
+  const { t } = useTranslation()
   const mobile = typeof window !== 'undefined' && window.innerWidth < 768
   const particleCount = mobile ? 120 : 320
+  const cards = CARD_META.map((card) => ({ ...card, label: t(card.key) }))
   return (
     <Canvas
       dpr={[1, mobile ? 1.5 : 2]}
@@ -113,7 +116,7 @@ export default function Hero3D() {
         <pointLight position={[5, 4, 5]} intensity={110} color="#A78BFA" distance={30} decay={1.6} />
         <pointLight position={[-6, -2, -4]} intensity={80} color="#C4B5FD" distance={30} decay={1.6} />
         <pointLight position={[0, 6, -2]} intensity={60} color="#7C3AED" distance={30} decay={1.6} />
-        <Cluster mobile={mobile} />
+        <Cluster mobile={mobile} cards={cards} />
         <Particles count={particleCount} />
         <AdaptiveDpr pixelated />
       </Suspense>

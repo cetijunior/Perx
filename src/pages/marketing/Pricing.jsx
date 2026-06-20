@@ -1,71 +1,21 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Check, ArrowRight } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { SitePage, PageHero, Section, SectionHeading, Reveal, CtaBand } from '@/components/site/Site'
 
-const PLANS = [
-  {
-    name: 'Starter',
-    price: '€0',
-    cadence: 'forever',
-    tagline: 'For small teams trying benefits the modern way.',
-    cta: 'Start free',
-    features: [
-      'Up to 15 employees',
-      'Full benefits marketplace',
-      'Perky AI concierge',
-      'One-tap approvals',
-      'Basic analytics',
-    ],
-  },
-  {
-    name: 'Growth',
-    price: '€3',
-    cadence: 'per employee / mo',
-    tagline: 'For growing companies that want control and insight.',
-    cta: 'Choose Growth',
-    featured: true,
-    features: [
-      'Unlimited employees',
-      'Per-department budgets',
-      'Games & rewards engine',
-      'Advanced analytics & exports',
-      'AI Deals Engine discovery',
-      'Priority support',
-    ],
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    cadence: 'let’s talk',
-    tagline: 'For larger organisations with bespoke policy needs.',
-    cta: 'Contact sales',
-    features: [
-      'Everything in Growth',
-      'Custom approval policies',
-      'SSO & advanced security',
-      'Dedicated success manager',
-      'Custom partner onboarding',
-      'SLA & data residency',
-    ],
-  },
-]
-
-const FAQ = [
-  { q: 'How does the budget work?', a: 'Companies fund a yearly wallet per employee. Employees spend it across the marketplace — no reimbursements, no vouchers, no leftover allowance lost to paperwork.' },
-  { q: 'Do you charge providers?', a: 'Local partners join free and only benefit from reaching engaged employees. We never charge employees a cent — the company funds everything.' },
-  { q: 'Can we set per-department budgets?', a: 'Yes. On Growth and Enterprise, finance can set budgets and approval policies per department, with a clean audit trail on every request.' },
-  { q: 'Is there a contract?', a: 'Starter is free forever. Paid plans are monthly with no lock-in — scale up or down as your team changes.' },
-]
-
 export default function Pricing() {
+  const { t } = useTranslation()
+  const PLANS = t('pricing.plans', { returnObjects: true })
+  const FAQ = t('pricing.faq', { returnObjects: true })
+
   return (
     <SitePage>
       <PageHero
-        eyebrow="Pricing"
-        title="Simple pricing,"
-        accent="generous benefits."
-        subtitle="Pay for the platform, not the paperwork. Every plan includes the full marketplace and Perky AI — you choose the controls and scale."
+        eyebrow={t('pricing.eyebrow')}
+        title={t('pricing.title')}
+        accent={t('pricing.accent')}
+        subtitle={t('pricing.subtitle')}
       />
 
       <Section className="py-10">
@@ -76,7 +26,7 @@ export default function Pricing() {
                 {p.featured && (
                   <>
                     <div className="pointer-events-none absolute inset-0 bg-grad-aurora opacity-70" />
-                    <span className="absolute right-5 top-5 rounded-full bg-grad-ember px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-on-accent shadow-glow">Popular</span>
+                    <span className="absolute right-5 top-5 rounded-full bg-grad-ember px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-on-accent shadow-glow">{t('pricing.popular')}</span>
                   </>
                 )}
                 <div className="relative">
@@ -111,7 +61,7 @@ export default function Pricing() {
       </Section>
 
       <Section>
-        <SectionHeading eyebrow="Questions" title="Pricing, answered" />
+        <SectionHeading eyebrow={t('pricing.faqEyebrow')} title={t('pricing.faqTitle')} />
         <div className="mx-auto max-w-2xl space-y-3">
           {FAQ.map((f, i) => (
             <Reveal key={f.q} delay={(i % 2) * 0.06}>
@@ -125,8 +75,8 @@ export default function Pricing() {
       </Section>
 
       <CtaBand
-        title="Ready to make benefits feel like a gift?"
-        body="Start free in minutes, or talk to us about rolling PERX out across your whole company."
+        title={t('pricing.ctaTitle')}
+        body={t('pricing.ctaBody')}
       />
     </SitePage>
   )
