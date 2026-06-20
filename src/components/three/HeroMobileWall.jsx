@@ -45,7 +45,7 @@ export default function HeroMobileWall() {
               provider={provider}
               readonly
               showBlurb
-              showPlayButton={false}
+              linkable={false}
               variant="compact"
             />
           </div>

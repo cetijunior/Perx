@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Plus, Check } from 'lucide-react'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
-import { providerVideoSources, categoryPoster } from '@/lib/videos'
+import { categoryPoster } from '@/lib/videos'
 import { useStore, getProviderBySlug } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 
@@ -14,7 +15,7 @@ function BenefitCardFooter({ provider, inCart, onAdd, readonly, t }) {
       </div>
       {!readonly && (
         <button
-          onClick={() => onAdd?.(provider.id)}
+          onClick={(e) => { e.stopPropagation(); onAdd?.(provider.id) }}
           className={cn(
             'flex h-9 items-center gap-1.5 rounded-md px-3 text-xs font-medium transition-all active:scale-95',
             inCart
@@ -30,7 +31,7 @@ function BenefitCardFooter({ provider, inCart, onAdd, readonly, t }) {
 }
 
 /**
- * Benefit card — video header + footer (title, blurb, price, optional CTA).
+ * Benefit card — poster header + footer (title, blurb, price, optional CTA).
  */
 export default function BenefitCard({
   provider,
@@ -42,32 +43,39 @@ export default function BenefitCard({
   score,
   footer,
   readonly = false,
-  showPlayButton = true,
+  linkable = true,
 }) {
   const { t } = useTranslation()
+  const nav = useNavigate()
   useStore()
   const compact = variant === 'compact'
   const mediaSize = compact ? 'compact' : 'full'
-  // Merge in API-side media fields (posterUrl/videoUrl) when present.
   const apiProvider = getProviderBySlug(provider.id) || {}
   const poster = apiProvider.posterUrl || provider.posterUrl || categoryPoster(provider.category)
-  const apiVideo = apiProvider.videoUrl
-  const sources = apiVideo ? [apiVideo, ...providerVideoSources(provider)] : providerVideoSources(provider)
+
+  function handleCardClick() {
+    if (linkable) nav(`/employee/benefits/${provider.id}`)
+  }
 
   return (
     <motion.div
+      role={linkable ? 'link' : undefined}
+      tabIndex={linkable ? 0 : undefined}
+      onClick={handleCardClick}
+      onKeyDown={(e) => { if (linkable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); handleCardClick() } }}
       whileHover={{ y: -3 }}
       transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-      className={cn('group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-bg-elevated shadow-e2', className)}
+      className={cn(
+        'group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-bg-elevated shadow-e2',
+        linkable && 'cursor-pointer',
+        className,
+      )}
     >
       <BenefitCardMedia
         category={provider.category}
         rating={provider.rating}
-        sources={showPlayButton ? sources : []}
         poster={poster}
         size={mediaSize}
-        showPlayButton={showPlayButton}
-        playOnHover={showPlayButton}
       />
 
       <div className={cn('flex flex-1 flex-col gap-3', compact ? 'p-3' : 'p-4')}>

@@ -137,7 +137,7 @@ function ProviderOrbitCard({
             provider={provider}
             readonly
             showBlurb
-            showPlayButton={false}
+            linkable={false}
             variant={compact ? 'compact' : 'default'}
           />
         </Html>

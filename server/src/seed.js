@@ -12,10 +12,7 @@ const USERS = [
   { email: 'admin@perx.al', password: 'admin2026', name: 'Endrit Leka', role: 'admin', department: 'People Ops', budget: 0 },
 ]
 
-// Per-provider thematic Unsplash posters + Mixkit free-stock MP4s.
-// Posters are very reliable; Mixkit URLs occasionally rotate, so the catalog's
-// local `providerVideoSources` chain still tries category fallbacks if a primary
-// 404s. The result is always *something* on screen.
+// Per-provider thematic Unsplash posters.
 const POSTERS = {
   fitlife:      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800', // gym
   kombi:        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800', // coffee
@@ -31,35 +28,7 @@ const POSTERS = {
   lumeretreat:  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800', // mountains
 }
 
-// Free clips from samplelib.com — confirmed hotlinkable from any origin
-// (Mixkit/Pexels/Vimeo block third-party Referers). 5 distinct clips cycled
-// across providers + archive.org's Big Buck Bunny gives 6 variants.
-// Thumbnails are thematic (Unsplash); on hover the cards play these so each
-// category at least gets a different motion.
-const V1 = 'https://download.samplelib.com/mp4/sample-5s.mp4'
-const V2 = 'https://download.samplelib.com/mp4/sample-10s.mp4'
-const V3 = 'https://download.samplelib.com/mp4/sample-15s.mp4'
-const V4 = 'https://download.samplelib.com/mp4/sample-20s.mp4'
-const V5 = 'https://download.samplelib.com/mp4/sample-30s.mp4'
-const V6 = 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4'
-
-const VIDEOS = {
-  fitlife:      V1,
-  kombi:        V2,
-  aquaspa:      V3,
-  langschool:   V4,
-  greensalad:   V5,
-  albtransport: V6,
-  medicheck:    V1,
-  booknook:     V2,
-  yogaflow:     V3,
-  burgerlab:    V4,
-  cyclecity:    V5,
-  lumeretreat:  V6,
-}
-
 const media = (slug) => ({
-  videoUrl: VIDEOS[slug] || '',
   posterUrl: POSTERS[slug] || '',
 })
 

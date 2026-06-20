@@ -387,6 +387,34 @@
     "addPackage": "Add package to cart",
     "empty": "No benefits match your filters."
   },
+  "detail": {
+    "back": "Back to marketplace",
+    "about": "About this benefit",
+    "location": "Location in Tirana",
+    "locationHint": "Approximate partner location relative to your office.",
+    "inPackages": "Included in packages",
+    "yourCodes": "Your discount codes",
+    "viewCode": "View in Redeem",
+    "similar": "Similar benefits",
+    "forYou": "Your fit",
+    "fitsBudget": "Fits your remaining budget",
+    "overBudget": "Over your remaining budget",
+    "statusActive": "Active",
+    "showQr": "Show redemption QR",
+    "askPerky": "Ask Perky",
+    "perkyPrompt": "Tell me more about {{name}} and whether it fits my lifestyle and budget.",
+    "budget": "Budget",
+    "games": "Games",
+    "redeem": "Redeem",
+    "preferences": "Preferences",
+    "explore": "Explore PERX",
+    "cadence": {
+      "month": "Monthly",
+      "once": "One-time",
+      "course": "Course",
+      "variable": "Flexible pricing"
+    }
+  },
   "perky": {
     "title": "Perky",
     "subtitle": "Your benefits concierge",
@@ -460,51 +488,63 @@
     "providers": {
       "fitlife": {
         "name": "FitLife Gym Tirana",
-        "blurb": "Full-service gym in Blloku — weights, classes, sauna."
+        "blurb": "Full-service gym in Blloku — weights, classes, sauna.",
+        "description": "FitLife is a full-service gym in the heart of Blloku with free weights, machine circuits, group classes, and a sauna. Your PERX benefit covers monthly access so you can train before work or unwind after hours. Staff can help with a starter program if you're new."
       },
       "kombi": {
         "name": "Kombi Coffee",
-        "blurb": "Specialty coffee subscription across 6 Tirana spots."
+        "blurb": "Specialty coffee subscription across 6 Tirana spots.",
+        "description": "Kombi Coffee runs six specialty cafés across Tirana. This subscription gives you a monthly coffee allowance you can use at any location — ideal for morning rituals or client meetings. Seasonal drinks and pastries are included at partner pricing."
       },
       "aquaspa": {
         "name": "Aqua Spa Tirana",
-        "blurb": "Thermal pools, massage & hammam day-pass."
+        "blurb": "Thermal pools, massage & hammam day-pass.",
+        "description": "Aqua Spa offers thermal pools, hammam rituals, and massage treatments designed for deep recovery. The day-pass covers pool access plus one treatment slot. Book ahead on weekends — PERX members get priority waitlist placement."
       },
       "langschool": {
         "name": "Tirana Language School",
-        "blurb": "English, German & Italian — small evening groups."
+        "blurb": "English, German & Italian — small evening groups.",
+        "description": "Evening group courses in English, German, and Italian with small class sizes and conversational focus. Perfect if you want structured learning without sacrificing your workday. Materials and placement test are included."
       },
       "greensalad": {
         "name": "Green Salad Bar",
-        "blurb": "Build-your-own healthy bowls, delivered to the office."
+        "blurb": "Build-your-own healthy bowls, delivered to the office.",
+        "description": "Build-your-own bowls with local produce, vegan proteins, and office delivery. The monthly plan covers several lunches — great for teams trying to eat cleaner during busy weeks. Custom macros available on request."
       },
       "albtransport": {
         "name": "Albtransport Travel",
-        "blurb": "Discounted intercity & coastal weekend trips."
+        "blurb": "Discounted intercity & coastal weekend trips.",
+        "description": "Discounted intercity routes and curated weekend trips to the coast. Credits apply to scheduled departures from Tirana; seasonal routes to Sarandë and Vlorë are highlighted in the app during summer."
       },
       "medicheck": {
         "name": "MediCheck Clinic",
-        "blurb": "Annual health screening & blood panel."
+        "blurb": "Annual health screening & blood panel.",
+        "description": "A comprehensive annual screening with blood panel, vitals, and a GP consult. Results arrive within 48 hours with optional tele-follow-up. Ideal as a once-a-year baseline for wellness-focused teams."
       },
       "booknook": {
         "name": "BookNook Albania",
-        "blurb": "Unlimited e-books + 1 physical title / month."
+        "blurb": "Unlimited e-books + 1 physical title / month.",
+        "description": "Unlimited e-books plus one physical title shipped monthly. Curated lists for leadership, fiction, and Albanian authors. Swap your physical pick anytime before the monthly cutoff."
       },
       "yogaflow": {
         "name": "YogaFlow Studio",
-        "blurb": "Unlimited yoga & breathwork, mornings + evenings."
+        "blurb": "Unlimited yoga & breathwork, mornings + evenings.",
+        "description": "Unlimited yoga and breathwork classes with morning and evening slots in central Tirana. Suitable for beginners and experienced practitioners. Mats provided; arrive 10 minutes early for your first session."
       },
       "burgerlab": {
         "name": "Burger Lab Tirana",
-        "blurb": "Cheat-day voucher — smash burgers in Pazari i Ri."
+        "blurb": "Cheat-day voucher — smash burgers in Pazari i Ri.",
+        "description": "A one-time voucher for smash burgers and sides at Burger Lab in Pazari i Ri. Perfect for team celebrations or a well-earned cheat day. Dine-in only; show your PERX QR at the counter."
       },
       "cyclecity": {
         "name": "CycleCity Bike Rental",
-        "blurb": "Unlimited city-bike rides + safety gear."
+        "blurb": "Unlimited city-bike rides + safety gear.",
+        "description": "Monthly access to city bikes and safety gear for commutes or weekend rides along the Lana. Unlock via the CycleCity app; first-time riders get a free helmet fitting at the Blloku depot."
       },
       "lumeretreat": {
         "name": "Lumë Retreat",
-        "blurb": "Weekend mountain reset near the Lumë river."
+        "blurb": "Weekend mountain reset near the Lumë river.",
+        "description": "A weekend mountain retreat with guided hikes, meals, and digital detox time near the Lumë river. Includes shared lodging and transport from Tirana. Seasonal availability — book early for spring slots."
       }
     }
   },

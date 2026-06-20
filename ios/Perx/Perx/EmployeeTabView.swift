@@ -1,5 +1,4 @@
 import SwiftUI
-import AVKit
 
 // MARK: - Tab routing (lets any screen jump the user to another tab)
 
@@ -867,113 +866,79 @@ struct MemoryMatchGameView: View {
 struct ProviderCardCompact: View {
     let provider: Provider
     @EnvironmentObject var session: SessionStore
-    @State private var showVideo = false
     @State private var showQR = false
 
     var inCart: Bool { session.employee?.cart.contains(provider.slug) ?? false }
     var isActive: Bool { session.employee?.activeBenefits.contains(provider.slug) ?? false }
-    var hasVideo: Bool { !(provider.videoUrl ?? "").isEmpty }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            // Image — fixed height, flush with top
-            Button { if hasVideo { showVideo = true } } label: {
-                BenefitMedia(provider: provider, height: 120)
+            NavigationLink(destination: BenefitDetailView(provider: provider)) {
+                VStack(alignment: .leading, spacing: 0) {
+                    BenefitMedia(provider: provider, height: 120)
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack(alignment: .top, spacing: 4) {
+                            Text(provider.name)
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(PerxTheme.text)
+                                .lineLimit(1)
+                            Spacer()
+                            if let r = provider.rating {
+                                HStack(spacing: 2) {
+                                    Image(systemName: "star.fill").font(.system(size: 8)).foregroundColor(PerxTheme.gold)
+                                    Text(String(format: "%.1f", r)).font(.caption2).foregroundColor(PerxTheme.muted)
+                                }
+                            }
+                        }
+                        Text(provider.blurb ?? " ")
+                            .font(.caption)
+                            .foregroundColor(PerxTheme.muted)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.top, 8)
+                    .padding(.bottom, 6)
+                }
             }
             .buttonStyle(.plain)
 
-            // Text section — fixed height so all cards are identical
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(alignment: .top, spacing: 4) {
-                    Text(provider.name)
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(PerxTheme.text)
-                        .lineLimit(1)
-                    Spacer()
-                    if let r = provider.rating {
-                        HStack(spacing: 2) {
-                            Image(systemName: "star.fill").font(.system(size: 8)).foregroundColor(PerxTheme.gold)
-                            Text(String(format: "%.1f", r)).font(.caption2).foregroundColor(PerxTheme.muted)
-                        }
+            HStack {
+                Text("\(Int(provider.cost).formatted()) LEK")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(PerxTheme.ember)
+                Spacer()
+                Button {
+                    if isActive {
+                        showQR = true
+                    } else {
+                        Task { await session.addToCart(provider.slug) }
                     }
-                }
-                // Always render blurb row (space placeholder keeps layout consistent)
-                Text(provider.blurb ?? " ")
-                    .font(.caption)
-                    .foregroundColor(PerxTheme.muted)
-                    .lineLimit(1)
-                Spacer(minLength: 0)
-                HStack {
-                    Text("\(Int(provider.cost).formatted()) LEK")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(PerxTheme.ember)
-                    Spacer()
-                    Button {
-                        if isActive {
-                            showQR = true
-                        } else {
-                            Task { await session.addToCart(provider.slug) }
-                        }
-                    } label: {
-                        HStack(spacing: 4) {
-                            if isActive { Image(systemName: "qrcode").font(.system(size: 10, weight: .semibold)) }
-                            Text(isActive ? "Active" : (inCart ? "In cart" : "Add"))
-                        }
-                        .font(.system(size: 11, weight: .semibold))
-                        .padding(.horizontal, 8).padding(.vertical, 5)
-                        .background(isActive ? PerxTheme.success.opacity(0.18) : (inCart ? PerxTheme.bgElevated2 : PerxTheme.ember.opacity(0.18)))
-                        .foregroundColor(isActive ? PerxTheme.success : PerxTheme.ember)
-                        .clipShape(Capsule())
+                } label: {
+                    HStack(spacing: 4) {
+                        if isActive { Image(systemName: "qrcode").font(.system(size: 10, weight: .semibold)) }
+                        Text(isActive ? "Active" : (inCart ? "In cart" : "Add"))
                     }
-                    .disabled(!isActive && inCart)
+                    .font(.system(size: 11, weight: .semibold))
+                    .padding(.horizontal, 8).padding(.vertical, 5)
+                    .background(isActive ? PerxTheme.success.opacity(0.18) : (inCart ? PerxTheme.bgElevated2 : PerxTheme.ember.opacity(0.18)))
+                    .foregroundColor(isActive ? PerxTheme.success : PerxTheme.ember)
+                    .clipShape(Capsule())
                 }
+                .buttonStyle(.borderless)
+                .disabled(!isActive && inCart)
             }
             .padding(.horizontal, 10)
-            .padding(.top, 8)
             .padding(.bottom, 10)
-            .frame(maxWidth: .infinity, maxHeight: 86)
         }
         .frame(maxWidth: .infinity)
         .background(PerxTheme.bgElevated)
         .overlay(RoundedRectangle(cornerRadius: 14).stroke(PerxTheme.line, lineWidth: 1))
         .clipShape(RoundedRectangle(cornerRadius: 14))
-        .sheet(isPresented: $showVideo) {
-            VideoSheet(provider: provider)
-        }
         .sheet(isPresented: $showQR) {
             BenefitQRSheet(benefit: MemberBenefit(slug: provider.slug, name: provider.name, category: provider.category))
                 .presentationDetents([.height(440)])
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(28)
-        }
-    }
-}
-
-struct VideoSheet: View {
-    let provider: Provider
-    @Environment(\.dismiss) private var dismiss
-    var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            if let s = provider.videoUrl, let url = URL(string: s) {
-                VideoPlayer(player: AVPlayer(url: url))
-                    .ignoresSafeArea(edges: .horizontal)
-            }
-            VStack {
-                HStack {
-                    Button { dismiss() } label: {
-                        Image(systemName: "xmark").font(.system(size: 14, weight: .bold))
-                            .padding(10).background(.ultraThinMaterial, in: Circle())
-                            .foregroundColor(.white)
-                    }
-                    Spacer()
-                    Text(provider.name).foregroundColor(.white).font(.headline)
-                    Spacer()
-                    Color.clear.frame(width: 36, height: 36)
-                }
-                .padding(.horizontal, 16).padding(.top, 16)
-                Spacer()
-            }
         }
     }
 }

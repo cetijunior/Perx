@@ -1,6 +1,5 @@
 import SwiftUI
 import UIKit
-import AVKit
 
 // MARK: - Theme manager (light/dark toggle, persisted)
 
@@ -120,7 +119,7 @@ extension View {
     func perxCard() -> some View { modifier(CardBackground()) }
 }
 
-// MARK: - Video / poster placeholder for benefits
+// MARK: - Poster image for benefits
 
 struct BenefitMedia: View {
     let provider: Provider
@@ -174,11 +173,6 @@ struct BenefitMedia: View {
                     .foregroundColor(.white)
                     .clipShape(Capsule())
                 Spacer()
-                Image(systemName: "play.fill")
-                    .font(.system(size: 11, weight: .bold))
-                    .padding(6)
-                    .background(.ultraThinMaterial, in: Circle())
-                    .foregroundColor(.white)
             }
             .padding(8)
             .frame(maxHeight: .infinity, alignment: .bottom)

@@ -11,7 +11,7 @@ import { CategoryChip } from '@/components/ui/Badge'
 import BenefitCard from '@/components/employee/BenefitCard'
 import PackageCard from '@/components/employee/PackageCard'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
-import { providerVideoSources, categoryPoster } from '@/lib/videos'
+import { categoryPoster } from '@/lib/videos'
 import { getProviderBySlug } from '@/lib/store'
 import Button from '@/components/ui/Button'
 
@@ -165,10 +165,8 @@ function CartSheet({ open, onClose, items, total, userId, t }) {
                 <div key={p.id} className="flex items-center gap-3 border-b border-line/60 py-3 last:border-0">
                   <BenefitCardMedia
                     category={p.category}
-                    sources={providerVideoSources(p)}
                     poster={getProviderBySlug(p.id)?.posterUrl || categoryPoster(p.category)}
                     size="thumb"
-                    playOnHover={false}
                     showChips={false}
                     className="rounded-md"
                   />

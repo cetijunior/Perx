@@ -22,6 +22,7 @@
 		AA11BB22CC33DD44EE55FF02 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */; };
 		AA11BB22CC33DD44EE55FF04 /* ValidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */; };
 		AA11BB22CC33DD44EE55FF06 /* PerkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */; };
+		BB22CC33DD44EE55FF08 /* BenefitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
 		AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateCardView.swift; sourceTree = "<group>"; };
 		AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerkyView.swift; sourceTree = "<group>"; };
+		BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -59,6 +61,7 @@
 				36C86DE20EABE8AA228C16FB /* API.swift */,
 				2A3E22892592AE503F7A94A7 /* Assets.xcassets */,
 				FE751179C98EEE9901A4EB16 /* BenefitsView.swift */,
+				BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */,
 				50A082F1AAD15C3731A6297C /* Config.swift */,
 				2B399AE2DF7E1868BD3531FD /* EmployeeTabView.swift */,
 				C1105807E1B69AE1F01A2FAD /* LoginView.swift */,
@@ -159,6 +162,7 @@
 				762A29A6FDDDE4028890383D /* API.swift in Sources */,
 				2BBF9F2E161E49D35ABC26FE /* AdminTabView.swift in Sources */,
 				8B08B51628B4029BC84C183C /* BenefitsView.swift in Sources */,
+				BB22CC33DD44EE55FF08 /* BenefitDetailView.swift in Sources */,
 				5F4E4D8A3AF474B218BF10D7 /* Config.swift in Sources */,
 				755DC8B85BF1D438B194080D /* EmployeeTabView.swift in Sources */,
 				5F7A955C01868D04BEAD753B /* LoginView.swift in Sources */,

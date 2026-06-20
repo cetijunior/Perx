@@ -15,6 +15,7 @@ import { useTheme } from '@/lib/theme'
 import EmployeeLayout from '@/pages/employee/EmployeeLayout'
 import Dashboard from '@/pages/employee/Dashboard'
 import Benefits from '@/pages/employee/Benefits'
+import BenefitDetail from '@/pages/employee/BenefitDetail'
 import Perky from '@/pages/employee/Perky'
 import Budget from '@/pages/employee/Budget'
 import Games from '@/pages/employee/Games'
@@ -74,6 +75,7 @@ export default function App() {
         <Route path="/employee" element={<Protected role="employee"><EmployeeLayout /></Protected>}>
           <Route index element={<Dashboard />} />
           <Route path="benefits" element={<Benefits />} />
+          <Route path="benefits/:slug" element={<BenefitDetail />} />
           <Route path="perky" element={<Perky />} />
           <Route path="budget" element={<Budget />} />
           <Route path="games" element={<Games />} />

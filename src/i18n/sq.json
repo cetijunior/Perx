@@ -387,6 +387,34 @@
     "addPackage": "Shto paketën në shportë",
     "empty": "Asnjë përfitim nuk përputhet me filtrat."
   },
+  "detail": {
+    "back": "Kthehu te tregu",
+    "about": "Rreth këtij përfitimi",
+    "location": "Vendndodhja në Tiranë",
+    "locationHint": "Vendndodhja e përafërt e partnerit krahasuar me zyrën.",
+    "inPackages": "Përfshihet në paketa",
+    "yourCodes": "Kodet e tua të zbritjes",
+    "viewCode": "Shiko te Përdor",
+    "similar": "Përfitime të ngjashme",
+    "forYou": "Përputhja jote",
+    "fitsBudget": "Përshtatet me buxhetin e mbetur",
+    "overBudget": "Mbi buxhetin e mbetur",
+    "statusActive": "Aktiv",
+    "showQr": "Shfaq QR për përdorim",
+    "askPerky": "Pyet Perky-n",
+    "perkyPrompt": "Më trego më shumë për {{name}} dhe nëse më përshtatet stilit tim të jetës dhe buxhetit.",
+    "budget": "Buxheti",
+    "games": "Lojëra",
+    "redeem": "Përdor",
+    "preferences": "Preferencat",
+    "explore": "Eksploro PERX",
+    "cadence": {
+      "month": "Mujore",
+      "once": "Një herë",
+      "course": "Kurs",
+      "variable": "Çmim fleksibël"
+    }
+  },
   "perky": {
     "title": "Perky",
     "subtitle": "Concierge i përfitimeve",

@@ -31,9 +31,6 @@ export const PROVIDERS = [
 
 export const providerById = (id) => PROVIDERS.find((p) => p.id === id)
 
-// Video resolution — drop clips in public/videos/ (see public/videos/README.txt).
-export { providerVideo, packageVideo, dealVideo, CATEGORY_VIDEO } from '@/lib/videos'
-
 export const PACKAGES = [
   { id: 'healthy-start', name: 'Healthy Start', blurb: 'Move, eat clean, get checked.', items: ['fitlife', 'greensalad', 'medicheck'], accent: 'sport' },
   { id: 'mind-body', name: 'Mind & Body', blurb: 'Calm the mind, restore the body.', items: ['yogaflow', 'booknook', 'aquaspa'], accent: 'wellness' },

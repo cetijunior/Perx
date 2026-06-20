@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
 import { Countdown } from '@/components/ui/Badge'
-import { dealVideoSources } from '@/lib/videos'
 import { getProviderBySlug, useStore } from '@/lib/store'
 import { cn } from '@/lib/utils'
 
@@ -11,22 +10,18 @@ export default function DealCard({ deal, provider, expiresAt, className }) {
   useStore()
   const apiProvider = provider ? getProviderBySlug(provider.id) : null
   const poster = apiProvider?.posterUrl
-  const apiVideo = apiProvider?.videoUrl
-  const baseSources = dealVideoSources(deal, provider)
-  const sources = apiVideo ? [apiVideo, ...baseSources] : baseSources
 
   return (
     <motion.button
       type="button"
       whileHover={{ y: -3 }}
       transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-      onClick={() => nav('/employee/benefits')}
+      onClick={() => nav(`/employee/benefits/${deal.providerId}`)}
       className={cn('group flex h-full w-full flex-col overflow-hidden rounded-lg border border-line bg-bg-elevated text-left shadow-e2 transition-colors hover:border-ember/40', className)}
     >
       <BenefitCardMedia
         category={deal.accent}
         rating={provider?.rating}
-        sources={sources}
         poster={poster}
         overlay={
           <div className="absolute right-3 top-3">

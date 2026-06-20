@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Sparkles, Wifi, WifiOff } from 'lucide-react'
@@ -7,12 +8,14 @@ import { PROVIDERS } from '@/lib/catalog'
 import { streamChat } from '@/lib/perky'
 import { sleep, cn, formatALL } from '@/lib/utils'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
-import { providerVideoSources } from '@/lib/videos'
+import { categoryPoster } from '@/lib/videos'
 
 const PROMPTS = ['perky.p1', 'perky.p2', 'perky.p3', 'perky.p4']
 
 export default function Perky() {
   const { t } = useTranslation()
+  const location = useLocation()
+  const nav = useNavigate()
   const user = useCurrentUser()
   useStore()
   const b = budgetFor(user.id)
@@ -24,6 +27,15 @@ export default function Perky() {
   const abortRef = useRef(null)
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }) }, [messages, busy])
+
+  useEffect(() => {
+    const prompt = location.state?.prompt
+    if (prompt && !busy) {
+      send(prompt)
+      window.history.replaceState({}, document.title)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state?.prompt])
 
   async function send(text) {
     const trimmed = (text || '').trim()
@@ -173,14 +185,14 @@ function Message({ m, user, onAdd }) {
             {m.mentions.map((p) => (
               <button
                 key={p.id}
-                onClick={() => onAdd(p.id)}
+                type="button"
+                onClick={() => nav(`/employee/benefits/${p.id}`)}
                 className="flex w-full items-center gap-2.5 overflow-hidden rounded-md border border-line bg-bg-elevated-2 text-left transition-colors hover:border-ember/40"
               >
                 <BenefitCardMedia
                   category={p.category}
-                  sources={providerVideoSources(p)}
+                  poster={categoryPoster(p.category)}
                   size="thumb"
-                  playOnHover={false}
                   showChips={false}
                   className="rounded-l-md"
                 />
