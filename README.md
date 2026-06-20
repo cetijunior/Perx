@@ -141,48 +141,60 @@ npm run preview
 
 ---
 
-## Deploy to Vercel (web app)
+## Deploy to Vercel (web + API)
 
-The **frontend** is a static Vite SPA and deploys to [Vercel](https://vercel.com). The **Express API** (`server/`) runs separately — deploy it to any Node host (Railway, Render, Fly.io, etc.) with MongoDB Atlas.
+Vercel serves **both** the Vite frontend and the Express API on the same domain. API routes (`/auth`, `/employees`, …) are rewritten to a serverless function in `api/index.js` — no separate backend host required.
 
-### Connect the repo
+### 1. Connect the repo
 
-1. Import the GitHub repo in the Vercel dashboard (or run `npx vercel` from the repo root).
-2. Vercel reads `vercel.json` — build command `npm run build`, output `dist/`.
-3. Root directory stays `/` (not `server/`).
+Import the GitHub repo in Vercel. `vercel.json` handles the Vite build and API rewrites.
 
-### Environment variables (Vercel project settings)
+### 2. Environment variables (Vercel → Settings → Environment Variables)
 
-| Variable | Example | Description |
-|----------|---------|-------------|
-| `VITE_API_URL` | `https://your-api.example.com` | Public HTTPS URL of the running `perx-api` |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URL` | **yes** | MongoDB Atlas connection string |
+| `JWT_SECRET` | **yes** | Long random string for signing JWTs |
+| `CORS_ORIGIN` | no | Defaults to `*` (same-origin works without changing this) |
 
-Redeploy after changing env vars — Vite inlines them at **build** time.
+You do **not** need `VITE_API_URL` on Vercel — production calls the API on the same domain.
 
-### API + CORS for production
+Apply to **Production**, **Preview**, and **Development**, then redeploy.
 
-On your API host, set in `server/.env`:
+### 3. Seed the production database (required for demo login)
 
-```env
-CORS_ORIGIN=https://your-app.vercel.app
-DATABASE_URL=mongodb+srv://...
-JWT_SECRET=...
-PORT=4000
+Atlas IP whitelist (`0.0.0.0/0`) only allows connections — it does **not** create users. Run seed **once** from your machine against the same cluster:
+
+```bash
+cd server
+DATABASE_URL="mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/perx?..." \
+JWT_SECRET="same-secret-as-vercel" \
+npm run seed
 ```
 
-Seed once on the API host: `cd server && npm run seed`
+Demo accounts after seed: `arta.koci@perx.al` / `perx123`, `admin@perx.al` / `admin2026`.
 
-### SPA routing
+### 4. Verify deployment
 
-Client-side routes (`/employee/*`, `/admin/*`, marketing pages) are handled by the rewrite in `vercel.json` — direct URL loads and refreshes work without 404s.
+```bash
+curl https://your-app.vercel.app/health
+# → {"ok":true,"service":"perx-api","db":"configured"}
+
+curl -X POST https://your-app.vercel.app/auth/login \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"arta.koci@perx.al","password":"perx123"}'
+# → {"token":"...","user":{...}}
+```
 
 ### Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| `ERESOLVE` on `npm install` | Use `@vitejs/plugin-react@^6` with Vite 8 (pinned in `package.json`) |
-| Login works locally, fails on Vercel | Set `VITE_API_URL` to the live API; check API CORS |
-| Blank page after deploy | Confirm build output is `dist/` and env vars were set before build |
+| Login fails instantly | Check `/health` — if `db: "missing"`, add `DATABASE_URL` on Vercel and redeploy |
+| `invalid_credentials` | Run `npm run seed` against prod `DATABASE_URL` |
+| `ERESOLVE` on install | Use `@vitejs/plugin-react@^6` with Vite 8 |
+| API 404 on Vercel | Ensure latest code with `api/index.js` + rewrites is deployed |
+| Works locally, not prod | Old builds pointed at `localhost:4000` — pull latest (same-origin API) |
 
 ---
 

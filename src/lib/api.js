@@ -1,6 +1,6 @@
 // Thin wrapper around the perx-api server. Stores JWT in localStorage so the
 // web app and the iOS app share the same auth model.
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const BASE_URL = import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://localhost:4000' : '')
 const TOKEN_KEY = 'perx.token'
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY)

@@ -3,8 +3,21 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "installCommand": "npm ci && npm ci --prefix server",
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/health", "destination": "/api" },
+    { "source": "/auth/:path*", "destination": "/api" },
+    { "source": "/users/:path*", "destination": "/api" },
+    { "source": "/providers/:path*", "destination": "/api" },
+    { "source": "/employees/:path*", "destination": "/api" },
+    { "source": "/requests/:path*", "destination": "/api" },
+    { "source": "/admin/:path*", "destination": "/api" },
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
