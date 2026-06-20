@@ -6,7 +6,8 @@ import { useCurrentUser, useStore, getState, addToCart, budgetFor } from '@/lib/
 import { PROVIDERS } from '@/lib/catalog'
 import { streamChat } from '@/lib/perky'
 import { sleep, cn, formatALL } from '@/lib/utils'
-import { LogoChip } from '@/components/ui/Avatar'
+import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
+import { providerVideoSources } from '@/lib/videos'
 
 const PROMPTS = ['perky.p1', 'perky.p2', 'perky.p3', 'perky.p4']
 
@@ -173,14 +174,21 @@ function Message({ m, user, onAdd }) {
               <button
                 key={p.id}
                 onClick={() => onAdd(p.id)}
-                className="flex w-full items-center gap-2.5 rounded-md border border-line bg-bg-elevated-2 p-2 text-left transition-colors hover:border-ember/40"
+                className="flex w-full items-center gap-2.5 overflow-hidden rounded-md border border-line bg-bg-elevated-2 text-left transition-colors hover:border-ember/40"
               >
-                <LogoChip name={p.name} size={32} />
-                <div className="min-w-0 flex-1">
+                <BenefitCardMedia
+                  category={p.category}
+                  sources={providerVideoSources(p)}
+                  size="thumb"
+                  playOnHover={false}
+                  showChips={false}
+                  className="rounded-l-md"
+                />
+                <div className="min-w-0 flex-1 py-2">
                   <p className="truncate text-xs font-semibold">{p.name}</p>
                   <p className="text-[0.65rem] text-faint">{p.blurb}</p>
                 </div>
-                <span className="rounded-full bg-ember/15 px-2 py-0.5 text-[0.65rem] font-semibold tabular-nums text-ember">{formatALL(p.cost)} LEK</span>
+                <span className="mr-2 rounded-full bg-ember/15 px-2 py-0.5 text-[0.65rem] font-semibold tabular-nums text-ember">{formatALL(p.cost)} LEK</span>
               </button>
             ))}
           </div>

@@ -31,21 +31,8 @@ export const PROVIDERS = [
 
 export const providerById = (id) => PROVIDERS.find((p) => p.id === id)
 
-// Short, loopable marketing clips shown at the top of each benefit card.
-// Placeholder stock loops mapped per category — replace the URL here (or add a
-// per-provider `video:` field above) with each benefit's own ≤10s marketing video.
-const BASE = 'https://storage.googleapis.com/gtv-videos-bucket/sample/'
-export const CATEGORY_VIDEO = {
-  wellness: BASE + 'ForBiggerEscapes.mp4',
-  food: BASE + 'ForBiggerFun.mp4',
-  sport: BASE + 'ForBiggerJoyrides.mp4',
-  travel: BASE + 'ForBiggerBlazes.mp4',
-  learning: BASE + 'ForBiggerMeltdowns.mp4',
-  selfcare: BASE + 'SubaruOutbackOnStreetAndDirt.mp4',
-  health: BASE + 'VolkswagenGTIReview.mp4',
-}
-// Per-provider video if set, otherwise the category placeholder.
-export const providerVideo = (p) => p?.video || CATEGORY_VIDEO[p?.category] || null
+// Video resolution — drop clips in public/videos/ (see public/videos/README.txt).
+export { providerVideo, packageVideo, dealVideo, CATEGORY_VIDEO } from '@/lib/videos'
 
 export const PACKAGES = [
   { id: 'healthy-start', name: 'Healthy Start', blurb: 'Move, eat clean, get checked.', items: ['fitlife', 'greensalad', 'medicheck'], accent: 'sport' },

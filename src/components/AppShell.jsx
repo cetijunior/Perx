@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
@@ -6,6 +7,7 @@ import { logout, useCurrentUser, useStore, budgetFor } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
 import Avatar from '@/components/ui/Avatar'
+import DailySurpriseModal from '@/components/employee/DailySurpriseModal'
 
 function BudgetPill({ user }) {
   useStore()
@@ -37,6 +39,21 @@ export default function AppShell({ items, basePath }) {
   const isEmployee = user.role === 'employee'
 
   const doLogout = () => { logout(); nav('/login') }
+
+  // ── Daily surprise pop-up (MVP: fires every reload for testing) ─────
+  const [surpriseGame, setSurpriseGame] = useState(null) // 'scratch' | 'spin' | null
+
+  useEffect(() => {
+    if (!isEmployee) return
+    // MVP mode: always show on reload so the reward can be tested.
+    // For production, swap this back to the isDailySurpriseShownToday() guard.
+    const timer = setTimeout(() => {
+      const game = Math.random() < 0.5 ? 'scratch' : 'spin'
+      setSurpriseGame(game)
+    }, 800)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="min-h-dvh bg-bg text-text">
@@ -83,6 +100,14 @@ export default function AppShell({ items, basePath }) {
           <Outlet />
         </div>
       </main>
+
+      {/* ===== Daily surprise modal ===== */}
+      {isEmployee && surpriseGame && (
+        <DailySurpriseModal
+          gameType={surpriseGame}
+          onClose={() => setSurpriseGame(null)}
+        />
+      )}
 
       {/* ===== Mobile bottom tabs ===== */}
       <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch justify-around border-t border-line glass px-1 pb-[env(safe-area-inset-bottom)] md:hidden">

@@ -1,13 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Flame, Trophy, Check, ListChecks, History } from 'lucide-react'
-import { useCurrentUser, useStore, getState, budgetFor, awardBonus, setGames, completeTask } from '@/lib/store'
+import { useCurrentUser, useStore, getState, budgetFor, completeTask } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 import { fadeUp, stagger } from '@/lib/motion'
 import { PageHeader, SectionTitle, Ring } from '@/components/ui/Misc'
-import ScratchCard from '@/components/employee/ScratchCard'
-import SpinWheel from '@/components/employee/SpinWheel'
 
 const TASKS = [
   { id: 'standup', label: 'Attend morning standup', reward: 200 },
@@ -23,30 +21,7 @@ export default function BudgetGames() {
   const emp = getState().employees[user.id]
   const b = budgetFor(user.id)
 
-  // Deterministic per-user prize so it feels meaningful.
-  const prize = useMemo(() => {
-    const seed = (user.id.charCodeAt(0) + new Date().getDate()) % 4
-    return [
-      { amount: 500, label: '+500 LEK', subtitle: t('budget.won') + ' — daily bonus', disabledLabel: t('budget.scratchUsed') },
-      { amount: 300, label: '+300 LEK', subtitle: t('budget.won') + ' — keep the streak', disabledLabel: t('budget.scratchUsed') },
-      { amount: 150, label: '+150 LEK', subtitle: t('budget.won'), disabledLabel: t('budget.scratchUsed') },
-      { amount: 0, label: t('budget.tryAgain'), subtitle: 'Better luck tomorrow', disabledLabel: t('budget.scratchUsed') },
-    ][seed]
-  }, [user.id, t])
 
-  const scratchUsed = emp.games.scratchToday
-  const spinsLeft = emp.games.spinsLeft
-
-  function onScratchReveal() {
-    if (scratchUsed) return
-    if (prize.amount > 0) awardBonus(user.id, prize.amount, 'Scratch card')
-    setGames(user.id, { scratchToday: true })
-  }
-  function onSpinResult(w) {
-    setGames(user.id, { spinsLeft: Math.max(0, spinsLeft - 1) })
-    if (w.id === 'bonus') awardBonus(user.id, 500, 'Spin wheel bonus')
-    else awardBonus(user.id, 100, `Spin: ${w.label} unlocked`)
-  }
 
   return (
     <motion.div variants={stagger(0.06)} initial="hidden" animate="show">
@@ -70,19 +45,7 @@ export default function BudgetGames() {
         </div>
       </motion.div>
 
-      {/* Games */}
-      <motion.section variants={fadeUp} className="mb-7 grid gap-4 md:grid-cols-2">
-        <div className="rounded-xl border border-line bg-bg-elevated p-5">
-          <SectionTitle>{t('budget.scratch')}</SectionTitle>
-          <p className="mb-3 text-xs text-muted">{scratchUsed ? t('budget.scratchUsed') : t('budget.scratchHint')}</p>
-          <ScratchCard disabled={scratchUsed} prize={prize} onReveal={onScratchReveal} label={t('budget.scratchHint')} />
-        </div>
-        <div className="rounded-xl border border-line bg-bg-elevated p-5">
-          <SectionTitle>{t('budget.spin')}</SectionTitle>
-          <p className="mb-3 text-xs text-muted">{spinsLeft === 0 ? t('budget.spinUsed') : t('budget.spinHint')}</p>
-          <SpinWheel disabled={spinsLeft === 0} onResult={onSpinResult} />
-        </div>
-      </motion.section>
+
 
       {/* Tasks */}
       <motion.section variants={fadeUp} className="mb-7 rounded-xl border border-line bg-bg-elevated p-5">

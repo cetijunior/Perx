@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { ArrowRight, Compass, Sparkles, Flame } from 'lucide-react'
@@ -9,16 +9,14 @@ import { providerById, SEASONAL } from '@/lib/catalog'
 import { formatALL } from '@/lib/utils'
 import { fadeUp, stagger } from '@/lib/motion'
 import { PageHeader, SectionTitle, EmptyState } from '@/components/ui/Misc'
-import { Countdown } from '@/components/ui/Badge'
-import { LogoChip } from '@/components/ui/Avatar'
-import OfferCard from '@/components/employee/OfferCard'
+import BenefitCard from '@/components/employee/BenefitCard'
+import DealCard from '@/components/employee/DealCard'
 import Button from '@/components/ui/Button'
 
 export default function Dashboard() {
   const { t } = useTranslation()
   const user = useCurrentUser()
   useStore()
-  const nav = useNavigate()
   const s = getState()
   const emp = s.employees[user.id]
   const b = budgetFor(user.id)
@@ -56,13 +54,14 @@ export default function Dashboard() {
         ) : (
           <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 no-scrollbar md:mx-0 md:grid md:grid-cols-3 md:px-0">
             {active.map((p) => (
-              <div key={p.id} className="flex w-60 shrink-0 items-center gap-3 rounded-lg border border-line bg-bg-elevated p-4 md:w-auto">
-                <LogoChip name={p.name} size={44} />
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{p.name}</p>
-                  <p className="text-xs text-ember tnum">{formatALL(p.cost)} LEK{p.cadence === 'month' ? t('common.perMonth') : ''}</p>
-                </div>
-              </div>
+              <BenefitCard
+                key={p.id}
+                provider={p}
+                variant="compact"
+                readonly
+                showBlurb={false}
+                className="w-52 shrink-0 md:w-auto"
+              />
             ))}
           </div>
         )}
@@ -72,7 +71,7 @@ export default function Dashboard() {
         <SectionTitle action={<span className="flex items-center gap-1 text-xs text-gold"><Sparkles className="h-3.5 w-3.5" /> Perky</span>}>{t('dash.recommended')}</SectionTitle>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {recs.map((p) => (
-            <OfferCard key={p.id} provider={p} score={p.score} compact inCart={cart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
+            <BenefitCard key={p.id} provider={p} score={p.score} showBlurb={false} inCart={cart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
           ))}
         </div>
       </motion.section>
@@ -84,15 +83,7 @@ export default function Dashboard() {
             const p = providerById(deal.providerId)
             const expiresAt = s.seededAt + deal.expiresInH * 3600000
             return (
-              <button key={deal.id} onClick={() => nav('/employee/benefits')} className="group relative overflow-hidden rounded-lg border border-line bg-bg-elevated p-4 text-left transition-all hover:-translate-y-0.5 hover:border-ember/40">
-                <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-2xl" style={{ background: `var(--cat-${deal.accent})`, opacity: 0.15 }} />
-                <div className="mb-3 flex items-center justify-between">
-                  <LogoChip name={p.name} size={36} />
-                  <Countdown expiresAt={expiresAt} />
-                </div>
-                <p className="text-sm font-semibold">{deal.title}</p>
-                <p className="mt-0.5 text-xs text-muted">{deal.blurb}</p>
-              </button>
+              <DealCard key={deal.id} deal={deal} provider={p} expiresAt={expiresAt} />
             )
           })}
         </div>

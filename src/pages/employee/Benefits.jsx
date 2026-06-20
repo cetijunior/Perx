@@ -1,15 +1,17 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ShoppingBag, X, Send, Check, Sparkles, Package } from 'lucide-react'
+import { ShoppingBag, X, Send, Check, Sparkles } from 'lucide-react'
 import { useCurrentUser, useStore, getState, addToCart, removeFromCart, requestApproval } from '@/lib/store'
 import { PROVIDERS, CATEGORIES, PACKAGES, packageTotal, providerById } from '@/lib/catalog'
 import { formatALL, cn, sleep } from '@/lib/utils'
 import { fadeUp, stagger } from '@/lib/motion'
 import { PageHeader, SectionTitle } from '@/components/ui/Misc'
-import { LogoChip } from '@/components/ui/Avatar'
 import { CategoryChip } from '@/components/ui/Badge'
 import BenefitCard from '@/components/employee/BenefitCard'
+import PackageCard from '@/components/employee/PackageCard'
+import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
+import { providerVideoSources } from '@/lib/videos'
 import Button from '@/components/ui/Button'
 
 export default function Benefits() {
@@ -69,29 +71,14 @@ export default function Benefits() {
             const items = pkg.items.map(providerById)
             const allInCart = pkg.items.every((id) => inCart.includes(id))
             return (
-              <div key={pkg.id} className="relative overflow-hidden rounded-lg border border-line bg-bg-elevated p-4">
-                <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full blur-3xl" style={{ background: `var(--cat-${pkg.accent})`, opacity: 0.18 }} />
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="grid h-9 w-9 place-items-center rounded-md bg-bg-elevated-2 text-ember"><Package className="h-4 w-4" /></span>
-                  <div>
-                    <p className="text-sm font-semibold">{pkg.name}</p>
-                    <p className="text-xs text-muted">{pkg.blurb}</p>
-                  </div>
-                </div>
-                <div className="mb-3 flex -space-x-2">
-                  {items.map((p) => <LogoChip key={p.id} name={p.name} size={28} rounded="rounded-full" className="ring-2 ring-bg-elevated" />)}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-base font-bold tabular-nums text-ember">{formatALL(total)} <span className="text-[0.65rem] font-medium text-faint">LEK</span></span>
-                  <Button
-                    size="sm"
-                    variant={allInCart ? 'ghost' : 'primary'}
-                    onClick={() => pkg.items.forEach((id) => addToCart(user.id, id))}
-                  >
-                    {allInCart ? <><Check className="h-3.5 w-3.5" /> {t('common.inCart')}</> : t('benefits.addPackage')}
-                  </Button>
-                </div>
-              </div>
+              <PackageCard
+                key={pkg.id}
+                pkg={pkg}
+                items={items}
+                total={total}
+                allInCart={allInCart}
+                onAdd={() => pkg.items.forEach((id) => addToCart(user.id, id))}
+              />
             )
           })}
         </div>
@@ -175,7 +162,14 @@ function CartSheet({ open, onClose, items, total, userId, t }) {
                 <p className="py-12 text-center text-sm text-muted">{t('benefits.cartEmpty')}</p>
               ) : items.map((p) => (
                 <div key={p.id} className="flex items-center gap-3 border-b border-line/60 py-3 last:border-0">
-                  <LogoChip name={p.name} size={40} />
+                  <BenefitCardMedia
+                    category={p.category}
+                    sources={providerVideoSources(p)}
+                    size="thumb"
+                    playOnHover={false}
+                    showChips={false}
+                    className="rounded-md"
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{p.name}</p>
                     <div className="mt-0.5 flex items-center gap-2"><CategoryChip category={p.category} /></div>

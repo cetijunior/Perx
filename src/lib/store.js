@@ -174,6 +174,34 @@ export function decideRequest(reqId, decision) {
 
 export function setLang(lang) { set(() => ({ lang })) }
 
+// ---- daily surprise pop-up ----
+const SURPRISE_KEY = 'perx:daily-surprise'
+function todayStr() { return new Date().toISOString().slice(0, 10) }
+
+export function getDailySurprise() {
+  try {
+    const raw = localStorage.getItem(SURPRISE_KEY)
+    if (!raw) return null
+    return JSON.parse(raw) // { shownDate, gameType }
+  } catch { return null }
+}
+
+export function markDailySurpriseShown(gameType) {
+  localStorage.setItem(SURPRISE_KEY, JSON.stringify({ shownDate: todayStr(), gameType }))
+}
+
+export function isDailySurpriseShownToday() {
+  const s = getDailySurprise()
+  return s?.shownDate === todayStr()
+}
+
+/** Pick scratch or spin deterministically for today (different each day) */
+export function pickTodayGame() {
+  // Use date digits to alternate: even day → scratch, odd → spin
+  const day = new Date().getDate()
+  return day % 2 === 0 ? 'scratch' : 'spin'
+}
+
 export function resetAll() { localStorage.removeItem(KEY); localStorage.removeItem(SESSION); state = defaultState(); persist() }
 
 // ---- hooks ----

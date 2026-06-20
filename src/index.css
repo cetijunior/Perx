@@ -109,3 +109,172 @@ h1, h2, h3, h4 { font-family: 'Space Grotesk', system-ui, sans-serif; letter-spa
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ============================================================= */
+/*  DAILY SURPRISE MODAL STYLES                                   */
+/* ============================================================= */
+
+/* Backdrop — dark frosted glass, full-screen */
+.surprise-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(11, 10, 20, 0.72);
+  backdrop-filter: blur(12px) saturate(1.3);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+}
+
+/* Modal card */
+.surprise-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  background: rgb(var(--bg-elevated));
+  border: 1.5px solid rgb(var(--ember) / 0.35);
+  box-shadow:
+    0 0 0 4px rgb(var(--ember) / 0.08),
+    0 32px 64px -12px rgba(11, 10, 20, 0.6),
+    0 0 40px rgb(var(--ember) / 0.18);
+  overflow: hidden;
+  animation: surprise-glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes surprise-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgb(var(--ember) / 0.08), 0 32px 64px -12px rgba(11, 10, 20, 0.6), 0 0 40px rgb(var(--ember) / 0.18); }
+  50%       { box-shadow: 0 0 0 6px rgb(var(--ember) / 0.14), 0 32px 64px -12px rgba(11, 10, 20, 0.6), 0 0 60px rgb(var(--ember) / 0.28); }
+}
+
+/* Glowing background blob */
+.surprise-blob {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--ember) / 0.22) 0%, transparent 70%);
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+/* Close button */
+.surprise-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(var(--bg-elevated-2));
+  border: 1px solid rgb(var(--surface-line));
+  color: rgb(var(--text-muted));
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  z-index: 10;
+}
+.surprise-close:hover {
+  background: rgb(var(--danger) / 0.1);
+  color: rgb(var(--danger));
+  transform: scale(1.1);
+}
+
+/* Badge */
+.surprise-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--ember));
+  background: rgb(var(--ember) / 0.12);
+  border: 1px solid rgb(var(--ember) / 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+/* Header */
+.surprise-header {
+  margin-bottom: 18px;
+}
+.surprise-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgb(var(--text));
+  margin: 0 0 4px;
+}
+.surprise-subtitle {
+  font-size: 0.83rem;
+  color: rgb(var(--text-muted));
+  margin: 0;
+}
+
+/* Game area */
+.surprise-game-area {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+/* Already-played state */
+.surprise-already-played {
+  text-align: center;
+  padding: 28px 0 12px;
+}
+
+/* Win state */
+.surprise-win-state {
+  position: relative;
+  text-align: center;
+  padding: 24px 0 8px;
+}
+.surprise-win-label {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgb(var(--text));
+  margin: 0;
+}
+
+/* CTA button */
+.surprise-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 28px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgb(var(--text-on-accent));
+  background: linear-gradient(135deg, rgb(var(--ember)) 0%, rgb(var(--ember-600)) 100%);
+  box-shadow: 0 4px 18px rgb(var(--ember) / 0.4);
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.surprise-cta:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 6px 24px rgb(var(--ember) / 0.5);
+}
+.surprise-cta:active { transform: scale(0.97); }
+
+/* Dismiss hint */
+.surprise-dismiss-hint {
+  text-align: center;
+  font-size: 0.68rem;
+  color: rgb(var(--text-faint));
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
