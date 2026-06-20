@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import crypto from 'node:crypto'
 
 const secret = () => process.env.JWT_SECRET || 'perx-dev-secret'
 
@@ -8,6 +9,25 @@ export function signToken(user) {
     secret(),
     { expiresIn: '30d' },
   )
+}
+
+// Short-lived, single-use token scoped to one specific benefit redemption.
+// jti is consumed (stored on the Redemption row) the moment it's redeemed, so a
+// screenshot or replay of an already-scanned code can never redeem again.
+export function signCardToken(user, employeeId, providerSlug) {
+  const jti = crypto.randomUUID()
+  const token = jwt.sign(
+    { sub: String(user._id), employeeId: String(employeeId), providerSlug, typ: 'card', jti },
+    secret(),
+    { expiresIn: '3m' },
+  )
+  return { token, jti }
+}
+
+export function verifyCardToken(token) {
+  const payload = jwt.verify(token, secret())
+  if (payload.typ !== 'card') throw new Error('not_a_card_token')
+  return payload
 }
 
 export function requireAuth(req, _res, next) {

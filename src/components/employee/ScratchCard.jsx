@@ -7,10 +7,10 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
   const canvasRef = useRef(null)
   const [revealed, setRevealed] = useState(false)
   const draggingRef = useRef(false)
-  const erasedRef = useRef(0)
 
   useEffect(() => {
     if (disabled) return
+    setRevealed(false)
     const c = canvasRef.current; if (!c) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const w = c.clientWidth, h = c.clientHeight
@@ -23,18 +23,29 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
     ctx.fillText(label, w / 2, h / 2 + 6)
     ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.font = '700 11px Inter'; ctx.fillText('PERX', w / 2, h / 2 - 14)
     ctx.globalCompositeOperation = 'destination-out'
-  }, [disabled, label])
+  }, [disabled, label, prize])
 
   function scratchAt(e) {
     if (revealed || !draggingRef.current) return
+    e.preventDefault?.()
     const c = canvasRef.current; if (!c) return
     const rect = c.getBoundingClientRect()
     const x = ((e.touches?.[0]?.clientX ?? e.clientX) - rect.left)
     const y = ((e.touches?.[0]?.clientY ?? e.clientY) - rect.top)
     const ctx = c.getContext('2d')
     ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.fill()
-    erasedRef.current += 1
-    if (erasedRef.current > 60) finish()
+    if (scratchedCoverage(ctx, c) > 0.3) finish()
+  }
+  function scratchedCoverage(ctx, c) {
+    const { data } = ctx.getImageData(0, 0, c.width, c.height)
+    let cleared = 0
+    const step = 4 * 16 // sample every 16th pixel for speed
+    let sampled = 0
+    for (let i = 3; i < data.length; i += step) {
+      sampled++
+      if (data[i] === 0) cleared++
+    }
+    return sampled ? cleared / sampled : 0
   }
   function finish() {
     if (revealed) return
@@ -45,7 +56,7 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
   }
 
   return (
-    <div className="relative aspect-[4/2.4] w-full overflow-hidden rounded-lg border border-line bg-grad-dusk">
+    <div className="relative mx-auto aspect-[4/2.4] w-full max-w-[420px] overflow-hidden rounded-lg border border-line bg-grad-dusk">
       {/* prize underlay */}
       <div className="absolute inset-0 grid place-items-center text-center">
         <div>
@@ -66,7 +77,6 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
           onTouchStart={(e) => { draggingRef.current = true; scratchAt(e) }}
           onTouchMove={scratchAt}
           onTouchEnd={() => { draggingRef.current = false }}
-          onDoubleClick={finish}
         />
       )}
       {disabled && (

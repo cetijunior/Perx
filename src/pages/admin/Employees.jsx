@@ -93,7 +93,7 @@ function EmployeeModal({ userId, onClose, t }) {
           'fixed left-1/2 top-1/2 z-50 w-[min(560px,92vw)] max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-line bg-bg-elevated shadow-e3',
         )}
       >
-        <div className="relative overflow-hidden border-b border-line bg-grad-dusk p-5">
+        <div className="relative overflow-hidden border-b border-line bg-bg-elevated p-5">
           <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ember/20 blur-3xl" />
           <button onClick={onClose} className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-md hover:bg-bg-elevated-2"><X className="h-4 w-4" /></button>
           <div className="flex items-center gap-4">

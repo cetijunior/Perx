@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Disc3 } from 'lucide-react'
 
 // 12 reward wedges — mix of LEK bonuses, discounts, and fun perks
 const WHEEL_WEDGES = [
   { id: 'lek500',    label: '+500 LEK',  sublabel: 'Cash bonus',      color: '#7C3AED' },
   { id: 'disc20',   label: '−20%',       sublabel: 'Any benefit',     color: '#10B981' },
   { id: 'lek150',   label: '+150 LEK',  sublabel: 'Pocket money',     color: '#3B82F6' },
-  { id: 'spa',      label: '🧖 Spa',     sublabel: 'Free day-pass',   color: '#EC4899' },
+  { id: 'spa',      label: 'Spa',        sublabel: 'Free day-pass',   color: '#EC4899' },
   { id: 'lek300',   label: '+300 LEK',  sublabel: 'Cash bonus',       color: '#F59E0B' },
   { id: 'tryagain', label: 'Try Again', sublabel: 'Come back tmrw',   color: '#6B7280' },
-  { id: 'lek750',   label: '+750 LEK',  sublabel: '🔥 Big bonus',     color: '#E0A938' },
+  { id: 'lek750',   label: '+750 LEK',  sublabel: 'Big bonus',       color: '#E0A938' },
   { id: 'disc15',   label: '−15%',       sublabel: 'Food & drink',    color: '#CA8A1C' },
   { id: 'lek100',   label: '+100 LEK',  sublabel: 'Daily nudge',      color: '#8B5CF6' },
-  { id: 'gym',      label: '🏋️ Gym',    sublabel: '1 week free',     color: '#0891B2' },
+  { id: 'gym',      label: 'Gym',        sublabel: '1 week free',     color: '#0891B2' },
   { id: 'lek200',   label: '+200 LEK',  sublabel: 'Cash bonus',       color: '#D97706' },
-  { id: 'bonus',    label: '⭐ JACKPOT', sublabel: '+1000 LEK!',      color: '#DC2626' },
+  { id: 'bonus',    label: 'JACKPOT',   sublabel: '+1000 LEK!',      color: '#DC2626' },
 ]
 
 export default function SpinWheel({ disabled, onResult }) {
@@ -109,7 +110,11 @@ export default function SpinWheel({ disabled, onResult }) {
         disabled={spinning || disabled}
         className="rounded-full bg-grad-ember px-7 py-2.5 text-sm font-semibold text-on-accent shadow-glow transition active:scale-95 disabled:opacity-50"
       >
-        {spinning ? 'Spinning…' : disabled ? 'No spins left today' : '🎡 Spin!'}
+        {spinning ? 'Spinning…' : disabled ? 'No spins left today' : (
+          <span className="inline-flex items-center gap-2">
+            <Disc3 className="h-4 w-4" /> Spin!
+          </span>
+        )}
       </button>
 
       {result && !spinning && (

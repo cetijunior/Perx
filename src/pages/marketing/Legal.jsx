@@ -2,9 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { SitePage, PageHero, Section } from '@/components/site/Site'
 
 /**
- * Renders a legal document (privacy / terms) in the hero's essence:
- * dark surface, ember accents, a sticky table of contents on desktop.
- * `sections` = [{ id, heading, body: string[] }]
+ * Renders a legal document (privacy / terms) with theme-aware surfaces
+ * and a sticky table of contents on desktop.
  */
 export default function LegalLayout({ eyebrow, title, accent, updated, intro, sections }) {
   const { t } = useTranslation()

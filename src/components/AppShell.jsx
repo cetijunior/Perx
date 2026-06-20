@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react'
 import { NavLink, useNavigate, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { LogOut } from 'lucide-react'
-import { logout, useCurrentUser, useStore, budgetFor, setGames, getState } from '@/lib/store'
+import { logout, useCurrentUser, useStore, budgetFor } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
 import Avatar from '@/components/ui/Avatar'
-import DailySurpriseModal from '@/components/employee/DailySurpriseModal'
 import ThemeToggle from '@/components/ui/ThemeToggle'
 
 function BudgetPill({ user }) {
@@ -15,14 +13,14 @@ function BudgetPill({ user }) {
   const b = budgetFor(user.id)
   const low = b.pct < 0.25
   return (
-    <div className="rounded-md border border-line bg-bg-elevated-2 p-3">
+    <div className="rounded-md border border-line bg-bg p-3">
       <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-wide text-faint">
         <span>Budget</span><span>{Math.round(b.pct * 100)}%</span>
       </div>
       <div className="mt-1 font-display text-lg font-bold tnum text-ember">
         {formatALL(b.remaining)} <span className="text-xs font-medium text-faint">LEK</span>
       </div>
-      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-bg">
+      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-bg-elevated-2">
         <motion.div
           className={cn('h-full rounded-full', low ? 'bg-danger' : 'bg-grad-ember')}
           initial={{ width: 0 }} animate={{ width: `${b.pct * 100}%` }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -41,32 +39,10 @@ export default function AppShell({ items, basePath }) {
 
   const doLogout = () => { logout(); nav('/login') }
 
-  // ── Daily surprise pop-up (MVP: fires every reload for testing) ─────
-  const [surpriseGame, setSurpriseGame] = useState(null) // 'scratch' | 'spin' | null
-
-  useEffect(() => {
-    if (!isEmployee) return
-    // MVP mode: always show on reload, and reset whichever game is picked
-    // so it's always playable (not stuck in "already used" state).
-    // For production: wrap in isDailySurpriseShownToday() guard.
-    const timer = setTimeout(() => {
-      const game = Math.random() < 0.5 ? 'scratch' : 'spin'
-      // Reset that game's state so it's fresh and playable
-      const userId = getState().users.find(u => u.role === 'employee' && u.id === user.id)?.id
-      if (userId) {
-        if (game === 'scratch') setGames(userId, { scratchToday: false })
-        if (game === 'spin')    setGames(userId, { spinsLeft: 1 })
-      }
-      setSurpriseGame(game)
-    }, 800)
-    return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div className="min-h-dvh bg-bg text-text">
       {/* ===== Desktop sidebar ===== */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] flex-col border-r border-line bg-grad-dusk px-4 py-5 md:flex">
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-[260px] flex-col border-r border-line bg-bg-elevated px-4 py-5 shadow-e2 md:flex">
         <div className="px-2"><Logo /></div>
 
         <div className="mt-6 flex items-center gap-3 rounded-md bg-bg-elevated/60 p-3">
@@ -114,14 +90,6 @@ export default function AppShell({ items, basePath }) {
           <Outlet />
         </div>
       </main>
-
-      {/* ===== Daily surprise modal ===== */}
-      {isEmployee && surpriseGame && (
-        <DailySurpriseModal
-          gameType={surpriseGame}
-          onClose={() => setSurpriseGame(null)}
-        />
-      )}
 
       {/* ===== Mobile bottom tabs ===== */}
       <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch justify-around border-t border-line glass px-1 pb-[env(safe-area-inset-bottom)] md:hidden">

@@ -20,9 +20,21 @@ struct LoginView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     HStack {
-                        Text("PERX")
-                            .font(.system(size: 28, weight: .bold, design: .serif))
-                            .foregroundStyle(PerxTheme.emberGradient)
+                        HStack(spacing: 7) {
+                            Image("Logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                            Text("PERX")
+                                .font(.system(size: 17, weight: .bold, design: .serif))
+                                .foregroundColor(PerxTheme.text)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 7)
+                        .background(PerxTheme.bgElevated2)
+                        .overlay(Capsule().stroke(PerxTheme.line, lineWidth: 1))
+                        .clipShape(Capsule())
                         Spacer()
                     }
                     .padding(.top, 20)

@@ -45,6 +45,38 @@ struct LoginResponse: Codable {
     let user: User
 }
 
+struct MemberBenefit: Codable, Equatable, Identifiable {
+    var id: String { slug }
+    let slug: String
+    let name: String
+    let category: String
+}
+
+struct BenefitQRResponse: Codable, Equatable {
+    let qrToken: String
+    let expiresInSeconds: Int
+    let benefit: MemberBenefit
+}
+
+struct CardLookupEmployee: Codable, Equatable {
+    let name: String
+    let department: String?
+    let employeeId: String
+}
+
+struct CardLookupResponse: Codable, Equatable {
+    let employee: CardLookupEmployee
+    let benefits: [MemberBenefit]
+    let lockedBenefit: String?
+}
+
+struct Redemption: Codable, Equatable {
+    let id: String
+    let providerSlug: String
+}
+
+struct RedeemResponse: Codable, Equatable { let redemption: Redemption }
+
 struct ProvidersResponse: Codable { let providers: [Provider] }
 struct EmployeeResponse: Codable { let employee: EmployeeProfile }
 struct RequestsResponse: Codable { let requests: [BenefitRequest] }

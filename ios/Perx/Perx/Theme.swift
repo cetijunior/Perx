@@ -146,13 +146,17 @@ struct BenefitMedia: View {
                     case .empty:
                         ProgressView().tint(.white)
                     case .success(let img):
-                        img.resizable().scaledToFill()
+                        img.resizable()
+                            .scaledToFill()
+                            .frame(maxWidth: .infinity, maxHeight: height)
+                            .clipped()
                     case .failure:
                         Color.clear.onAppear { loadFailed = true }
                     @unknown default:
                         Color.clear
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: height)
             }
 
             // Bottom gradient + play hint

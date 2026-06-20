@@ -42,6 +42,7 @@ export default function BenefitCard({
   score,
   footer,
   readonly = false,
+  showPlayButton = true,
 }) {
   const { t } = useTranslation()
   useStore()
@@ -62,9 +63,11 @@ export default function BenefitCard({
       <BenefitCardMedia
         category={provider.category}
         rating={provider.rating}
-        sources={sources}
+        sources={showPlayButton ? sources : []}
         poster={poster}
         size={mediaSize}
+        showPlayButton={showPlayButton}
+        playOnHover={showPlayButton}
       />
 
       <div className={cn('flex flex-1 flex-col gap-3', compact ? 'p-3' : 'p-4')}>

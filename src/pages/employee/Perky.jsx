@@ -79,7 +79,7 @@ export default function Perky() {
   return (
     <div className="flex h-[calc(100dvh-9rem)] flex-col md:h-[calc(100dvh-6rem)]">
       {/* Perky header */}
-      <div className="mb-3 flex items-center justify-between rounded-xl border border-line bg-grad-dusk p-4">
+      <div className="mb-3 flex items-center justify-between rounded-xl border border-line bg-bg-elevated p-4 shadow-e1">
         <div className="flex items-center gap-3">
           <PerkyOrb breathing />
           <div>
@@ -93,7 +93,7 @@ export default function Perky() {
       </div>
 
       {/* Chat scroll */}
-      <div className="flex-1 overflow-y-auto rounded-xl border border-line bg-bg-elevated/40 p-4">
+      <div className="flex-1 overflow-y-auto rounded-xl border border-line bg-bg-elevated p-4">
         <AnimatePresence initial={false}>
           {messages.map((m, i) => (
             <Message key={i} m={m} user={user} onAdd={(id) => addToCart(user.id, id)} />

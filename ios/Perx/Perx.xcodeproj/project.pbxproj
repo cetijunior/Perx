@@ -19,6 +19,9 @@
 		762A29A6FDDDE4028890383D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C86DE20EABE8AA228C16FB /* API.swift */; };
 		8B08B51628B4029BC84C183C /* BenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE751179C98EEE9901A4EB16 /* BenefitsView.swift */; };
 		D01C063463CEFC3F4314445C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292DAE2C82428F2721EAD28 /* Models.swift */; };
+		AA11BB22CC33DD44EE55FF02 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */; };
+		AA11BB22CC33DD44EE55FF04 /* ValidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */; };
+		AA11BB22CC33DD44EE55FF06 /* PerkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		D5021A7C34DE5B28D4EB42E0 /* PerxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerxApp.swift; sourceTree = "<group>"; };
 		EB81B0BBC3AF33D69A8459E0 /* Perx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Perx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE751179C98EEE9901A4EB16 /* BenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsView.swift; sourceTree = "<group>"; };
+		AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
+		AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateCardView.swift; sourceTree = "<group>"; };
+		AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerkyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -57,9 +63,12 @@
 				2B399AE2DF7E1868BD3531FD /* EmployeeTabView.swift */,
 				C1105807E1B69AE1F01A2FAD /* LoginView.swift */,
 				1292DAE2C82428F2721EAD28 /* Models.swift */,
+				AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */,
 				D5021A7C34DE5B28D4EB42E0 /* PerxApp.swift */,
 				ACBB21A587735201BC36F885 /* SessionStore.swift */,
 				B977BB0016AB88E93CD75CAB /* Theme.swift */,
+				AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */,
+				AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */,
 				1F15C48143B03BFF83C2B545 /* Preview Content */,
 			);
 			path = Perx;
@@ -157,6 +166,9 @@
 				633B2FC6F869EFA885C1A79C /* PerxApp.swift in Sources */,
 				27871401C4C3D8D81983C3DA /* SessionStore.swift in Sources */,
 				202D915196C170E4286884FA /* Theme.swift in Sources */,
+				AA11BB22CC33DD44EE55FF02 /* MemberCardView.swift in Sources */,
+				AA11BB22CC33DD44EE55FF04 /* ValidateCardView.swift in Sources */,
+				AA11BB22CC33DD44EE55FF06 /* PerkyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

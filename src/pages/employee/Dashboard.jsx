@@ -27,9 +27,9 @@ export default function Dashboard() {
 
   return (
     <motion.div variants={stagger(0.06)} initial="hidden" animate="show">
-      <PageHeader title={`${t('dash.greeting')}, ${firstName} 👋`} subtitle={t('dash.subtitle')} />
+      <PageHeader title={`${t('dash.greeting')}, ${firstName}`} subtitle={t('dash.subtitle')} />
 
-      <motion.div variants={fadeUp} className="relative mb-6 overflow-hidden rounded-xl border border-line bg-grad-dusk p-5">
+      <motion.div variants={fadeUp} className="relative mb-6 overflow-hidden rounded-xl border border-ember/20 bg-bg-elevated p-5 shadow-e2">
         <div className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-ember/15 blur-3xl" />
         <div className="relative flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -42,7 +42,7 @@ export default function Dashboard() {
             <Button as={Link} to="/employee/perky" variant="secondary" size="sm"><Sparkles className="h-4 w-4" /> Perky</Button>
           </div>
         </div>
-        <div className="relative mt-4 h-2 overflow-hidden rounded-full bg-bg">
+        <div className="relative mt-4 h-2 overflow-hidden rounded-full bg-bg-elevated-2">
           <motion.div className="h-full bg-grad-ember" initial={{ width: 0 }} animate={{ width: `${b.pct * 100}%` }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />
         </div>
       </motion.div>

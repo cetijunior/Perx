@@ -14,6 +14,17 @@ enum APIError: Error, LocalizedError {
     }
 }
 
+extension APIError {
+    /// Extracts the `{"error":"..."}` code the server sends, if present.
+    var serverCode: String? {
+        guard case .http(_, let body) = self,
+              let data = body.data(using: .utf8),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else { return nil }
+        return obj["error"] as? String
+    }
+}
+
 @MainActor
 final class API {
     static let shared = API()
@@ -75,6 +86,19 @@ final class API {
     func decide(id: String, decision: String) async throws -> BenefitRequest {
         let res: RequestResponse = try await send("/requests/\(id)/decide", method: "POST", body: ["decision": decision], auth: true)
         return res.request
+    }
+
+    func benefitQR(slug: String) async throws -> BenefitQRResponse {
+        try await send("/employees/me/card/qr", method: "POST", body: ["providerSlug": slug], auth: true)
+    }
+
+    func lookupCard(token qrToken: String) async throws -> CardLookupResponse {
+        try await send("/admin/card/lookup", method: "POST", body: ["token": qrToken], auth: true)
+    }
+
+    func redeemCard(token qrToken: String, providerSlug: String) async throws -> Redemption {
+        let res: RedeemResponse = try await send("/admin/card/redeem", method: "POST", body: ["token": qrToken, "providerSlug": providerSlug], auth: true)
+        return res.redemption
     }
 
     // MARK: - Core

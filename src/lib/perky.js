@@ -28,7 +28,7 @@ const FALLBACK_PATTERNS = [
   },
   {
     match: /(food|eat|ushqim|lunch|drekë|coffee|kafe)/i,
-    reply: () => `Two safe wins: **Green Salad Bar** at 1,200 ALL/mo for office-delivered bowls, plus **Kombi Coffee** (800 ALL/mo) for daily fuel across 6 Tirana spots. Add **Burger Lab** as a 1,500 ALL cheat-day voucher when you've earned it 🍔.`,
+    reply: () => `Two safe wins: **Green Salad Bar** at 1,200 ALL/mo for office-delivered bowls, plus **Kombi Coffee** (800 ALL/mo) for daily fuel across 6 Tirana spots. Add **Burger Lab** as a 1,500 ALL cheat-day voucher when you've earned it.`,
   },
   {
     match: /(travel|udhët|trip|weekend|fundjava|coast|det)/i,

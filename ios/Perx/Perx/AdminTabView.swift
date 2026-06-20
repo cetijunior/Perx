@@ -7,6 +7,8 @@ struct AdminTabView: View {
                 .tabItem { Label("Overview", systemImage: "chart.bar") }
             AdminRequestsView()
                 .tabItem { Label("Requests", systemImage: "tray.full") }
+            ValidateCardView()
+                .tabItem { Label("Validate", systemImage: "qrcode.viewfinder") }
             ProfileView()
                 .tabItem { Label("Profile", systemImage: "person") }
         }
@@ -48,6 +50,11 @@ struct AdminDashboardView: View {
             }
             .background(PerxTheme.bg.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    PerxLogoTitle()
+                }
+            }
             .refreshable { await session.refreshAll() }
         }
     }
@@ -138,7 +145,12 @@ struct AdminRequestsView: View {
                 .padding(20)
             }
             .background(PerxTheme.bg.ignoresSafeArea())
-            .navigationTitle("Requests")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    PerxLogoTitle()
+                }
+            }
             .refreshable { await session.refreshRequests() }
         }
     }

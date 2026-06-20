@@ -6,13 +6,14 @@
     "companies": "For Companies",
     "providers": "For Providers",
     "login": "Log in",
-    "getStarted": "Get started"
+    "getStarted": "Get started",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   },
   "site": {
     "nav": {
       "features": "Features",
       "about": "About",
-      "pricing": "Pricing",
       "contact": "Contact"
     },
     "footer": {
@@ -77,6 +78,9 @@
     "control3Title": "Smarter partner discovery",
     "control3": "The Deals Engine ranks nearby providers by fit, distance, and predicted usage.",
     "footerCta": "Ready to make benefits feel like a gift?",
+    "heroQrEyebrow": "Scan to redeem",
+    "heroQrCaption": "Each benefit gets its own single-use QR code.",
+    "heroCardQrAlt": "Sample benefit QR code",
     "footerNote": "Built for JunctionX Tirana 2026 · A TeamSystem challenge"
   },
   "heroCards": {
@@ -252,6 +256,9 @@
   "login": {
     "title": "Welcome back",
     "subtitle": "Sign in to your PERX account",
+    "google": "Continue with Google",
+    "orEmail": "Or continue with email",
+    "googleSoon": "Google sign-in coming soon",
     "email": "Email",
     "password": "Password",
     "submit": "Log in",
@@ -264,13 +271,71 @@
   "tabs": {
     "dashboard": "Dashboard",
     "benefits": "Benefits",
+    "card": "Redeem",
     "perky": "Perky AI",
-    "budget": "Budget & Games",
+    "budget": "Budget",
+    "games": "Games",
     "preferences": "Preferences",
     "employees": "Employees",
+    "validate": "Validate",
     "statistics": "Statistics",
     "deals": "Deals Engine",
     "settings": "Settings"
+  },
+  "card": {
+    "title": "Redeem",
+    "subtitle": "Tap a benefit to show a one-time QR code for staff to scan.",
+    "memberLabel": "Member card",
+    "qrAlt": "Benefit redemption QR code",
+    "refreshHint": "Refreshes automatically — show this to staff to redeem a benefit.",
+    "activeBenefits": "Active benefits",
+    "redeemTitle": "Redeem a benefit",
+    "redeemHint": "Tap to show QR",
+    "showQr": "Show QR",
+    "noBenefits": "No active benefits",
+    "noBenefitsBody": "Request a benefit from the marketplace first, then return here to redeem in person.",
+    "qrSingleUse": "Single-use code — invalid immediately after staff scans it.",
+    "qrSecure": "Locked to this benefit only",
+    "qrLoadError": "Couldn't generate QR code.",
+    "loadError": "Couldn't load your card.",
+    "tapRefresh": "Tap to refresh",
+    "codesTitle": "Discount codes",
+    "codesHint": "From daily games",
+    "noCodes": "No codes yet",
+    "noCodesBody": "Play daily minigames to win one-time partner discount codes.",
+    "playGames": "Play games",
+    "oneTime": "One-time",
+    "expires": "Expires",
+    "copyCode": "Copy code",
+    "markUsed": "Mark as used at partner"
+  },
+  "validate": {
+    "title": "Validate",
+    "subtitle": "Scan a member's benefit QR code to confirm and log the redemption.",
+    "idleHint": "Scan the QR code shown on the member's phone for a specific benefit.",
+    "startScan": "Start scan",
+    "scanningHint": "Point the camera at the member's QR code",
+    "cancel": "Cancel",
+    "lookingUp": "Looking up member…",
+    "redeeming": "Redeeming…",
+    "selectBenefit": "Select benefit to redeem",
+    "scannedBenefit": "Scanned benefit",
+    "noBenefits": "No active benefits to redeem.",
+    "confirm": "Confirm redemption",
+    "scanAgain": "Scan again",
+    "successTitle": "Redeemed",
+    "successDetail": "{{benefit}} for {{name}}",
+    "manualEntry": "Enter code manually",
+    "manualPlaceholder": "Paste the QR token string…",
+    "lookupToken": "Look up token",
+    "errors": {
+      "expired": "This code is invalid or expired — ask them to reopen their card.",
+      "used": "This code has already been redeemed.",
+      "notFound": "No matching member found.",
+      "benefitInactive": "This member doesn't have that benefit active.",
+      "camera": "Couldn't access the camera. Try manual code entry instead.",
+      "generic": "Something went wrong. Please try again."
+    }
   },
   "common": {
     "remaining": "remaining",
@@ -326,7 +391,7 @@
     "title": "Perky",
     "subtitle": "Your benefits concierge",
     "placeholder": "Ask Perky anything…",
-    "greeting": "Mirëdita! I'm Perky 👋 I help you find benefits that fit your life and budget. What are you in the mood for?",
+    "greeting": "Mirëdita! I'm Perky. I help you find benefits that fit your life and budget. What are you in the mood for?",
     "p1": "Something relaxing under 3000 ALL",
     "p2": "Best gym deals near Tirana",
     "p3": "Help me spend my budget wisely",
@@ -334,12 +399,23 @@
     "offline": "Perky is running on local smarts right now."
   },
   "budget": {
-    "title": "Budget & Games",
-    "subtitle": "Track your budget and earn more by staying active.",
+    "title": "Budget",
+    "subtitle": "Track your allowance, complete tasks, and grow your balance.",
     "meter": "Budget meter",
     "spent": "Spent",
     "available": "Available",
     "streak": "Day streak",
+    "days": "days",
+    "baseBudget": "Base budget",
+    "bonusEarned": "Bonus earned",
+    "lowWarning": "You're running low on budget. Browse the marketplace to plan your next benefit.",
+    "earnMore": "Earn more",
+    "earnMoreBody": "Complete tasks for LEK bonuses, or play daily games for partner discount codes.",
+    "playGames": "Play games",
+    "gameCodes": "Game codes",
+    "gameCodesBody": "Win one-time discount codes from scratch cards, spins, and more.",
+    "goToGames": "Go to games",
+    "noHistory": "No budget activity yet — complete a task to get started.",
     "scratch": "Scratch card",
     "scratchHint": "Scratch to reveal today's bonus",
     "scratchUsed": "Come back tomorrow for another card!",
@@ -351,6 +427,86 @@
     "history": "Budget history",
     "won": "You won",
     "tryAgain": "Almost! Try again tomorrow."
+  },
+  "games": {
+    "title": "Games",
+    "subtitle": "Play daily minigames to win one-time discount codes — saved in Redeem.",
+    "dailyMinigames": "Daily minigames",
+    "playedToday": "Played today",
+    "codesReady": "Codes ready",
+    "redeemBanner": "Codes live in Redeem",
+    "redeemBannerBody": "Show your code at the partner checkout — each code works once.",
+    "openRedeem": "Open Redeem",
+    "codeWon": "You won {{label}}! Code saved to Redeem.",
+    "tryAgainTomorrow": "Better luck tomorrow!",
+    "yourCode": "Your code",
+    "viewInRedeem": "View in Redeem",
+    "scratchHint": "Scratch the card to reveal a partner discount code",
+    "scratchAction": "Scratch to reveal your code",
+    "scratchUsedTitle": "Already scratched today!",
+    "scratchUsedHint": "Come back tomorrow for a new card.",
+    "spinHint": "Spin the wheel for a one-time discount code",
+    "spinUsedTitle": "No spins left today!",
+    "spinUsedHint": "Come back tomorrow for another spin.",
+    "guessUsedTitle": "Already played today!",
+    "guessUsedHint": "Come back tomorrow for a new number.",
+    "guessLost": "Out of guesses — try again tomorrow!",
+    "memoryUsedTitle": "Already matched today!",
+    "memoryUsedHint": "Come back tomorrow for a new set.",
+    "reset": "Reset",
+    "resetDaily": "Reset daily games (demo)"
+  },
+  "catalog": {
+    "providers": {
+      "fitlife": {
+        "name": "FitLife Gym Tirana",
+        "blurb": "Full-service gym in Blloku — weights, classes, sauna."
+      },
+      "kombi": {
+        "name": "Kombi Coffee",
+        "blurb": "Specialty coffee subscription across 6 Tirana spots."
+      },
+      "aquaspa": {
+        "name": "Aqua Spa Tirana",
+        "blurb": "Thermal pools, massage & hammam day-pass."
+      },
+      "langschool": {
+        "name": "Tirana Language School",
+        "blurb": "English, German & Italian — small evening groups."
+      },
+      "greensalad": {
+        "name": "Green Salad Bar",
+        "blurb": "Build-your-own healthy bowls, delivered to the office."
+      },
+      "albtransport": {
+        "name": "Albtransport Travel",
+        "blurb": "Discounted intercity & coastal weekend trips."
+      },
+      "medicheck": {
+        "name": "MediCheck Clinic",
+        "blurb": "Annual health screening & blood panel."
+      },
+      "booknook": {
+        "name": "BookNook Albania",
+        "blurb": "Unlimited e-books + 1 physical title / month."
+      },
+      "yogaflow": {
+        "name": "YogaFlow Studio",
+        "blurb": "Unlimited yoga & breathwork, mornings + evenings."
+      },
+      "burgerlab": {
+        "name": "Burger Lab Tirana",
+        "blurb": "Cheat-day voucher — smash burgers in Pazari i Ri."
+      },
+      "cyclecity": {
+        "name": "CycleCity Bike Rental",
+        "blurb": "Unlimited city-bike rides + safety gear."
+      },
+      "lumeretreat": {
+        "name": "Lumë Retreat",
+        "blurb": "Weekend mountain reset near the Lumë river."
+      }
+    }
   },
   "prefs": {
     "title": "Preferences",

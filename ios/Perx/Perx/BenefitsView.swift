@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BenefitsView: View {
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var router: TabRouter
     @State private var category: String = "all"
 
     private let categories = ["all", "wellness", "food", "sport", "travel", "learning", "health"]
@@ -14,6 +15,23 @@ struct BenefitsView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    Button { router.selected = .perky } label: {
+                        HStack(spacing: 10) {
+                            PerkyOrb()
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("Not sure what to pick?").font(.system(size: 13, weight: .semibold)).foregroundColor(PerxTheme.text)
+                                Text("Ask Perky for a recommendation").font(.caption).foregroundColor(PerxTheme.muted)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right").font(.system(size: 12, weight: .semibold)).foregroundColor(PerxTheme.faint)
+                        }
+                        .padding(12)
+                        .background(PerxTheme.bgElevated)
+                        .overlay(RoundedRectangle(cornerRadius: 14).stroke(PerxTheme.line, lineWidth: 1))
+                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                    }
+                    .buttonStyle(.plain)
+
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 8) {
                             ForEach(categories, id: \.self) { c in
@@ -32,7 +50,14 @@ struct BenefitsView: View {
                         }
                     }
 
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: 12),
+                            GridItem(.flexible(), spacing: 12)
+                        ],
+                        alignment: .leading,
+                        spacing: 12
+                    ) {
                         ForEach(filtered) { p in
                             ProviderCardCompact(provider: p)
                         }
@@ -41,8 +66,12 @@ struct BenefitsView: View {
                 .padding(20)
             }
             .background(PerxTheme.bg.ignoresSafeArea())
-            .navigationTitle("Benefits")
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    PerxLogoTitle()
+                }
+            }
             .refreshable { await session.refreshProviders() }
         }
     }
@@ -50,11 +79,15 @@ struct BenefitsView: View {
 
 struct CartView: View {
     @EnvironmentObject var session: SessionStore
+    @State private var showActiveBenefits = false
 
     var items: [Provider] {
         (session.employee?.cart ?? []).compactMap { session.provider(slug: $0) }
     }
     var total: Double { items.reduce(0) { $0 + $1.cost } }
+    var activeBenefits: [Provider] {
+        (session.employee?.activeBenefits ?? []).compactMap { session.provider(slug: $0) }
+    }
 
     var body: some View {
         NavigationStack {
@@ -117,7 +150,99 @@ struct CartView: View {
                     }
                 }
             }
-            .navigationTitle("Cart")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    PerxLogoTitle()
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showActiveBenefits = true
+                    } label: {
+                        Image(systemName: "qrcode")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(PerxTheme.ember)
+                    }
+                }
+            }
+            .sheet(isPresented: $showActiveBenefits) {
+                ActiveBenefitsSheet(benefits: activeBenefits)
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(28)
+            }
+        }
+    }
+}
+
+// MARK: - Active benefits modal (redeem from the cart screen)
+
+struct ActiveBenefitsSheet: View {
+    let benefits: [Provider]
+    @Environment(\.dismiss) private var dismiss
+    @State private var selected: MemberBenefit?
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                PerxTheme.bg.ignoresSafeArea()
+                if benefits.isEmpty {
+                    VStack(spacing: 10) {
+                        Image(systemName: "gift").font(.system(size: 32)).foregroundColor(PerxTheme.faint)
+                        Text("No active benefits yet").font(.subheadline).foregroundColor(PerxTheme.muted)
+                    }
+                } else {
+                    ScrollView {
+                        VStack(spacing: 10) {
+                            ForEach(benefits) { p in
+                                Button {
+                                    selected = MemberBenefit(slug: p.slug, name: p.name, category: p.category)
+                                } label: {
+                                    HStack(spacing: 12) {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(PerxTheme.ember.opacity(0.12))
+                                                .frame(width: 40, height: 40)
+                                            Image(systemName: "qrcode")
+                                                .font(.system(size: 16, weight: .semibold))
+                                                .foregroundColor(PerxTheme.ember)
+                                        }
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(p.name).font(.system(size: 14, weight: .semibold)).foregroundColor(PerxTheme.text)
+                                            Text(p.category.capitalized).font(.caption2).foregroundColor(PerxTheme.muted)
+                                        }
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .font(.system(size: 12, weight: .semibold))
+                                            .foregroundColor(PerxTheme.faint)
+                                    }
+                                    .padding(14)
+                                    .background(PerxTheme.bgElevated)
+                                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(PerxTheme.line, lineWidth: 1))
+                                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(16)
+                    }
+                }
+            }
+            .navigationTitle("Active benefits")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") { dismiss() }
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(PerxTheme.ember)
+                }
+            }
+            .sheet(item: $selected) { benefit in
+                BenefitQRSheet(benefit: benefit)
+                    .presentationDetents([.height(440)])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(28)
+            }
         }
     }
 }
@@ -125,11 +250,45 @@ struct CartView: View {
 struct ProfileView: View {
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject var router: TabRouter
+    @State private var showActiveBenefits = false
+
+    var activeBenefits: [Provider] {
+        (session.employee?.activeBenefits ?? []).compactMap { session.provider(slug: $0) }
+    }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    HStack(spacing: 10) {
+                        Button { showActiveBenefits = true } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "qrcode").font(.system(size: 12, weight: .semibold))
+                                Text("My QR codes")
+                            }
+                            .font(.system(size: 12, weight: .semibold))
+                            .frame(maxWidth: .infinity).padding(.vertical, 10)
+                            .background(PerxTheme.bgElevated2)
+                            .foregroundColor(PerxTheme.ember)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(PerxTheme.line, lineWidth: 1))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                        Button { router.selected = .perky } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "sparkles").font(.system(size: 12, weight: .semibold))
+                                Text("Ask Perky")
+                            }
+                            .font(.system(size: 12, weight: .semibold))
+                            .frame(maxWidth: .infinity).padding(.vertical, 10)
+                            .background(PerxTheme.bgElevated2)
+                            .foregroundColor(PerxTheme.ember)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(PerxTheme.line, lineWidth: 1))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                    }
+                    .buttonStyle(.plain)
+
                     VStack(alignment: .leading, spacing: 10) {
                         Text("APPEARANCE")
                             .font(.system(size: 11, weight: .semibold)).tracking(1.2)
@@ -203,7 +362,18 @@ struct ProfileView: View {
                 .padding(20)
             }
             .background(PerxTheme.bg.ignoresSafeArea())
-            .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    PerxLogoTitle()
+                }
+            }
+            .sheet(isPresented: $showActiveBenefits) {
+                ActiveBenefitsSheet(benefits: activeBenefits)
+                    .presentationDetents([.medium, .large])
+                    .presentationDragIndicator(.visible)
+                    .presentationCornerRadius(28)
+            }
         }
     }
 

@@ -1,14 +1,11 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Mail, Lock, ArrowRight, User, ShieldCheck } from 'lucide-react'
 import { login } from '@/lib/store'
-import { sleep } from '@/lib/utils'
 import Button from '@/components/ui/Button'
-import Logo from '@/components/ui/Logo'
-import LanguageToggle from '@/components/ui/LanguageToggle'
-import ThemeToggle from '@/components/ui/ThemeToggle'
+import GoogleSignInButton from '@/components/auth/GoogleSignInButton'
 import { fadeUp, stagger } from '@/lib/motion'
 
 const DEMO = [
@@ -42,17 +39,21 @@ export default function Login() {
       <div className="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-ember/20 blur-[100px]" />
 
       <motion.div variants={stagger(0.07)} initial="hidden" animate="show" className="relative z-10 w-full max-w-sm">
-        <div className="mb-6 flex items-center justify-between">
-          <Link to="/"><Logo /></Link>
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <LanguageToggle />
-          </div>
-        </div>
-
         <motion.div variants={fadeUp} className="rounded-xl border border-line bg-bg-elevated/80 p-6 shadow-e3 backdrop-blur-xl">
           <h1 className="text-2xl font-bold tracking-tight">{t('login.title')}</h1>
           <p className="mt-1 text-sm text-muted">{t('login.subtitle')}</p>
+
+          <div className="mt-5 space-y-4">
+            <GoogleSignInButton disabled title={t('login.googleSoon')}>
+              {t('login.google')}
+            </GoogleSignInButton>
+            <p className="text-center text-[0.7rem] text-faint">{t('login.googleSoon')}</p>
+            <div className="flex items-center gap-3">
+              <span className="h-px flex-1 bg-line" aria-hidden />
+              <span className="text-[0.7rem] font-medium uppercase tracking-[0.08em] text-faint">{t('login.orEmail')}</span>
+              <span className="h-px flex-1 bg-line" aria-hidden />
+            </div>
+          </div>
 
           <form onSubmit={submit} className="mt-5 space-y-3">
             <Field icon={Mail} type="email" placeholder={t('login.email')} value={email} onChange={setEmail} />
@@ -70,6 +71,7 @@ export default function Login() {
             {DEMO.map((d) => (
               <button
                 key={d.email}
+                type="button"
                 onClick={(e) => submit(e, d)}
                 disabled={loading}
                 className="flex w-full items-center gap-3 rounded-md border border-line bg-bg-elevated/60 px-3 py-2.5 text-left transition-colors hover:border-faint hover:bg-bg-elevated-2 disabled:opacity-50"

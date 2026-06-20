@@ -41,10 +41,10 @@ export default {
         xl: '16px',
       },
       boxShadow: {
-        e1: '0 1px 2px rgb(15 14 30 / 0.04)',
-        e2: '0 1px 2px rgb(15 14 30 / 0.05)',
-        e3: '0 6px 18px rgb(15 14 30 / 0.08)',
-        glow: '0 4px 16px rgb(var(--ember) / 0.22)',
+        e1: 'var(--shadow-e1)',
+        e2: 'var(--shadow-e2)',
+        e3: 'var(--shadow-e3)',
+        glow: 'var(--shadow-glow)',
         gold: '0 4px 16px rgb(var(--gold) / 0.16)',
       },
       backgroundImage: {

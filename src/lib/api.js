@@ -34,4 +34,10 @@ export const api = {
   submitRequest: (items) => request('/requests', { method: 'POST', body: { items }, auth: true }),
   decideRequest: (id, decision) => request(`/requests/${id}/decide`, { method: 'POST', body: { decision }, auth: true }),
   adminOverview: () => request('/admin/overview', { auth: true }),
+  myCard: () => request('/employees/me/card', { auth: true }),
+  benefitQr: (providerSlug) => request('/employees/me/card/qr', { method: 'POST', body: { providerSlug }, auth: true }),
+  claimGameReward: (reward) => request('/employees/me/games/reward', { method: 'POST', body: reward, auth: true }),
+  useDiscountCode: (id) => request(`/employees/me/discount-codes/${id}/use`, { method: 'PATCH', auth: true }),
+  cardLookup: (token) => request('/admin/card/lookup', { method: 'POST', body: { token }, auth: true }),
+  cardRedeem: (token, providerSlug) => request('/admin/card/redeem', { method: 'POST', body: { token, providerSlug }, auth: true }),
 }

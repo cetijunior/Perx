@@ -10,11 +10,11 @@
 /* ============================================================= */
 :root {
   /* Light canvas base */
-  --bg: 250 249 245;            /* canvas — warm cream, not pure white */
-  --bg-elevated: 255 255 255;   /* cards, sheets */
-  --bg-elevated-2: 239 233 222; /* nested cards, inputs, hover — surface-card */
-  --surface-line: 230 223 216;  /* hairline borders */
-  --surface-line-soft: 235 230 223;
+  --bg: 246 247 249;            /* canvas — very light cool grey */
+  --bg-elevated: 255 255 255;   /* cards, sheets — pure white */
+  --bg-elevated-2: 241 243 246; /* nested cards, inputs, hover */
+  --surface-line: 224 227 232;  /* hairline borders */
+  --surface-line-soft: 232 235 240;
 
   --text: 20 20 19;             /* ink — warm dark, off-black */
   --text-muted: 108 106 100;
@@ -52,11 +52,20 @@
 
   /* Theme-aware gradients */
   --grad-ember: linear-gradient(135deg, rgb(var(--ember)) 0%, rgb(var(--gold)) 100%);
-  --grad-dusk: linear-gradient(160deg, rgb(255 253 249) 0%, rgb(241 235 223) 100%);
+  --grad-dusk: linear-gradient(160deg, rgb(255 255 255) 0%, rgb(248 249 252) 100%);
   --grad-gold: linear-gradient(135deg, rgb(var(--gold-400)) 0%, rgb(var(--gold-600)) 100%);
   --grad-aurora:
-    radial-gradient(120% 120% at 0% 0%, rgb(var(--ember) / 0.20), transparent 50%),
-    radial-gradient(120% 120% at 100% 0%, rgb(var(--cat-travel) / 0.13), transparent 50%);
+    radial-gradient(120% 120% at 0% 0%, rgb(var(--ember) / 0.12), transparent 50%),
+    radial-gradient(120% 120% at 100% 0%, rgb(var(--cat-travel) / 0.08), transparent 50%);
+
+  /* Elevation shadows — tuned per theme below */
+  --shadow-e1: 0 1px 3px rgb(20 20 19 / 0.06);
+  --shadow-e2: 0 2px 8px rgb(20 20 19 / 0.07), 0 1px 2px rgb(20 20 19 / 0.04);
+  --shadow-e3: 0 8px 24px rgb(20 20 19 / 0.1), 0 2px 6px rgb(20 20 19 / 0.05);
+  --shadow-glow: 0 4px 16px rgb(var(--ember) / 0.22);
+
+  /* Fixed marketing navbar — used to clip hero canvas below the bar */
+  --site-nav-height: calc(4.25rem + env(safe-area-inset-top, 0px));
 }
 
 .dark {
@@ -75,11 +84,21 @@
   --grad-aurora:
     radial-gradient(120% 120% at 0% 0%, rgb(var(--ember) / 0.18), transparent 50%),
     radial-gradient(120% 120% at 100% 0%, rgb(var(--cat-travel) / 0.10), transparent 50%);
+
+  --shadow-e1: 0 1px 4px rgb(0 0 0 / 0.4);
+  --shadow-e2: 0 2px 8px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-e3: 0 8px 24px rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-glow: 0 4px 16px rgb(var(--ember) / 0.38);
 }
 
 * { border-color: rgb(var(--surface-line)); }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: light; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  color-scheme: light;
+  overscroll-behavior-y: none;
+}
 html.dark { color-scheme: dark; }
 
 body {
@@ -113,9 +132,36 @@ h1, h2, h3, h4 {
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .glass {
-    background: rgb(var(--bg-elevated) / 0.72);
+    background: rgb(var(--bg-elevated) / 0.78);
     backdrop-filter: blur(20px) saturate(1.2);
     -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  }
+  .site-navbar {
+    z-index: 9000;
+    isolation: isolate;
+    /* Keep compositor layer above WebGL / drei Html during scroll & overscroll */
+    transform: translate3d(0, 0, 0);
+  }
+  /* Solid curtain above the bar — covers pull-to-refresh / rubber-band gap */
+  .site-navbar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 100vh;
+    background: rgb(var(--bg));
+    pointer-events: none;
+  }
+  .site-navbar-bar {
+    position: relative;
+    z-index: 1;
+    background: rgb(var(--bg));
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  }
+  .site-mobile-menu {
+    background: rgb(var(--bg-elevated) / 0.92);
   }
   .text-balance { text-wrap: balance; }
   .safe-b { padding-bottom: env(safe-area-inset-bottom); }
@@ -139,6 +185,229 @@ h1, h2, h3, h4 {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ============================================================= */
+/*  DARK MODE — stronger card presence & visible shadows         */
+/* ============================================================= */
+
+.dark .site-navbar-bar {
+  background: rgb(var(--bg));
+}
+
+.dark .site-mobile-menu {
+  background: rgb(var(--bg-elevated) / 0.95);
+}
+
+.dark .glass {
+  background: rgb(var(--bg-elevated) / 0.82);
+}
+
+.dark .shadow-e1 {
+  box-shadow: var(--shadow-e1);
+}
+.dark .shadow-e2 {
+  box-shadow: var(--shadow-e2);
+}
+.dark .shadow-e3 {
+  box-shadow: var(--shadow-e3);
+}
+.dark .shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+/* ============================================================= */
+/*  MARKETING SECTIONS (below hero — editorial bands & cards)      */
+/* ============================================================= */
+
+.mkt-band {
+  background:
+    linear-gradient(180deg, rgb(var(--bg-elevated-2) / 0.55) 0%, rgb(var(--bg)) 55%, rgb(var(--bg)) 100%);
+}
+
+.mkt-band-alt {
+  background: rgb(var(--bg-elevated) / 0.35);
+}
+
+.mkt-band-contrast {
+  background:
+    linear-gradient(135deg, rgb(var(--bg-elevated-2) / 0.8) 0%, rgb(var(--bg)) 50%, rgb(var(--ember) / 0.06) 100%);
+}
+
+.dark .mkt-band {
+  background:
+    linear-gradient(180deg, rgb(var(--bg-elevated) / 0.35) 0%, rgb(var(--bg)) 100%);
+}
+
+.dark .mkt-band-contrast {
+  background:
+    linear-gradient(135deg, rgb(var(--bg-elevated) / 0.5) 0%, rgb(var(--bg)) 60%, rgb(var(--ember) / 0.08) 100%);
+}
+
+.mkt-dot-grid {
+  background-image: radial-gradient(rgb(var(--text-faint) / 0.22) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.mkt-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--surface-line) / 0.85);
+  background: rgb(var(--bg-elevated));
+  box-shadow: var(--shadow-e2);
+}
+
+.mkt-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--mkt-accent, rgb(var(--ember)));
+  opacity: 0.85;
+}
+
+.mkt-editorial-heading h2 {
+  letter-spacing: -0.03em;
+}
+
+.mkt-stat-strip > div > div:first-child {
+  color: rgb(var(--ember));
+}
+
+/* ============================================================= */
+/*  HERO — card backdrop + single readability scrim              */
+/* ============================================================= */
+
+.hero {
+  z-index: 0;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.hero-bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--site-nav-height);
+  z-index: 0;
+  overflow: clip;
+  contain: paint;
+  opacity: 0.42;
+}
+
+/* R3F root + drei Html overlay — clip projected cards inside the hero band */
+.hero-canvas-root {
+  height: 100%;
+  width: 100%;
+  overflow: clip;
+  contain: strict;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(var(--bg) / 0.92) 0%, rgb(var(--bg) / 0.55) 8%, transparent 18%),
+    linear-gradient(105deg, rgb(var(--bg) / 0.94) 0%, rgb(var(--bg) / 0.72) 38%, rgb(var(--bg) / 0.08) 72%, transparent 100%),
+    linear-gradient(to top, rgb(var(--bg)) 0%, rgb(var(--bg) / 0.35) 28%, transparent 55%);
+}
+
+.dark .hero::after {
+  background:
+    linear-gradient(to bottom, rgb(var(--bg) / 0.96) 0%, rgb(var(--bg) / 0.6) 8%, transparent 18%),
+    linear-gradient(105deg, rgb(var(--bg) / 0.96) 0%, rgb(var(--bg) / 0.78) 38%, rgb(var(--bg) / 0.12) 72%, transparent 100%),
+    linear-gradient(to top, rgb(var(--bg)) 0%, rgb(var(--bg) / 0.4) 28%, transparent 55%);
+}
+
+.hero-content {
+  z-index: 2;
+}
+
+.hero-copy {
+  max-width: 42rem;
+}
+
+.hero-stats strong {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .hero-content {
+    display: flex;
+    min-height: 100dvh;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: calc(4.75rem + env(safe-area-inset-top, 0px)) 0 1.25rem;
+  }
+
+  .hero-copy {
+    width: 100%;
+    padding: 1.125rem 1rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid rgb(var(--line) / 0.45);
+    background: rgb(var(--bg) / 0.92);
+    box-shadow: 0 12px 40px -20px rgb(var(--text) / 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--bg) / 0.98) 0%,
+      rgb(var(--bg) / 0.9) 36%,
+      rgb(var(--bg) / 0.35) 52%,
+      transparent 68%
+    );
+  }
+
+  .hero-bg {
+    opacity: 0.5;
+  }
+
+  .hero-mobile-wall {
+    top: auto;
+    bottom: 0;
+    height: min(52dvh, 420px);
+    min-height: 0;
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    display: flex;
+    min-height: 100dvh;
+    align-items: center;
+    padding: 7.5rem 0 5rem;
+  }
+
+  .hero-copy {
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .hero-stats {
+    flex-direction: row;
+    gap: 0.5rem 1.5rem;
+  }
+}
+
+.hero-mobile-wall {
+  min-height: 100%;
+  transform: scale(0.94);
+  transform-origin: center bottom;
 }
 
 /* ============================================================= */

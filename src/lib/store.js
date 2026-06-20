@@ -29,7 +29,8 @@ function freshEmployeeState() {
       dietary: [],
       notifications: { deals: true, approvals: true, streaks: true },
     },
-    games: { streak: 3, lastClaim: 0, scratchToday: false, spinsLeft: 1, tasks: [], history: [] },
+    games: { streak: 3, lastClaim: 0, scratchToday: false, guessToday: false, memoryToday: false, spinsLeft: 1, tasks: [], history: [] },
+    discountCodes: [],
   }
 }
 
@@ -42,6 +43,7 @@ function defaultState() {
     providers: LOCAL_PROVIDERS,    // fallback catalog until /providers loads
     lang: 'sq',
     currentUserId: null,
+    sessionLoading: typeof window !== 'undefined' && !!getToken(),
     seededAt: now(),
     loading: false,
     error: null,
@@ -92,6 +94,7 @@ function reshapeEmployee(emp, providers) {
     spent,
     preferences: { ...base.preferences, ...(emp?.preferences || {}) },
     games: { ...base.games, ...(emp?.games || {}) },
+    discountCodes: emp?.discountCodes || [],
   }
 }
 
@@ -240,15 +243,23 @@ export function setPreferences(userId, prefs) {
   api.patchEmployee({ preferences: { ...state.employees[userId].preferences } }).catch(() => {})
 }
 
+function syncEmployee(userId, patch) {
+  api.patchEmployee(patch).catch((err) => console.warn('patchEmployee failed', err))
+}
+
 export function awardBonus(userId, amount, label) {
   applyEmployee(userId, (e) => {
     e.bonus += amount
     e.games = { ...e.games, history: [{ id: uid(), at: now(), label, delta: amount }, ...(e.games.history || [])] }
   })
+  syncEmployee(userId, { bonus: state.employees[userId].bonus, games: state.employees[userId].games })
 }
+
 export function setGames(userId, patch) {
   applyEmployee(userId, (e) => { e.games = { ...e.games, ...patch } })
+  syncEmployee(userId, { games: state.employees[userId].games })
 }
+
 export function completeTask(userId, taskId, reward) {
   applyEmployee(userId, (e) => {
     if (e.games.tasks.includes(taskId)) return
@@ -259,6 +270,46 @@ export function completeTask(userId, taskId, reward) {
     }
     e.bonus += reward
   })
+  syncEmployee(userId, { bonus: state.employees[userId].bonus, games: state.employees[userId].games })
+}
+
+export async function awardDiscountCode(userId, reward) {
+  if (!reward) return null
+  try {
+    const { discountCode, employee } = await api.claimGameReward(reward)
+    set((s) => ({ employees: { ...s.employees, [userId]: reshapeEmployee(employee, s.providers) } }))
+    return discountCode
+  } catch (err) {
+    console.warn('claimGameReward failed', err)
+    const localCode = {
+      id: uid(),
+      code: `PERX${Math.round(reward.discountPct * 100)}-${uid().slice(0, 6).toUpperCase()}`,
+      label: reward.label,
+      providerSlug: reward.providerSlug || null,
+      category: reward.category || null,
+      discountPct: reward.discountPct,
+      source: reward.source,
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      usedAt: null,
+    }
+    applyEmployee(userId, (e) => { e.discountCodes = [localCode, ...(e.discountCodes || [])] })
+    return localCode
+  }
+}
+
+export async function markDiscountCodeUsed(userId, codeId) {
+  try {
+    const { employee } = await api.useDiscountCode(codeId)
+    set((s) => ({ employees: { ...s.employees, [userId]: reshapeEmployee(employee, s.providers) } }))
+  } catch (err) {
+    console.warn('useDiscountCode failed', err)
+    applyEmployee(userId, (e) => {
+      e.discountCodes = (e.discountCodes || []).map((c) =>
+        c.id === codeId ? { ...c, usedAt: new Date().toISOString() } : c,
+      )
+    })
+  }
 }
 
 export function setLang(lang) {
@@ -291,11 +342,31 @@ export function useCurrentUser() {
   return useSyncExternalStore(subscribe, currentUser, currentUser)
 }
 
-// ── boot: providers always, current user if a token exists, periodic refresh ──
-loadProviders()
-if (getToken()) {
-  loadCurrentUserData()
+export function useSessionLoading() {
+  return useSyncExternalStore(
+    subscribe,
+    () => state.sessionLoading,
+    () => false,
+  )
 }
+
+async function bootstrapSession() {
+  if (!getToken()) {
+    set(() => ({ sessionLoading: false }))
+    return
+  }
+  set(() => ({ sessionLoading: true }))
+  await loadCurrentUserData().catch(() => {})
+  if (!currentUser() && getToken()) {
+    setToken(null)
+    persistSession()
+  }
+  set(() => ({ sessionLoading: false }))
+}
+
+// ── boot: providers always, restore session if a token exists, periodic refresh ──
+loadProviders()
+bootstrapSession()
 
 if (typeof window !== 'undefined') {
   let timer = null

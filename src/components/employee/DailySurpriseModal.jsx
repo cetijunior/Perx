@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Sparkles, Gift, Star, Zap } from 'lucide-react'
-import { useCurrentUser, useStore, getState, budgetFor, awardBonus, setGames, pickTodayGame } from '@/lib/store'
+import { X, Sparkles, Gift, Star, Zap, Ticket, Disc3, PartyPopper, Check } from 'lucide-react'
+import { useCurrentUser, useStore, getState, awardDiscountCode, setGames } from '@/lib/store'
+import { scratchPrizeForUser, spinRewardFromWedge, rewardToClaim } from '@/lib/gameRewards'
 import ScratchCard from '@/components/employee/ScratchCard'
 import SpinWheel from '@/components/employee/SpinWheel'
 
@@ -79,7 +80,6 @@ export default function DailySurpriseModal({ gameType, onClose }) {
   const user = useCurrentUser()
   useStore()
   const emp = getState().employees[user.id]
-  const b = budgetFor(user.id)
 
   const scratchUsed = emp.games.scratchToday
   const spinsLeft = emp.games.spinsLeft
@@ -94,46 +94,34 @@ export default function DailySurpriseModal({ gameType, onClose }) {
 
   // Build the same deterministic prize logic as BudgetGames
   const prize = useMemo(() => {
-    const seed = (user.id.charCodeAt(0) + new Date().getDate()) % 4
-    return [
-      { amount: 500, label: '+500 LEK', subtitle: "Daily bonus — you're on a roll! 🔥", disabledLabel: 'Already used today' },
-      { amount: 300, label: '+300 LEK', subtitle: 'Keep the streak going! ⚡', disabledLabel: 'Already used today' },
-      { amount: 150, label: '+150 LEK', subtitle: 'Nice one!', disabledLabel: 'Already used today' },
-      { amount: 0, label: 'Try Again', subtitle: 'Better luck tomorrow 🍀', disabledLabel: 'Already used today' },
-    ][seed]
+    const today = new Date().toISOString().slice(0, 10)
+    return scratchPrizeForUser(user.id, today)
   }, [user.id])
 
-  function handleScratchReveal() {
+  async function handleScratchReveal() {
     if (scratchUsed) return
-    if (prize.amount > 0) awardBonus(user.id, prize.amount, 'Scratch card')
+    const reward = rewardToClaim(prize, 'scratch')
+    if (reward) await awardDiscountCode(user.id, reward)
     setGames(user.id, { scratchToday: true })
-    const label = prize.amount > 0 ? `You won ${prize.label}! 🎉` : 'Better luck tomorrow!'
+    const label = reward ? `You won ${prize.label}! Check Redeem for your code.` : 'Better luck tomorrow!'
     setWinLabel(label)
-    if (prize.amount > 0) setConfetti(true)
+    if (reward) setConfetti(true)
     setDone(true)
   }
 
-  function handleSpinResult(w) {
+  async function handleSpinResult(w) {
     setGames(user.id, { spinsLeft: Math.max(0, spinsLeft - 1) })
+    const spec = spinRewardFromWedge(w)
+    const reward = spec ? { ...spec, source: 'spin' } : null
+    if (reward) await awardDiscountCode(user.id, reward)
 
-    // Map wedge IDs to reward amounts
-    const rewards = {
-      lek100: 100, lek150: 150, lek200: 200,
-      lek300: 300, lek500: 500, lek750: 750,
-      bonus: 1000,
-    }
-    const amount = rewards[w.id] ?? 0
     let label = ''
-
     if (w.id === 'tryagain') {
-      label = 'Better luck tomorrow! 🍀'
-    } else if (amount > 0) {
-      awardBonus(user.id, amount, `Spin: ${w.label}`)
-      label = `${w.label} — +${amount} LEK added! 🎉`
+      label = 'Better luck tomorrow!'
+    } else if (reward) {
+      label = `${w.label} — code saved to Redeem!`
     } else {
-      // perk wedges (spa, gym, disc20, disc15)
-      awardBonus(user.id, 100, `Spin perk: ${w.label}`)
-      label = `${w.label} unlocked! Check your benefits 🎁`
+      label = 'Better luck tomorrow!'
     }
 
     setWinLabel(label)
@@ -160,7 +148,8 @@ export default function DailySurpriseModal({ gameType, onClose }) {
     return () => { document.body.style.overflow = prev }
   }, [])
 
-  const title = gameType === 'scratch' ? '🎴 Scratch Your Reward' : '🎡 Spin to Win'
+  const TitleIcon = gameType === 'scratch' ? Ticket : Disc3
+  const title = gameType === 'scratch' ? 'Scratch Your Reward' : 'Spin to Win'
   const subtitle = gameType === 'scratch'
     ? 'Scratch the card to reveal today\'s bonus!'
     : 'Give the wheel a spin for a daily reward!'
@@ -211,11 +200,12 @@ export default function DailySurpriseModal({ gameType, onClose }) {
           {/* Title */}
           <div className="surprise-header">
             <motion.h2
-              className="surprise-title"
+              className="surprise-title flex items-center justify-center gap-2"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
             >
+              <TitleIcon className="h-5 w-5" />
               {title}
             </motion.h2>
             <motion.p
@@ -239,8 +229,9 @@ export default function DailySurpriseModal({ gameType, onClose }) {
               <Gift className="h-10 w-10 text-ember/60 mx-auto mb-3" />
               <p className="text-base font-semibold text-text">You've already played today!</p>
               <p className="mt-1 text-sm text-muted">Come back tomorrow for another surprise.</p>
-              <button onClick={onClose} className="surprise-cta mt-5">
-                Got it ✓
+              <button onClick={onClose} className="surprise-cta mt-5 inline-flex items-center gap-2">
+                <Check className="h-4 w-4" />
+                Got it
               </button>
             </motion.div>
           )}
@@ -280,12 +271,12 @@ export default function DailySurpriseModal({ gameType, onClose }) {
               <motion.div
                 animate={{ rotate: [0, -5, 5, -3, 3, 0], scale: [1, 1.15, 1] }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-5xl mb-3"
+                className="mb-3 flex justify-center"
               >
-                🎉
+                <PartyPopper className="h-12 w-12 text-gold" />
               </motion.div>
               <p className="surprise-win-label">{winLabel}</p>
-              <p className="text-sm text-muted mt-1">Reward added to your budget!</p>
+              <p className="text-sm text-muted mt-1">Discount codes are saved in Redeem.</p>
               <button onClick={onClose} className="surprise-cta mt-6">
                 <Sparkles className="h-4 w-4" />
                 Awesome, let's go!
@@ -295,8 +286,8 @@ export default function DailySurpriseModal({ gameType, onClose }) {
 
           {/* Dismiss hint (only when game is active) */}
           {!alreadyPlayed && !done && (
-            <p className="surprise-dismiss-hint">
-              Press Esc or tap ✕ to dismiss
+            <p className="surprise-dismiss-hint inline-flex items-center justify-center gap-1">
+              Press Esc or tap <X className="inline h-3 w-3" /> to dismiss
             </p>
           )}
         </motion.div>

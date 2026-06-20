@@ -6,13 +6,14 @@
     "companies": "Për Kompanitë",
     "providers": "Për Ofruesit",
     "login": "Hyr",
-    "getStarted": "Fillo tani"
+    "getStarted": "Fillo tani",
+    "dashboard": "Paneli",
+    "logout": "Dil"
   },
   "site": {
     "nav": {
       "features": "Veçoritë",
       "about": "Rreth nesh",
-      "pricing": "Çmimet",
       "contact": "Kontakt"
     },
     "footer": {
@@ -77,6 +78,9 @@
     "control3Title": "Zbulim më i mençur partnerësh",
     "control3": "Deals Engine rendit ofruesit pranë teje sipas përputhjes, distancës dhe përdorimit të parashikuar.",
     "footerCta": "Gati ta bësh përfitimin të ndihet si dhuratë?",
+    "heroQrEyebrow": "Skano për të përdorur",
+    "heroQrCaption": "Çdo përfitim merr kodin e vet QR një-përdorimsh.",
+    "heroCardQrAlt": "Shembull kodi QR i përfitimit",
     "footerNote": "Ndërtuar për JunctionX Tirana 2026 · Sfidë e TeamSystem"
   },
   "heroCards": {
@@ -252,6 +256,9 @@
   "login": {
     "title": "Mirë se erdhe",
     "subtitle": "Hyr në llogarinë tënde PERX",
+    "google": "Vazhdo me Google",
+    "orEmail": "Ose vazhdo me email",
+    "googleSoon": "Hyrja me Google vjen së shpejti",
     "email": "Email",
     "password": "Fjalëkalimi",
     "submit": "Hyr",
@@ -264,13 +271,71 @@
   "tabs": {
     "dashboard": "Paneli",
     "benefits": "Përfitimet",
+    "card": "Përdor",
     "perky": "Perky AI",
-    "budget": "Buxheti & Lojëra",
+    "budget": "Buxheti",
+    "games": "Lojëra",
     "preferences": "Preferencat",
     "employees": "Punonjësit",
+    "validate": "Valido",
     "statistics": "Statistika",
     "deals": "Deals Engine",
     "settings": "Cilësimet"
+  },
+  "card": {
+    "title": "Përdor",
+    "subtitle": "Prek një përfitim për të shfaqur një kod QR një-përdorimsh për stafin.",
+    "memberLabel": "Karta anëtare",
+    "qrAlt": "Kodi QR i përdorimit të përfitimit",
+    "refreshHint": "Rifreskohet automatikisht — tregoje stafit për të përdorur një përfitim.",
+    "activeBenefits": "Përfitime aktive",
+    "redeemTitle": "Përdor një përfitim",
+    "redeemHint": "Prek për QR",
+    "showQr": "Shfaq QR",
+    "noBenefits": "Nuk ka përfitime aktive",
+    "noBenefitsBody": "Kërko një përfitim nga marketplace-i, pastaj kthehu këtu për ta përdorur personalisht.",
+    "qrSingleUse": "Kod një-përdorimsh — bëhet i pavlefshëm menjëherë pas skanimit.",
+    "qrSecure": "I lidhur vetëm me këtë përfitim",
+    "qrLoadError": "Kodi QR nuk u gjenerua.",
+    "loadError": "Karta nuk u ngarkua.",
+    "tapRefresh": "Prek për të rifreskuar",
+    "codesTitle": "Kodet e zbritjes",
+    "codesHint": "Nga lojërat ditore",
+    "noCodes": "Ende pa kode",
+    "noCodesBody": "Luaj minilojërat ditore për të fituar kode zbritjeje një-përdorimshë nga partnerët.",
+    "playGames": "Luaj lojëra",
+    "oneTime": "Një herë",
+    "expires": "Skadon",
+    "copyCode": "Kopjo kodin",
+    "markUsed": "Shëno si të përdorur te partneri"
+  },
+  "validate": {
+    "title": "Valido",
+    "subtitle": "Skano kodin QR të përfitimit të anëtarit për të konfirmuar përdorimin.",
+    "idleHint": "Skano kodin QR që anëtari shfaq në telefon për një përfitim specifik.",
+    "startScan": "Fillo skanimin",
+    "scanningHint": "Drejto kamerën te kodi QR i anëtarit",
+    "cancel": "Anulo",
+    "lookingUp": "Duke kërkuar anëtarin…",
+    "redeeming": "Duke regjistruar…",
+    "selectBenefit": "Zgjidh përfitimin për të përdorur",
+    "scannedBenefit": "Përfitimi i skanuar",
+    "noBenefits": "Nuk ka përfitime aktive për të përdorur.",
+    "confirm": "Konfirmo përdorimin",
+    "scanAgain": "Skano përsëri",
+    "successTitle": "U regjistrua",
+    "successDetail": "{{benefit}} për {{name}}",
+    "manualEntry": "Fut kodin manualisht",
+    "manualPlaceholder": "Ngjit vargun e token-it QR…",
+    "lookupToken": "Kërko token-in",
+    "errors": {
+      "expired": "Ky kod është i pavlefshëm ose ka skaduar — kërkoji ta hapë përsëri kartën.",
+      "used": "Ky kod është përdorur tashmë.",
+      "notFound": "Nuk u gjet anëtar i përputhshëm.",
+      "benefitInactive": "Ky anëtar nuk e ka aktiv atë përfitim.",
+      "camera": "Kamera nuk u hap. Provo futjen manuale të kodit.",
+      "generic": "Diçka shkoi keq. Provo përsëri."
+    }
   },
   "common": {
     "remaining": "të mbetura",
@@ -326,7 +391,7 @@
     "title": "Perky",
     "subtitle": "Concierge i përfitimeve",
     "placeholder": "Pyet Perky-n çdo gjë…",
-    "greeting": "Mirëdita! Unë jam Perky 👋 Të ndihmoj të gjesh përfitime që i përshtaten jetës dhe buxhetit tënd. Për çfarë je në qejf?",
+    "greeting": "Mirëdita! Unë jam Perky. Të ndihmoj të gjesh përfitime që i përshtaten jetës dhe buxhetit tënd. Për çfarë je në qejf?",
     "p1": "Diçka relaksuese nën 3000 LEK",
     "p2": "Ofertat më të mira të palestrës pranë Tiranës",
     "p3": "Më ndihmo ta shpenzoj buxhetin me mençuri",
@@ -334,12 +399,23 @@
     "offline": "Perky po punon me mençuri lokale tani."
   },
   "budget": {
-    "title": "Buxheti & Lojëra",
-    "subtitle": "Ndiq buxhetin dhe fito më shumë duke qenë aktiv.",
+    "title": "Buxheti",
+    "subtitle": "Ndiq alokimin, përfundo detyrat dhe rrit balancën.",
     "meter": "Matësi i buxhetit",
     "spent": "Shpenzuar",
     "available": "Në dispozicion",
     "streak": "Ditë rresht",
+    "days": "ditë",
+    "baseBudget": "Buxheti bazë",
+    "bonusEarned": "Bonus i fituar",
+    "lowWarning": "Buxheti po mbaron. Shfleto marketplace-in për të planifikuar përfitimin tjetër.",
+    "earnMore": "Fito më shumë",
+    "earnMoreBody": "Përfundo detyra për bonus LEK, ose luaj lojëra ditore për kode zbritjeje.",
+    "playGames": "Luaj lojëra",
+    "gameCodes": "Kodet e lojërave",
+    "gameCodesBody": "Fito kode zbritjeje një-përdorimshë nga gërvishtjet, rrotullimet dhe më shumë.",
+    "goToGames": "Shko te lojërat",
+    "noHistory": "Ende pa aktivitet buxheti — përfundo një detyrë për të nisur.",
     "scratch": "Karta gërvishtëse",
     "scratchHint": "Gërvisht për të zbuluar bonusin e sotëm",
     "scratchUsed": "Kthehu nesër për një kartë tjetër!",
@@ -351,6 +427,86 @@
     "history": "Historiku i buxhetit",
     "won": "Fitove",
     "tryAgain": "Gati! Provo përsëri nesër."
+  },
+  "games": {
+    "title": "Lojëra",
+    "subtitle": "Luaj minilojëra ditore për kode zbritjeje një-përdorimshë — ruhen te Përdor.",
+    "dailyMinigames": "Minilojëra ditore",
+    "playedToday": "Luajtur sot",
+    "codesReady": "Kode gati",
+    "redeemBanner": "Kodet janë te Përdor",
+    "redeemBannerBody": "Trego kodin te partneri — çdo kod funksionon vetëm një herë.",
+    "openRedeem": "Hap Përdor",
+    "codeWon": "Fitove {{label}}! Kodi u ruajt te Përdor.",
+    "tryAgainTomorrow": "Më mirë nesër!",
+    "yourCode": "Kodi yt",
+    "viewInRedeem": "Shiko te Përdor",
+    "scratchHint": "Gërvisht kartën për të zbuluar një kod zbritjeje",
+    "scratchAction": "Gërvisht për të zbuluar kodin",
+    "scratchUsedTitle": "E ke gërvishtur sot!",
+    "scratchUsedHint": "Kthehu nesër për një kartë të re.",
+    "spinHint": "Rrotullo rrotën për një kod zbritjeje një-përdorimsh",
+    "spinUsedTitle": "Pa rrotullime sot!",
+    "spinUsedHint": "Kthehu nesër për një rrotullim tjetër.",
+    "guessUsedTitle": "E ke luajtur sot!",
+    "guessUsedHint": "Kthehu nesër për një numër të ri.",
+    "guessLost": "Mbaruan tentativat — provo nesër!",
+    "memoryUsedTitle": "E ke përfunduar sot!",
+    "memoryUsedHint": "Kthehu nesër për një set të ri.",
+    "reset": "Rivendos",
+    "resetDaily": "Rivendos lojërat ditore (demo)"
+  },
+  "catalog": {
+    "providers": {
+      "fitlife": {
+        "name": "FitLife Gym Tirana",
+        "blurb": "Palestra e plotë në Blloku — peshë, klasa, sauna."
+      },
+      "kombi": {
+        "name": "Kombi Coffee",
+        "blurb": "Abonim kafeje speciality në 6 pika në Tiranë."
+      },
+      "aquaspa": {
+        "name": "Aqua Spa Tirana",
+        "blurb": "Pishina termale, masazh dhe day-pass hammam."
+      },
+      "langschool": {
+        "name": "Tirana Language School",
+        "blurb": "Anglisht, gjermanisht dhe italisht — grupe të vogla në mbrëmje."
+      },
+      "greensalad": {
+        "name": "Green Salad Bar",
+        "blurb": "Bowls të shëndetshme sipas dëshirës, dorëzim në zyrë."
+      },
+      "albtransport": {
+        "name": "Albtransport Travel",
+        "blurb": "Udhëtime ndërqytetëse dhe fundjavë në breg me zbritje."
+      },
+      "medicheck": {
+        "name": "MediCheck Clinic",
+        "blurb": "Kontroll shëndetësor vjetor dhe analiza gjaku."
+      },
+      "booknook": {
+        "name": "BookNook Albania",
+        "blurb": "E-libra të pakufizuara + 1 titull fizik / muaj."
+      },
+      "yogaflow": {
+        "name": "YogaFlow Studio",
+        "blurb": "Yoga dhe breathwork të pakufizuara, mëngjes dhe mbrëmje."
+      },
+      "burgerlab": {
+        "name": "Burger Lab Tirana",
+        "blurb": "Voucher ditë pushimi — smash burger në Pazari i Ri."
+      },
+      "cyclecity": {
+        "name": "CycleCity Bike Rental",
+        "blurb": "Qira biçikletash në qytet të pakufizuar + pajisje sigurie."
+      },
+      "lumeretreat": {
+        "name": "Lumë Retreat",
+        "blurb": "Reset fundjavë malor pranë lumit Lumë."
+      }
+    }
   },
   "prefs": {
     "title": "Preferencat",

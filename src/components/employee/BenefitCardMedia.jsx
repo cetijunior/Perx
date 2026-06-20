@@ -21,6 +21,7 @@ export default function BenefitCardMedia({
   size = 'full',
   overlay,
   playOnHover = true,
+  showPlayButton = true,
   showChips = true,
   className,
 }) {
@@ -74,7 +75,7 @@ export default function BenefitCardMedia({
         />
       )}
 
-      {size !== 'thumb' && (
+      {size !== 'thumb' && showPlayButton && (
         <span className="absolute left-1/2 top-1/2 z-[1] grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg-elevated/70 text-text shadow-e1 backdrop-blur transition-opacity duration-300 group-hover/media:opacity-0">
           <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
         </span>
