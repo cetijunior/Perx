@@ -12,6 +12,7 @@ export function getHeroLayout(width) {
       isMobile: true,
       cardCount: width < 480 ? 6 : 8,
       cardWidth: width < 480 ? 'clamp(6.5rem, 31vw, 7.75rem)' : 'clamp(7rem, 28vw, 8.5rem)',
+      marqueeRowSize: width < 480 ? 5 : 6,
     }
   }
 
@@ -52,7 +53,7 @@ export function getHeroLayout(width) {
   }
 }
 
-/** Fixed positions for the static mobile card wall (percent-based). */
+/** @deprecated — mobile hero uses marquee rows; kept for reference. */
 export const MOBILE_WALL_SLOTS = [
   { left: '-10%', top: '2%', rotate: -7, scale: 0.94, opacity: 0.88 },
   { left: '26%', top: '-2%', rotate: 4, scale: 0.9, opacity: 0.92 },

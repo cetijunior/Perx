@@ -100,6 +100,7 @@ function Hero({ t }) {
             <span><strong className="font-semibold text-muted">4.8★</strong> {t('landing.stat3')}</span>
           </motion.div>
         </div>
+        <div className="hero-mobile-stage md:hidden" aria-hidden />
       </motion.div>
     </section>
   )

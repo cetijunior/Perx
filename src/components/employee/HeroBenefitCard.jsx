@@ -6,15 +6,19 @@ import { formatALL } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 
 /** Compact marketing card for the landing hero orbit / mobile wall. */
-export default function HeroBenefitCard({ provider, className }) {
+export default function HeroBenefitCard({ provider, className, variant = 'default' }) {
   const { t } = useTranslation()
   const { name, blurb } = providerDisplay(t, provider)
   const poster = providerPoster(provider)
+  const isMarquee = variant === 'marquee'
 
   return (
     <div
       className={cn(
-        'flex h-full flex-col overflow-hidden rounded-lg border border-line/70 bg-bg-elevated shadow-e3',
+        'flex h-full flex-col overflow-hidden rounded-xl border bg-bg-elevated shadow-e3',
+        isMarquee
+          ? 'min-w-[9.25rem] max-w-[9.25rem] border-line/60 ring-1 ring-white/10'
+          : 'rounded-lg border-line/70',
         className,
       )}
     >
@@ -24,14 +28,23 @@ export default function HeroBenefitCard({ provider, className }) {
         poster={poster}
         size="hero"
       />
-      <div className="flex flex-1 flex-col gap-1 p-2">
-        <h3 className="line-clamp-2 text-[0.6875rem] font-semibold leading-tight text-text">
+      <div className={cn('flex flex-1 flex-col gap-1', isMarquee ? 'p-2.5' : 'p-2')}>
+        <h3 className={cn(
+          'line-clamp-2 font-semibold leading-tight text-text',
+          isMarquee ? 'text-[0.72rem]' : 'text-[0.6875rem]',
+        )}>
           {name}
         </h3>
         {blurb && (
-          <p className="line-clamp-2 text-[0.625rem] leading-snug text-muted">{blurb}</p>
+          <p className={cn(
+            'line-clamp-2 leading-snug text-muted',
+            isMarquee ? 'text-[0.65rem]' : 'text-[0.625rem]',
+          )}>{blurb}</p>
         )}
-        <p className="mt-auto font-display text-[0.6875rem] font-bold tabular-nums text-ember">
+        <p className={cn(
+          'mt-auto font-display font-bold tabular-nums text-ember',
+          isMarquee ? 'text-[0.72rem]' : 'text-[0.6875rem]',
+        )}>
           {formatALL(provider.cost)}{' '}
           <span className="text-[0.55rem] font-medium text-faint">LEK</span>
         </p>
