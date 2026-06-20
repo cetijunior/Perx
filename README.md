@@ -63,8 +63,9 @@ perx/
 │       ├── Perx.xcodeproj  # Open this in Xcode
 │       ├── project.yml     # XcodeGen spec (optional regen)
 │       └── Perx/           # Swift sources
-├── public/                 # Static assets (logo, videos)
-└── dist/                   # Production web build output
+├── public/                 # Static assets (logo, favicon, videos)
+├── vercel.json             # Vercel SPA build + rewrites
+└── dist/                   # Production web build output (generated)
 ```
 
 ---
@@ -73,7 +74,7 @@ perx/
 
 | Tool | Version | Used for |
 |------|---------|----------|
-| Node.js | 18+ | Web app + API |
+| Node.js | 20+ | Web app + API (Vercel uses Node 20) |
 | npm | 9+ | Package management |
 | MongoDB Atlas | — | Cloud database ([free tier](https://www.mongodb.com/atlas) works) |
 | Xcode | 15+ | iOS app (macOS only) |
@@ -137,6 +138,53 @@ Production build:
 npm run build
 npm run preview
 ```
+
+---
+
+## Deploy to Vercel (web app)
+
+The **frontend** is a static Vite SPA and deploys to [Vercel](https://vercel.com). The **Express API** (`server/`) runs separately — deploy it to any Node host (Railway, Render, Fly.io, etc.) with MongoDB Atlas.
+
+### Connect the repo
+
+1. Import the GitHub repo in the Vercel dashboard (or run `npx vercel` from the repo root).
+2. Vercel reads `vercel.json` — build command `npm run build`, output `dist/`.
+3. Root directory stays `/` (not `server/`).
+
+### Environment variables (Vercel project settings)
+
+| Variable | Example | Description |
+|----------|---------|-------------|
+| `VITE_API_URL` | `https://your-api.example.com` | Public HTTPS URL of the running `perx-api` |
+
+Redeploy after changing env vars — Vite inlines them at **build** time.
+
+### API + CORS for production
+
+On your API host, set in `server/.env`:
+
+```env
+CORS_ORIGIN=https://your-app.vercel.app
+DATABASE_URL=mongodb+srv://...
+JWT_SECRET=...
+PORT=4000
+```
+
+Seed once on the API host: `cd server && npm run seed`
+
+### SPA routing
+
+Client-side routes (`/employee/*`, `/admin/*`, marketing pages) are handled by the rewrite in `vercel.json` — direct URL loads and refreshes work without 404s.
+
+### Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| `ERESOLVE` on `npm install` | Use `@vitejs/plugin-react@^6` with Vite 8 (pinned in `package.json`) |
+| Login works locally, fails on Vercel | Set `VITE_API_URL` to the live API; check API CORS |
+| Blank page after deploy | Confirm build output is `dist/` and env vars were set before build |
+
+---
 
 ### 4. iOS app
 
@@ -219,7 +267,7 @@ Example: an employee adds a benefit to their cart on **web** → `POST /employee
 |------|--------|-------------|
 | `/` | Public | Landing page + 3D hero |
 | `/features`, `/about`, `/contact`, … | Public | Marketing pages |
-| `/login` | Public | Email login + demo accounts |
+| `/login` | Public | Demo account picker (no manual email form) |
 | `/employee/*` | Employee JWT | Dashboard, benefits, Perky AI, games, card, budget |
 | `/admin/*` | Admin JWT | Employees, statistics, deals, QR validate, settings |
 
@@ -238,7 +286,9 @@ The web app keeps a reactive in-memory store that mirrors API data:
 - Mini-games (scratch, spin) with discount-code rewards
 - Membership card + single-use benefit QR codes
 - Admin QR scanner for in-store validation (`html5-qrcode`)
+- Mobile-first employee panel with sticky sidebar (desktop) and 5-tab bottom nav + **More** sheet (mobile)
 - Light/dark theme, Albanian + English
+- Official PerX logo (`public/perx-logo.png`) site-wide
 
 ---
 
@@ -345,7 +395,7 @@ See [`server/README.md`](server/README.md) for a compact route list.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `VITE_API_URL` | `http://localhost:4000` | API base URL |
+| `VITE_API_URL` | `http://localhost:4000` | API base URL (required in production on Vercel) |
 
 ### Server (`server/.env`)
 
@@ -409,6 +459,8 @@ The API uses `cors` with `CORS_ORIGIN=*` by default. For production, set a speci
 | Root | `npm run dev` | Vite dev server |
 | Root | `npm run build` | Production web build → `dist/` |
 | Root | `npm run preview` | Preview production build |
+| Root | `npx vercel` | Deploy web app to Vercel (preview) |
+| Root | `npx vercel --prod` | Deploy web app to production |
 | `server/` | `npm run dev` | API with `--watch` |
 | `server/` | `npm run seed` | Seed MongoDB |
 | `server/` | `npm start` | Production API (no watch) |
