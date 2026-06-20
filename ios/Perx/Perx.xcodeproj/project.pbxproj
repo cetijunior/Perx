@@ -11,25 +11,30 @@
 		23BD6AB02124CFC834AE1B22 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83D766AAC89A17CB9BF663B0 /* Preview Assets.xcassets */; };
 		27871401C4C3D8D81983C3DA /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBB21A587735201BC36F885 /* SessionStore.swift */; };
 		2BBF9F2E161E49D35ABC26FE /* AdminTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678C1B3DDD680663C73556DB /* AdminTabView.swift */; };
+		46EE620880B5D7A89B4C2E66 /* PerkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA28F6681B754A70CD21607D /* PerkyView.swift */; };
 		4E1C39EEFF00247169CFD724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A3E22892592AE503F7A94A7 /* Assets.xcassets */; };
 		5F4E4D8A3AF474B218BF10D7 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A082F1AAD15C3731A6297C /* Config.swift */; };
 		5F7A955C01868D04BEAD753B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1105807E1B69AE1F01A2FAD /* LoginView.swift */; };
 		633B2FC6F869EFA885C1A79C /* PerxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5021A7C34DE5B28D4EB42E0 /* PerxApp.swift */; };
 		755DC8B85BF1D438B194080D /* EmployeeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B399AE2DF7E1868BD3531FD /* EmployeeTabView.swift */; };
 		762A29A6FDDDE4028890383D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C86DE20EABE8AA228C16FB /* API.swift */; };
+		77C5DFACAB3ED953F24592AC /* ValidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D953C54E5017174881DB2D45 /* ValidateCardView.swift */; };
+		86093C3561E74604D9C6966A /* DealsEngineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AADF6A3B07B11AC29D8B69 /* DealsEngineView.swift */; };
 		8B08B51628B4029BC84C183C /* BenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE751179C98EEE9901A4EB16 /* BenefitsView.swift */; };
+		93CA54BAE56E4BEBE680A5F7 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2020AC267F5AF7C5F29150E1 /* MemberCardView.swift */; };
+		BCB09BA7F192F9C9D63D6A85 /* AdminEmployeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C07DA84A7A0224D4D6F2B3 /* AdminEmployeesView.swift */; };
 		D01C063463CEFC3F4314445C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1292DAE2C82428F2721EAD28 /* Models.swift */; };
-		AA11BB22CC33DD44EE55FF02 /* MemberCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */; };
-		AA11BB22CC33DD44EE55FF04 /* ValidateCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */; };
-		AA11BB22CC33DD44EE55FF06 /* PerkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */; };
-		BB22CC33DD44EE55FF08 /* BenefitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */; };
+		DB141171C22B35FE1D301415 /* BenefitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C4DE989780ED17795D569F /* BenefitDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1292DAE2C82428F2721EAD28 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		2020AC267F5AF7C5F29150E1 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
 		2A3E22892592AE503F7A94A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B399AE2DF7E1868BD3531FD /* EmployeeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeTabView.swift; sourceTree = "<group>"; };
 		36C86DE20EABE8AA228C16FB /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		38AADF6A3B07B11AC29D8B69 /* DealsEngineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsEngineView.swift; sourceTree = "<group>"; };
+		40C4DE989780ED17795D569F /* BenefitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitDetailView.swift; sourceTree = "<group>"; };
 		50A082F1AAD15C3731A6297C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		678C1B3DDD680663C73556DB /* AdminTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTabView.swift; sourceTree = "<group>"; };
 		83D766AAC89A17CB9BF663B0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -37,12 +42,11 @@
 		B977BB0016AB88E93CD75CAB /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		C1105807E1B69AE1F01A2FAD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		D5021A7C34DE5B28D4EB42E0 /* PerxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerxApp.swift; sourceTree = "<group>"; };
-		EB81B0BBC3AF33D69A8459E0 /* Perx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Perx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D953C54E5017174881DB2D45 /* ValidateCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateCardView.swift; sourceTree = "<group>"; };
+		E0C07DA84A7A0224D4D6F2B3 /* AdminEmployeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminEmployeesView.swift; sourceTree = "<group>"; };
+		EB81B0BBC3AF33D69A8459E0 /* Perx.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Perx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA28F6681B754A70CD21607D /* PerkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerkyView.swift; sourceTree = "<group>"; };
 		FE751179C98EEE9901A4EB16 /* BenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCardView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateCardView.swift; sourceTree = "<group>"; };
-		AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerkyView.swift; sourceTree = "<group>"; };
-		BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -57,21 +61,23 @@
 		D0E673B9B0EAE748DC739292 /* Perx */ = {
 			isa = PBXGroup;
 			children = (
+				E0C07DA84A7A0224D4D6F2B3 /* AdminEmployeesView.swift */,
 				678C1B3DDD680663C73556DB /* AdminTabView.swift */,
 				36C86DE20EABE8AA228C16FB /* API.swift */,
 				2A3E22892592AE503F7A94A7 /* Assets.xcassets */,
+				40C4DE989780ED17795D569F /* BenefitDetailView.swift */,
 				FE751179C98EEE9901A4EB16 /* BenefitsView.swift */,
-				BB22CC33DD44EE55FF07 /* BenefitDetailView.swift */,
 				50A082F1AAD15C3731A6297C /* Config.swift */,
+				38AADF6A3B07B11AC29D8B69 /* DealsEngineView.swift */,
 				2B399AE2DF7E1868BD3531FD /* EmployeeTabView.swift */,
 				C1105807E1B69AE1F01A2FAD /* LoginView.swift */,
+				2020AC267F5AF7C5F29150E1 /* MemberCardView.swift */,
 				1292DAE2C82428F2721EAD28 /* Models.swift */,
-				AA11BB22CC33DD44EE55FF01 /* MemberCardView.swift */,
+				FA28F6681B754A70CD21607D /* PerkyView.swift */,
 				D5021A7C34DE5B28D4EB42E0 /* PerxApp.swift */,
 				ACBB21A587735201BC36F885 /* SessionStore.swift */,
 				B977BB0016AB88E93CD75CAB /* Theme.swift */,
-				AA11BB22CC33DD44EE55FF03 /* ValidateCardView.swift */,
-				AA11BB22CC33DD44EE55FF05 /* PerkyView.swift */,
+				D953C54E5017174881DB2D45 /* ValidateCardView.swift */,
 				1F15C48143B03BFF83C2B545 /* Preview Content */,
 			);
 			path = Perx;
@@ -121,7 +127,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2700;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = F72FAB129B9E228DE3AE17DC /* Build configuration list for PBXProject "Perx" */;
 			developmentRegion = en;
@@ -160,19 +168,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				762A29A6FDDDE4028890383D /* API.swift in Sources */,
+				BCB09BA7F192F9C9D63D6A85 /* AdminEmployeesView.swift in Sources */,
 				2BBF9F2E161E49D35ABC26FE /* AdminTabView.swift in Sources */,
+				DB141171C22B35FE1D301415 /* BenefitDetailView.swift in Sources */,
 				8B08B51628B4029BC84C183C /* BenefitsView.swift in Sources */,
-				BB22CC33DD44EE55FF08 /* BenefitDetailView.swift in Sources */,
 				5F4E4D8A3AF474B218BF10D7 /* Config.swift in Sources */,
+				86093C3561E74604D9C6966A /* DealsEngineView.swift in Sources */,
 				755DC8B85BF1D438B194080D /* EmployeeTabView.swift in Sources */,
 				5F7A955C01868D04BEAD753B /* LoginView.swift in Sources */,
+				93CA54BAE56E4BEBE680A5F7 /* MemberCardView.swift in Sources */,
 				D01C063463CEFC3F4314445C /* Models.swift in Sources */,
+				46EE620880B5D7A89B4C2E66 /* PerkyView.swift in Sources */,
 				633B2FC6F869EFA885C1A79C /* PerxApp.swift in Sources */,
 				27871401C4C3D8D81983C3DA /* SessionStore.swift in Sources */,
 				202D915196C170E4286884FA /* Theme.swift in Sources */,
-				AA11BB22CC33DD44EE55FF02 /* MemberCardView.swift in Sources */,
-				AA11BB22CC33DD44EE55FF04 /* ValidateCardView.swift in Sources */,
-				AA11BB22CC33DD44EE55FF06 /* PerkyView.swift in Sources */,
+				77C5DFACAB3ED953F24592AC /* ValidateCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +193,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -215,10 +224,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = N9RYR8K4CY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -227,12 +234,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -243,7 +249,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -275,10 +280,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = N9RYR8K4CY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -293,13 +296,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -311,24 +313,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Perx/Preview Content\"";
-				DEVELOPMENT_TEAM = N9RYR8K4CY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Perx/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = perx.arcet.app;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = al.perx.app;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -340,24 +337,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Perx/Preview Content\"";
-				DEVELOPMENT_TEAM = N9RYR8K4CY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Perx/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = perx.arcet.app;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = al.perx.app;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;
 				TARGETED_DEVICE_FAMILY = "1,2";

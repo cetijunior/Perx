@@ -230,7 +230,7 @@ function EmptyCardState({ onRetry, t }) {
     <div className={cn('flex flex-col items-center gap-4 py-8 text-center')}>
       <AlertCircle className="h-10 w-10 text-danger" />
       <p className="text-sm text-muted">{t('card.loadError')}</p>
-      <Logo showWord={false} size={32} />
+      <Logo variant="mark" size={32} />
       <Button variant="secondary" onClick={onRetry} className="gap-2">
         <RefreshCw className="h-4 w-4" />
         {t('card.tapRefresh')}

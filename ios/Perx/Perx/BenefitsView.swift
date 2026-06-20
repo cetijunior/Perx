@@ -334,8 +334,8 @@ struct ProfileView: View {
                         } else {
                             ForEach(session.requests) { r in
                                 HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(r.items.joined(separator: " + ")).font(.system(size: 13)).foregroundColor(PerxTheme.text).lineLimit(1)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(session.benefitNames(r.items)).font(.system(size: 13, weight: .medium)).foregroundColor(PerxTheme.text).lineLimit(2)
                                         Text("\(Int(r.total).formatted()) LEK").font(.caption).foregroundColor(PerxTheme.faint)
                                     }
                                     Spacer()
@@ -378,12 +378,6 @@ struct ProfileView: View {
     }
 
     private func statusChip(_ s: String) -> some View {
-        let color: Color = s == "approved" ? PerxTheme.success : s == "rejected" ? PerxTheme.danger : PerxTheme.gold
-        return Text(s.capitalized)
-            .font(.system(size: 10, weight: .semibold))
-            .padding(.horizontal, 8).padding(.vertical, 3)
-            .background(color.opacity(0.18))
-            .foregroundColor(color)
-            .clipShape(Capsule())
+        RequestStatusChip(status: s, compact: true)
     }
 }

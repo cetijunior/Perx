@@ -29,6 +29,16 @@ struct RootView: View {
                 EmployeeTabView()
             }
         }
-        .task { await session.restore() }
+        .task {
+            await session.restore()
+            // Demo/QA convenience: `-autoLogin admin|employee` signs in on launch.
+            let args = ProcessInfo.processInfo.arguments
+            if session.user == nil, let i = args.firstIndex(of: "-autoLogin"), i + 1 < args.count {
+                let creds = args[i + 1] == "admin"
+                    ? ("admin@perx.al", "admin2026")
+                    : ("arta.koci@perx.al", "perx123")
+                await session.login(email: creds.0, password: creds.1)
+            }
+        }
     }
 }

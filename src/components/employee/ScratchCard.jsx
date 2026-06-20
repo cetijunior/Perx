@@ -1,63 +1,140 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Gift, Sparkles } from 'lucide-react'
 
-// Reveals 0–500 ALL bonus or a "deal discount". Canvas-based scratching.
+const BRUSH = 26
+const REVEAL_RATIO = 0.28
+
+function drawOverlay(ctx, w, h, label) {
+  ctx.globalCompositeOperation = 'source-over'
+  ctx.clearRect(0, 0, w, h)
+
+  const grad = ctx.createLinearGradient(0, 0, w, h)
+  grad.addColorStop(0, '#CC785C')
+  grad.addColorStop(0.45, '#D4896A')
+  grad.addColorStop(1, '#E8A55A')
+  ctx.fillStyle = grad
+  ctx.fillRect(0, 0, w, h)
+
+  ctx.fillStyle = 'rgba(255,255,255,0.12)'
+  for (let x = 8; x < w; x += 14) {
+    for (let y = 8; y < h; y += 14) {
+      ctx.beginPath()
+      ctx.arc(x, y, 1.2, 0, Math.PI * 2)
+      ctx.fill()
+    }
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,0.92)'
+  ctx.font = '600 13px Inter, system-ui, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText(label, w / 2, h / 2 + 6)
+
+  ctx.globalCompositeOperation = 'destination-out'
+}
+
+function scratchedRatio(ctx, w, h, dpr) {
+  const { data } = ctx.getImageData(0, 0, w * dpr, h * dpr)
+  let cleared = 0
+  let sampled = 0
+  const stride = 4 * 12
+  for (let i = 3; i < data.length; i += stride) {
+    sampled++
+    if (data[i] < 16) cleared++
+  }
+  return sampled ? cleared / sampled : 0
+}
+
+// Reveals discount code or "try again". Canvas-based scratching.
 export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratch to reveal' }) {
+  const wrapRef = useRef(null)
   const canvasRef = useRef(null)
+  const ctxRef = useRef(null)
+  const sizeRef = useRef({ w: 0, h: 0, dpr: 1 })
+  const drawingRef = useRef(false)
+  const finishedRef = useRef(false)
   const [revealed, setRevealed] = useState(false)
-  const draggingRef = useRef(false)
+
+  const paintOverlay = useCallback(() => {
+    const c = canvasRef.current
+    if (!c || disabled) return
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const w = c.clientWidth
+    const h = c.clientHeight
+    if (!w || !h) return
+
+    c.width = w * dpr
+    c.height = h * dpr
+    const ctx = c.getContext('2d', { willReadFrequently: true })
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    drawOverlay(ctx, w, h, label)
+    ctxRef.current = ctx
+    sizeRef.current = { w, h, dpr }
+  }, [disabled, label])
 
   useEffect(() => {
     if (disabled) return
     setRevealed(false)
-    const c = canvasRef.current; if (!c) return
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const w = c.clientWidth, h = c.clientHeight
-    c.width = w * dpr; c.height = h * dpr
-    const ctx = c.getContext('2d'); ctx.scale(dpr, dpr)
-    const grad = ctx.createLinearGradient(0, 0, w, h)
-    grad.addColorStop(0, '#5B21B6'); grad.addColorStop(0.5, '#7C3AED'); grad.addColorStop(1, '#A78BFA')
-    ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h)
-    ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.font = '600 14px Inter, sans-serif'; ctx.textAlign = 'center'
-    ctx.fillText(label, w / 2, h / 2 + 6)
-    ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.font = '700 11px Inter'; ctx.fillText('PERX', w / 2, h / 2 - 14)
-    ctx.globalCompositeOperation = 'destination-out'
-  }, [disabled, label, prize])
+    finishedRef.current = false
+    paintOverlay()
 
-  function scratchAt(e) {
-    if (revealed || !draggingRef.current) return
-    e.preventDefault?.()
-    const c = canvasRef.current; if (!c) return
-    const rect = c.getBoundingClientRect()
-    const x = ((e.touches?.[0]?.clientX ?? e.clientX) - rect.left)
-    const y = ((e.touches?.[0]?.clientY ?? e.clientY) - rect.top)
-    const ctx = c.getContext('2d')
-    ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.fill()
-    if (scratchedCoverage(ctx, c) > 0.3) finish()
-  }
-  function scratchedCoverage(ctx, c) {
-    const { data } = ctx.getImageData(0, 0, c.width, c.height)
-    let cleared = 0
-    const step = 4 * 16 // sample every 16th pixel for speed
-    let sampled = 0
-    for (let i = 3; i < data.length; i += step) {
-      sampled++
-      if (data[i] === 0) cleared++
-    }
-    return sampled ? cleared / sampled : 0
-  }
-  function finish() {
-    if (revealed) return
-    setRevealed(true)
+    const wrap = wrapRef.current
+    if (!wrap || typeof ResizeObserver === 'undefined') return undefined
+
+    const ro = new ResizeObserver(() => paintOverlay())
+    ro.observe(wrap)
+    return () => ro.disconnect()
+  }, [disabled, label, prize, paintOverlay])
+
+  const scratchAt = useCallback((clientX, clientY) => {
+    if (revealed || disabled) return
     const c = canvasRef.current
-    if (c) { const ctx = c.getContext('2d'); ctx.clearRect(0, 0, c.width, c.height) }
+    const ctx = ctxRef.current
+    const { w, h, dpr } = sizeRef.current
+    if (!c || !ctx || !w || !h) return
+
+    const rect = c.getBoundingClientRect()
+    const x = clientX - rect.left
+    const y = clientY - rect.top
+
+    ctx.globalCompositeOperation = 'destination-out'
+    ctx.beginPath()
+    ctx.arc(x, y, BRUSH, 0, Math.PI * 2)
+    ctx.fill()
+
+    if (finishedRef.current || scratchedRatio(ctx, w, h, dpr) < REVEAL_RATIO) return
+
+    finishedRef.current = true
+    setRevealed(true)
+    ctx.globalCompositeOperation = 'source-over'
+    ctx.clearRect(0, 0, w, h)
     onReveal?.()
-  }
+  }, [disabled, onReveal, revealed])
+
+  const pointerDown = useCallback((e) => {
+    if (disabled || revealed) return
+    drawingRef.current = true
+    canvasRef.current?.setPointerCapture?.(e.pointerId)
+    scratchAt(e.clientX, e.clientY)
+  }, [disabled, revealed, scratchAt])
+
+  const pointerMove = useCallback((e) => {
+    if (!drawingRef.current) return
+    scratchAt(e.clientX, e.clientY)
+  }, [scratchAt])
+
+  const pointerUp = useCallback((e) => {
+    drawingRef.current = false
+    canvasRef.current?.releasePointerCapture?.(e.pointerId)
+  }, [])
 
   return (
-    <div className="relative mx-auto aspect-[4/2.4] w-full max-w-[420px] overflow-hidden rounded-lg border border-line bg-grad-dusk">
-      {/* prize underlay */}
+    <div
+      ref={wrapRef}
+      className="relative mx-auto aspect-[4/2.4] w-full max-w-[420px] overflow-hidden rounded-lg border border-line bg-grad-dusk"
+    >
       <div className="absolute inset-0 grid place-items-center text-center">
         <div>
           <Gift className="mx-auto mb-1 h-7 w-7 text-gold" />
@@ -65,28 +142,32 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
           <p className="mt-0.5 text-xs text-muted">{prize.subtitle}</p>
         </div>
       </div>
-      {/* scratch canvas */}
-      {!disabled && (
+
+      {!disabled && !revealed && (
         <canvas
           ref={canvasRef}
           className="absolute inset-0 h-full w-full touch-none cursor-crosshair"
-          onMouseDown={(e) => { draggingRef.current = true; scratchAt(e) }}
-          onMouseMove={scratchAt}
-          onMouseUp={() => { draggingRef.current = false }}
-          onMouseLeave={() => { draggingRef.current = false }}
-          onTouchStart={(e) => { draggingRef.current = true; scratchAt(e) }}
-          onTouchMove={scratchAt}
-          onTouchEnd={() => { draggingRef.current = false }}
+          onPointerDown={pointerDown}
+          onPointerMove={pointerMove}
+          onPointerUp={pointerUp}
+          onPointerCancel={pointerUp}
+          onPointerLeave={pointerUp}
         />
       )}
+
       {disabled && (
         <div className="absolute inset-0 grid place-items-center bg-bg-elevated/70 text-center text-sm text-muted">
           <p className="px-6">{prize.disabledLabel}</p>
         </div>
       )}
+
       <AnimatePresence>
         {revealed && (
-          <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="pointer-events-none absolute inset-0 grid place-items-center">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="pointer-events-none absolute inset-0 grid place-items-center"
+          >
             <span className="rounded-full bg-grad-gold px-3 py-1 text-[0.7rem] font-bold uppercase tracking-wide text-[#1A1206] shadow-gold">
               <Sparkles className="-mt-0.5 mr-1 inline h-3 w-3" /> You won
             </span>

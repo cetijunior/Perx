@@ -947,21 +947,15 @@ struct ProviderCardCompact: View {
 
 struct PerxLogoTitle: View {
     var body: some View {
-        HStack(spacing: 6) {
-            Image("Logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 20, height: 20)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
-            Text("PERX")
-                .font(.system(size: 14, weight: .bold, design: .serif))
-                .foregroundColor(PerxTheme.text)
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
-        .background(PerxTheme.bgElevated2)
-        .overlay(Capsule().stroke(PerxTheme.line, lineWidth: 1))
-        .clipShape(Capsule())
+        Image("Logo")
+            .resizable()
+            .scaledToFit()
+            .frame(height: 20)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(PerxTheme.bgElevated2)
+            .overlay(Capsule().stroke(PerxTheme.line, lineWidth: 1))
+            .clipShape(Capsule())
     }
 }
 

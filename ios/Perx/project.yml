@@ -2,7 +2,7 @@ name: Perx
 options:
   bundleIdPrefix: al.perx
   deploymentTarget:
-    iOS: "16.0"
+    iOS: "17.0"
   developmentLanguage: en
 
 targets:
@@ -18,6 +18,14 @@ targets:
       - Perx/Preview Content
     info:
       path: Perx/Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        NSCameraUsageDescription: "PerX uses the camera to scan member benefit QR codes for redemption."
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: al.perx.app
@@ -29,8 +37,6 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: "NO"
         INFOPLIST_FILE: Perx/Info.plist
-        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
-        INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
-        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "17.0"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor

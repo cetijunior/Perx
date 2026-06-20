@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import { earthTone } from '@/lib/earthTones'
 import { Reveal, SectionHeading } from '@/components/site/Site'
 
 /** Full-bleed section band — use below the hero, not inside it. */
@@ -48,25 +47,34 @@ export function StepCard({ step, icon: Icon, title, body, accent = 'var(--ember)
   )
 }
 
-export function EarthCategoryTile({ icon: Icon, label, category }) {
-  const tone = earthTone(category)
+export function EarthCategoryTile({ icon: Icon, label, category, className, onClick }) {
+  const Tag = onClick ? 'button' : 'div'
+
   return (
-    <div
-      className="mkt-earth-tile group relative flex min-h-[9.5rem] flex-col justify-between overflow-hidden rounded-xl border border-line/70 bg-bg-elevated p-5 shadow-e2 transition-all duration-300 hover:-translate-y-1 hover:shadow-e3"
-      style={{ '--earth-tone': tone }}
+    <Tag
+      type={onClick ? 'button' : undefined}
+      onClick={onClick}
+      className={cn(
+        'mkt-earth-tile group relative flex min-h-[9.5rem] w-full flex-col justify-between overflow-hidden rounded-xl border border-line/70 bg-bg-elevated p-5 text-left shadow-e2',
+        'transition-[border-color,box-shadow,background-color] duration-200',
+        'hover:border-line hover:bg-bg-elevated-2 hover:shadow-e3',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/35',
+        onClick && 'cursor-pointer',
+        className,
+      )}
+      style={{ '--tile-cat': `var(--cat-${category})` }}
     >
-      <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full opacity-25 blur-2xl transition-opacity group-hover:opacity-40" style={{ background: tone }} />
-      <span
-        className="relative grid h-12 w-12 place-items-center rounded-lg ring-1 ring-line/60"
-        style={{ background: `color-mix(in srgb, ${tone} 18%, rgb(var(--bg-elevated)))`, color: tone }}
-      >
-        <Icon className="h-6 w-6" />
+      <div className="mkt-earth-tile-glow pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-2xl" aria-hidden />
+
+      <span className="mkt-earth-icon relative grid h-12 w-12 shrink-0 place-items-center rounded-lg ring-1 ring-line/60">
+        <Icon className="h-6 w-6 shrink-0" strokeWidth={1.75} aria-hidden />
       </span>
+
       <div className="relative">
         <span className="block text-sm font-semibold">{label}</span>
-        <span className="mt-2 block h-0.5 w-10 rounded-full" style={{ background: tone }} />
+        <span className="mkt-earth-accent mt-2 block h-0.5 w-10 rounded-full transition-[width] duration-200 group-hover:w-14" />
       </div>
-    </div>
+    </Tag>
   )
 }
 

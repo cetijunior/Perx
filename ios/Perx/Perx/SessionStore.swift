@@ -8,6 +8,8 @@ final class SessionStore: ObservableObject {
     @Published var requests: [BenefitRequest] = []
     @Published var error: String?
     @Published var loading: Bool = false
+    @Published var allUsers: [User] = []
+    @Published var allEmployees: [EmployeeProfile] = []
 
     func restore() async {
         guard API.shared.token != nil, user == nil else { return }
@@ -42,6 +44,15 @@ final class SessionStore: ObservableObject {
         await refreshProviders()
         if user?.role == "employee" { await refreshEmployee() }
         await refreshRequests()
+        if user?.role == "admin" { await refreshAdminOverview() }
+    }
+
+    func refreshAdminOverview() async {
+        do {
+            let res = try await API.shared.adminOverview()
+            allUsers = res.users
+            allEmployees = res.employees
+        } catch { self.error = error.localizedDescription }
     }
 
     func refreshProviders() async {
@@ -84,6 +95,23 @@ final class SessionStore: ObservableObject {
     }
 
     func provider(slug: String) -> Provider? { providers.first { $0.slug == slug } }
+
+    /// The employee who submitted a given request (admin overview must be loaded).
+    func employee(for request: BenefitRequest) -> User? {
+        allUsers.first { $0.id == request.userId }
+    }
+
+    /// Turn a list of benefit slugs into a clean, human-readable label using real provider
+    /// names (falls back to a Title-Cased slug if the catalog hasn't loaded yet).
+    func benefitNames(_ slugs: [String]) -> String {
+        slugs.map { slug in
+            provider(slug: slug)?.name ?? slug
+                .replacingOccurrences(of: "-", with: " ")
+                .split(separator: " ")
+                .map { $0.prefix(1).uppercased() + $0.dropFirst() }
+                .joined(separator: " ")
+        }.joined(separator: " · ")
+    }
 
     var budgetSpent: Double {
         (employee?.activeBenefits ?? []).compactMap { provider(slug: $0)?.cost }.reduce(0, +)

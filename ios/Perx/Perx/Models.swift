@@ -10,6 +10,11 @@ struct User: Codable, Identifiable, Equatable {
     let budget: Double?
 }
 
+struct MapPoint: Codable, Equatable {
+    let x: Double
+    let y: Double
+}
+
 struct Provider: Codable, Identifiable, Equatable {
     var id: String { slug }
     let slug: String
@@ -21,6 +26,7 @@ struct Provider: Codable, Identifiable, Equatable {
     let blurb: String?
     let videoUrl: String?
     let posterUrl: String?
+    let map: MapPoint?
 }
 
 struct EmployeeProfile: Codable, Equatable {
@@ -82,3 +88,4 @@ struct EmployeeResponse: Codable { let employee: EmployeeProfile }
 struct RequestsResponse: Codable { let requests: [BenefitRequest] }
 struct RequestResponse: Codable { let request: BenefitRequest }
 struct MeResponse: Codable { let user: User }
+struct AdminOverviewResponse: Codable { let users: [User]; let employees: [EmployeeProfile] }

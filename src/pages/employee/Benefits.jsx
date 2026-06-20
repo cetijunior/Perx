@@ -93,7 +93,7 @@ export default function Benefits() {
         ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
-              <BenefitCard key={p.id} provider={p} inCart={inCart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
+              <BenefitCard key={p.id} provider={p} variant="panel" inCart={inCart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
             ))}
           </div>
         )}

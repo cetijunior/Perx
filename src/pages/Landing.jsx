@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { ArrowRight, Wallet, Compass, Sparkles, CheckCircle2, Users, Building2, Store, Heart, BarChart3, ShieldCheck, MapPin, Utensils, Dumbbell, Plane, GraduationCap, Gift } from 'lucide-react'
@@ -127,6 +127,7 @@ function HowItWorks({ t }) {
 }
 
 function Marketplace({ t }) {
+  const nav = useNavigate()
   const categories = [
     { icon: Heart, label: t('landing.categoryWellness'), category: 'wellness' },
     { icon: Utensils, label: t('landing.categoryFood'), category: 'food' },
@@ -157,13 +158,19 @@ function Marketplace({ t }) {
             ))}
           </div>
         </Reveal>
-        <Reveal delay={0.1}>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {categories.map((c) => (
-              <EarthCategoryTile key={c.label} icon={c.icon} label={c.label} category={c.category} />
-            ))}
-          </div>
-        </Reveal>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {categories.map((c, i) => (
+            <Reveal key={c.category} delay={0.1 + i * 0.04} y={10} className="h-full">
+              <EarthCategoryTile
+                icon={c.icon}
+                label={c.label}
+                category={c.category}
+                className="h-full"
+                onClick={() => nav('/login')}
+              />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </ContentBand>
   )

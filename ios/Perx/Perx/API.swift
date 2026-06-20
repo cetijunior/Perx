@@ -101,6 +101,10 @@ final class API {
         return res.redemption
     }
 
+    func adminOverview() async throws -> AdminOverviewResponse {
+        try await send("/admin/overview", auth: true)
+    }
+
     // MARK: - Core
     private func send<T: Decodable>(_ path: String, method: String = "GET", body: [String: Any]? = nil, auth: Bool = false) async throws -> T {
         var req = URLRequest(url: Config.apiBaseURL.appendingPathComponent(path))

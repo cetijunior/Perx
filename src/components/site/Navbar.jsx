@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 import Button from '@/components/ui/Button'
+import ThemeToggle from '@/components/ui/ThemeToggle'
+import LanguageToggle from '@/components/ui/LanguageToggle'
 import { NavbarToolbar } from '@/components/site/NavbarToolbar'
 import { navToolbarChipClass } from '@/components/ui/navToolbar'
 import { EASE } from '@/lib/motion'
@@ -38,18 +40,25 @@ export default function Navbar() {
     setOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    if (!open) return undefined
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [open])
+
   return (
     <header className="site-navbar fixed inset-x-0 top-0">
       <div
         className={cn(
           'site-navbar-bar safe-t border-b transition-[background-color,border-color,box-shadow] duration-300',
-          scrolled ? 'border-line/80 shadow-e1' : 'border-line/60',
+          scrolled || open ? 'border-line/80 shadow-e1' : 'border-line/60',
         )}
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:py-4">
-          <Link to="/" aria-label="PERX home" className="shrink-0"><Logo /></Link>
+        <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-3 sm:px-5 sm:py-4">
+          <Link to="/" aria-label="PerX home" className="shrink-0"><Logo /></Link>
 
-          <nav className="hidden items-center gap-7 text-sm md:flex" aria-label="Main">
+          <nav className="hidden flex-1 items-center justify-center gap-7 text-sm md:flex" aria-label="Main">
             {NAV_LINKS.map((l) => (
               <NavLink
                 key={l.to}
@@ -74,14 +83,18 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <NavbarToolbar className="hidden sm:inline-flex" />
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1 md:hidden">
+              <ThemeToggle variant="nav" />
+              <LanguageToggle variant="nav" />
+            </div>
+            <NavbarToolbar className="hidden md:inline-flex" />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               className={cn(navToolbarChipClass, 'w-9 px-0 text-text md:hidden')}
               aria-expanded={open}
-              aria-label="Menu"
+              aria-label={open ? t('common.close') : t('mobileNav.menuTitle')}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -91,35 +104,50 @@ export default function Navbar() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: EASE }}
-            className="site-mobile-menu mx-4 mt-2 overflow-hidden rounded-lg border border-line p-3 shadow-e3 backdrop-blur-xl md:hidden"
-          >
-            <nav className="flex flex-col" aria-label="Mobile">
-              {NAV_LINKS.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) => cn(
-                    'rounded-md px-3 py-2.5 text-sm transition-colors',
-                    isActive ? 'bg-bg-elevated-2 text-text' : 'text-muted hover:bg-bg-elevated-2 hover:text-text',
-                  )}
-                >
-                  {t(l.key)}
-                </NavLink>
-              ))}
-              <div className="mt-3 space-y-3 border-t border-line pt-3">
-                <NavbarToolbar className="flex-wrap" onNavigate={() => setOpen(false)} />
-                <Button as={Link} to="/login" size="sm" className="w-full lg:hidden" onClick={() => setOpen(false)}>
+          <>
+            <motion.button
+              type="button"
+              aria-label={t('common.close')}
+              className="fixed inset-0 z-[8998] bg-black/40 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setOpen(false)}
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={t('mobileNav.menuTitle')}
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.24, ease: EASE }}
+              className="site-mobile-menu fixed inset-x-0 top-[var(--site-navbar-h)] z-[9001] max-h-[calc(100dvh-var(--site-navbar-h))] overflow-y-auto border-b border-line px-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-3 shadow-e3 backdrop-blur-xl md:hidden"
+            >
+              <nav className="mx-auto flex max-w-lg flex-col gap-1" aria-label="Mobile">
+                {NAV_LINKS.map((l) => (
+                  <NavLink
+                    key={l.to}
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) => cn(
+                      'rounded-xl px-4 py-3.5 text-base font-medium transition-colors',
+                      isActive ? 'bg-ember/10 text-ember' : 'text-text hover:bg-bg-elevated-2',
+                    )}
+                  >
+                    {t(l.key)}
+                  </NavLink>
+                ))}
+              </nav>
+              <div className="mx-auto mt-4 flex max-w-lg flex-col gap-3 border-t border-line pt-4">
+                <NavbarToolbar className="flex-wrap justify-start" onNavigate={() => setOpen(false)} />
+                <Button as={Link} to="/login" size="md" className="w-full" onClick={() => setOpen(false)}>
                   {t('nav.getStarted')}
                 </Button>
               </div>
-            </nav>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

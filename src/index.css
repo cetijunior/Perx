@@ -45,6 +45,10 @@
   --danger: 198 69 69;          /* #c64545 */
   --info: 37 99 235;
 
+  /* Mobile chrome heights */
+  --mobile-nav-h: 3.75rem;
+  --site-navbar-h: calc(env(safe-area-inset-top) + 3.25rem);
+
   /* Dark surface tokens used by the surprise modal */
   --surface-dark: 24 23 21;         /* #181715 */
   --surface-dark-elevated: 37 35 32; /* #252320 */
@@ -63,6 +67,15 @@
   --shadow-e2: 0 2px 8px rgb(20 20 19 / 0.07), 0 1px 2px rgb(20 20 19 / 0.04);
   --shadow-e3: 0 8px 24px rgb(20 20 19 / 0.1), 0 2px 6px rgb(20 20 19 / 0.05);
   --shadow-glow: 0 4px 16px rgb(var(--ember) / 0.22);
+
+  /* Deals engine map (TiranaMap) */
+  --map-base: 248 249 252;
+  --map-grid: 224 227 232;
+  --map-block: 241 243 246;
+  --map-block-stroke: 224 227 232;
+  --map-river: 167 139 250;
+  --map-office: 204 120 92;
+  --map-scan-alt: 232 165 90;
 
   /* Fixed marketing navbar — used to clip hero canvas below the bar */
   --site-nav-height: calc(4.25rem + env(safe-area-inset-top, 0px));
@@ -89,6 +102,14 @@
   --shadow-e2: 0 2px 8px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.04);
   --shadow-e3: 0 8px 24px rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.04);
   --shadow-glow: 0 4px 16px rgb(var(--ember) / 0.38);
+
+  --map-base: 25 28 35;
+  --map-grid: 54 61 73;
+  --map-block: 31 35 43;
+  --map-block-stroke: 43 50 60;
+  --map-river: 204 120 92;
+  --map-office: 232 165 90;
+  --map-scan-alt: 220 160 130;
 }
 
 * { border-color: rgb(var(--surface-line)); }
@@ -161,7 +182,29 @@ h1, h2, h3, h4 {
     -webkit-backdrop-filter: blur(20px) saturate(1.2);
   }
   .site-mobile-menu {
+    background: rgb(var(--bg-elevated) / 0.98);
+  }
+  .app-mobile-header {
     background: rgb(var(--bg-elevated) / 0.92);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border-bottom: 1px solid rgb(var(--surface-line) / 0.85);
+  }
+  .app-mobile-tabbar {
+    background: rgb(var(--bg-elevated) / 0.94);
+    backdrop-filter: blur(24px) saturate(1.25);
+    -webkit-backdrop-filter: blur(24px) saturate(1.25);
+    border-top: 1px solid rgb(var(--surface-line) / 0.85);
+    box-shadow: 0 -10px 40px rgb(var(--text) / 0.06);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .app-mobile-tab {
+    min-height: var(--mobile-nav-h);
+    padding: 0.35rem 0.15rem 0.45rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .app-mobile-sheet {
+    background: rgb(var(--bg-elevated));
   }
   .text-balance { text-wrap: balance; }
   .safe-b { padding-bottom: env(safe-area-inset-bottom); }
@@ -273,6 +316,32 @@ h1, h2, h3, h4 {
   letter-spacing: -0.03em;
 }
 
+/* Curated marketplace category tiles — stable icons, hover via CSS vars */
+.mkt-earth-tile-glow {
+  background: rgb(var(--tile-cat) / 0.22);
+  opacity: 0.16;
+}
+
+.mkt-earth-tile:hover .mkt-earth-tile-glow {
+  opacity: 0.24;
+}
+
+.mkt-earth-icon {
+  color: rgb(var(--tile-cat));
+  background: rgb(var(--tile-cat) / 0.12);
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.mkt-earth-tile:hover .mkt-earth-icon,
+.mkt-earth-tile:focus-visible .mkt-earth-icon {
+  background: rgb(var(--tile-cat) / 0.2);
+  box-shadow: 0 0 0 3px rgb(var(--tile-cat) / 0.14);
+}
+
+.mkt-earth-accent {
+  background: rgb(var(--tile-cat));
+}
+
 .mkt-stat-strip > div > div:first-child {
   color: rgb(var(--ember));
 }
@@ -296,7 +365,7 @@ h1, h2, h3, h4 {
   z-index: 0;
   overflow: clip;
   contain: paint;
-  opacity: 0.42;
+  opacity: 0.92;
 }
 
 /* R3F root + drei Html overlay — clip projected cards inside the hero band */
@@ -369,7 +438,7 @@ h1, h2, h3, h4 {
   }
 
   .hero-bg {
-    opacity: 0.5;
+    opacity: 0.78;
   }
 
   .hero-mobile-wall {

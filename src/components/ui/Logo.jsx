@@ -1,17 +1,20 @@
 import { cn } from '@/lib/utils'
 
-export default function Logo({ className, showWord = true, size = 28 }) {
+const LOGO_SRC = '/perx-logo.png'
+
+/** PerX brand logo — official orange oval wordmark. */
+export default function Logo({ className, size = 28, variant = 'full', showWord = true }) {
+  void variant
+  void showWord
+
   return (
-    <span className={cn('inline-flex items-center gap-2 font-display', className)}>
-      <img
-        src="/Logo.svg"
-        alt="PERX"
-        width={size}
-        height={size}
-        className="shrink-0 rounded-md"
-        style={{ width: size, height: size }}
-      />
-      {showWord && <span className="text-xl font-bold tracking-tight text-text">PERX</span>}
-    </span>
+    <img
+      src={LOGO_SRC}
+      alt="PerX"
+      width={size}
+      height={size}
+      className={cn('shrink-0 select-none object-contain', className)}
+      decoding="async"
+    />
   )
 }

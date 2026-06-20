@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, Trophy, Flame, Search } from 'lucide-react'
@@ -62,73 +63,150 @@ export default function Employees() {
         })}
       </motion.div>
 
-      <AnimatePresence>
-        {open && <EmployeeModal userId={open} onClose={() => setOpen(null)} t={t} />}
-      </AnimatePresence>
+      <EmployeeModal userId={open} onClose={() => setOpen(null)} t={t} />
     </motion.div>
   )
 }
 
-const Stat = ({ label, value }) => (
-  <div className="rounded-md bg-bg-elevated-2 p-2">
+const Stat = ({ label, value, className }) => (
+  <div className={cn('rounded-md bg-bg-elevated-2 p-2 sm:p-2.5', className)}>
     <p className="text-[0.6rem] uppercase tracking-wide text-faint">{label}</p>
-    <p className="mt-0.5 text-sm font-semibold tabular-nums">{value}</p>
+    <p className="mt-0.5 truncate text-sm font-semibold tabular-nums">{value}</p>
   </div>
 )
 
 function EmployeeModal({ userId, onClose, t }) {
   const s = getState()
-  const u = s.users.find((x) => x.id === userId)
-  const e = s.employees[userId]
+
+  useEffect(() => {
+    if (!userId) return undefined
+    const onKey = (ev) => { if (ev.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [onClose, userId])
+
+  const u = userId ? s.users.find((x) => x.id === userId) : null
+  const e = userId ? s.employees[userId] : null
+
+  return createPortal(
+    <AnimatePresence>
+      {userId && u && e && (
+        <motion.div
+          key={userId}
+          className="fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-4 md:p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <EmployeeModalPanel userId={userId} u={u} e={e} s={s} onClose={onClose} t={t} />
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body,
+  )
+}
+
+function EmployeeModalPanel({ userId, u, e, s, onClose, t }) {
   const b = budgetFor(userId)
   const benefits = e.activeBenefits.map(providerById).filter(Boolean)
   const reqs = s.requests.filter((r) => r.userId === userId)
+
   return (
     <>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} className="fixed inset-0 z-50 bg-black/60" />
+      <motion.button
+        type="button"
+        aria-label={t('common.close')}
+        className="absolute inset-0 bg-bg/75 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      />
+
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96 }}
-        transition={{ type: 'spring', stiffness: 240, damping: 24 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="employee-modal-title"
+        initial={{ opacity: 0, y: 28, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 20, scale: 0.98 }}
+        transition={{ type: 'spring', stiffness: 320, damping: 30 }}
         className={cn(
-          'fixed left-1/2 top-1/2 z-50 w-[min(560px,92vw)] max-h-[85vh] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-line bg-bg-elevated shadow-e3',
+          'relative z-10 flex w-full max-h-[min(90dvh,760px)] flex-col overflow-hidden',
+          'rounded-t-2xl border border-line bg-bg-elevated shadow-e3',
+          'sm:max-w-xl sm:rounded-2xl md:max-w-2xl',
         )}
       >
-        <div className="relative overflow-hidden border-b border-line bg-bg-elevated p-5">
+        <div className="relative shrink-0 overflow-hidden border-b border-line bg-bg-elevated p-4 sm:p-5">
           <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ember/20 blur-3xl" />
-          <button onClick={onClose} className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-md hover:bg-bg-elevated-2"><X className="h-4 w-4" /></button>
-          <div className="flex items-center gap-4">
-            <Avatar name={u.name} size={64} />
-            <div>
-              <p className="font-display text-xl font-bold">{u.name}</p>
-              <p className="text-sm text-muted">{u.department} · {u.company}</p>
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-md text-faint transition-colors hover:bg-bg-elevated-2 hover:text-text"
+          >
+            <X className="h-4 w-4" />
+          </button>
+
+          <div className="flex flex-col gap-4 pr-10 sm:flex-row sm:items-center">
+            <Avatar name={u.name} size={64} className="shrink-0" />
+            <div className="min-w-0">
+              <p id="employee-modal-title" className="truncate font-display text-xl font-bold sm:text-2xl">{u.name}</p>
+              <p className="mt-0.5 truncate text-sm text-muted">{u.department} · {u.company}</p>
             </div>
           </div>
-          <div className="mt-4 grid grid-cols-3 gap-3">
+
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
             <Stat label={t('common.budget')} value={`${formatALL(b.remaining)} LEK`} />
             <Stat label={t('budget.spent')} value={`${formatALL(b.spent)}`} />
-            <Stat label="Bonus" value={`+${formatALL(e.bonus)}`} />
+            <Stat label="Bonus" value={`+${formatALL(e.bonus)}`} className="col-span-2 sm:col-span-1" />
           </div>
         </div>
-        <div className="max-h-[45vh] overflow-y-auto p-5">
+
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5">
           <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-wide text-faint">Active benefits</p>
-          {benefits.length === 0 ? <p className="text-sm text-muted">No active benefits yet.</p> : (
-            <div className="mb-4 space-y-2">
+          {benefits.length === 0 ? (
+            <p className="text-sm text-muted">No active benefits yet.</p>
+          ) : (
+            <div className="mb-5 space-y-2">
               {benefits.map((p) => (
-                <div key={p.id} className="flex items-center gap-3 rounded-md border border-line bg-bg-elevated-2 p-2.5">
+                <div
+                  key={p.id}
+                  className="flex items-center gap-3 rounded-md border border-line bg-bg-elevated-2 p-2.5"
+                >
                   <LogoChip name={p.name} size={32} />
-                  <span className="flex-1 truncate text-sm">{p.name}</span>
-                  <span className="text-xs font-semibold tabular-nums text-ember">{formatALL(p.cost)} LEK</span>
+                  <span className="min-w-0 flex-1 truncate text-sm">{p.name}</span>
+                  <span className="shrink-0 text-xs font-semibold tabular-nums text-ember">{formatALL(p.cost)} LEK</span>
                 </div>
               ))}
             </div>
           )}
+
           <p className="mb-2 text-[0.7rem] font-semibold uppercase tracking-wide text-faint">Requests</p>
-          {reqs.length === 0 ? <p className="text-sm text-muted">No requests yet.</p> : (
+          {reqs.length === 0 ? (
+            <p className="text-sm text-muted">No requests yet.</p>
+          ) : (
             <ul className="space-y-2">
               {reqs.map((r) => (
-                <li key={r.id} className="flex items-center justify-between rounded-md border border-line bg-bg-elevated-2 p-2.5 text-sm">
-                  <span>{r.items.map((id) => providerById(id)?.name).join(' + ')}</span>
-                  <span className={cn('text-xs font-semibold', r.status === 'approved' ? 'text-success' : r.status === 'rejected' ? 'text-danger' : 'text-warning')}>{r.status}</span>
+                <li
+                  key={r.id}
+                  className="flex flex-col gap-2 rounded-md border border-line bg-bg-elevated-2 p-2.5 sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <span className="min-w-0 text-sm leading-snug">
+                    {r.items.map((id) => providerById(id)?.name).join(' + ')}
+                  </span>
+                  <span
+                    className={cn(
+                      'shrink-0 self-start rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase sm:self-center',
+                      r.status === 'approved' ? 'bg-success/15 text-success' : r.status === 'rejected' ? 'bg-danger/15 text-danger' : 'bg-warning/15 text-warning',
+                    )}
+                  >
+                    {r.status}
+                  </span>
                 </li>
               ))}
             </ul>
