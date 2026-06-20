@@ -28,7 +28,7 @@ export default function BudgetGames() {
       <PageHeader title={t('budget.title')} subtitle={t('budget.subtitle')} />
 
       {/* Meter + streak */}
-      <motion.div variants={fadeUp} className="mb-6 grid gap-4 md:grid-cols-[auto,1fr]">
+      <motion.div variants={fadeUp} className="mb-6 grid gap-4 md:grid-cols-[auto_1fr]">
         <div className="grid place-items-center rounded-xl border border-line bg-grad-dusk p-6">
           <Ring value={b.pct} size={180} stroke={14}>
             <div>

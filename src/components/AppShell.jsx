@@ -8,6 +8,7 @@ import { formatALL, cn } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
 import Avatar from '@/components/ui/Avatar'
 import DailySurpriseModal from '@/components/employee/DailySurpriseModal'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 
 function BudgetPill({ user }) {
   useStore()
@@ -84,17 +85,23 @@ export default function AppShell({ items, basePath }) {
           ))}
         </nav>
 
-        <button onClick={doLogout} className="flex items-center gap-2.5 rounded-md px-3 py-2.5 text-sm text-faint transition-colors hover:bg-bg-elevated-2 hover:text-text">
-          <LogOut className="h-4 w-4" /> {t('common.logout')}
-        </button>
+        <div className="mt-3 flex items-center gap-2">
+          <ThemeToggle className="flex-1 justify-center" />
+          <button onClick={doLogout} className="flex flex-1 items-center justify-center gap-2.5 rounded-full px-3 py-2.5 text-sm text-faint transition-colors hover:bg-bg-elevated-2 hover:text-text">
+            <LogOut className="h-4 w-4" /> {t('common.logout')}
+          </button>
+        </div>
       </aside>
 
       {/* ===== Mobile top bar ===== */}
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-line glass px-4 py-3 safe-t md:hidden">
         <Logo size={24} />
-        {isEmployee
-          ? <MobileBudget user={user} />
-          : <span className="rounded-full bg-bg-elevated-2 px-3 py-1 text-xs font-medium text-muted">{user.company}</span>}
+        <div className="flex items-center gap-2">
+          {isEmployee
+            ? <MobileBudget user={user} />
+            : <span className="rounded-full bg-bg-elevated-2 px-3 py-1 text-xs font-medium text-muted">{user.company}</span>}
+          <ThemeToggle />
+        </div>
       </header>
 
       {/* ===== Content ===== */}

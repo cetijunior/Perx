@@ -8,6 +8,7 @@ import { sleep } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 import Logo from '@/components/ui/Logo'
 import LanguageToggle from '@/components/ui/LanguageToggle'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 import { fadeUp, stagger } from '@/lib/motion'
 
 const DEMO = [
@@ -29,8 +30,7 @@ export default function Login() {
     setError(''); setLoading(true)
     const em = creds?.email ?? email
     const pw = creds?.password ?? password
-    await sleep(650)
-    const res = login(em, pw)
+    const res = await login(em, pw)
     setLoading(false)
     if (!res.ok) { setError(t('login.error')); return }
     nav(res.user.role === 'admin' ? '/admin' : '/employee')
@@ -44,7 +44,10 @@ export default function Login() {
       <motion.div variants={stagger(0.07)} initial="hidden" animate="show" className="relative z-10 w-full max-w-sm">
         <div className="mb-6 flex items-center justify-between">
           <Link to="/"><Logo /></Link>
-          <LanguageToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageToggle />
+          </div>
         </div>
 
         <motion.div variants={fadeUp} className="rounded-xl border border-line bg-bg-elevated/80 p-6 shadow-e3 backdrop-blur-xl">

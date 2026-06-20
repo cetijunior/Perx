@@ -78,7 +78,7 @@ export default function DealsEngine() {
         }
       />
 
-      <motion.div variants={fadeUp} className="grid gap-4 lg:grid-cols-[1.4fr,1fr]">
+      <motion.div variants={fadeUp} className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         {/* Map panel */}
         <div className="space-y-3">
           <TiranaMap pins={visible} selectedId={selected} onSelect={setSelected} scanning={scanning} officeLabel={t('admin.yourOffice')} />

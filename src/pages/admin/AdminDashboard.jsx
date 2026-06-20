@@ -42,7 +42,7 @@ export default function AdminDashboard() {
         <KPI icon={<TrendingUp />} label={t('admin.popularCategory')} value={topCat} accent="info" />
       </motion.div>
 
-      <motion.section variants={fadeUp} className="mb-6 grid gap-4 lg:grid-cols-[1.4fr,1fr]">
+      <motion.section variants={fadeUp} className="mb-6 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
         <div className="rounded-xl border border-line bg-bg-elevated p-5">
           <SectionTitle action={pending.length > 0 && <span className="rounded-full bg-warning/15 px-2 py-0.5 text-[0.65rem] font-semibold text-warning">{pending.length}</span>}>{t('admin.pending')}</SectionTitle>
           {pending.length === 0 ? (

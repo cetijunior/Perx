@@ -2,7 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Plus, Check } from 'lucide-react'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
-import { providerVideoSources } from '@/lib/videos'
+import { providerVideoSources, categoryPoster } from '@/lib/videos'
+import { useStore, getProviderBySlug } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 
 function BenefitCardFooter({ provider, inCart, onAdd, readonly, t }) {
@@ -43,8 +44,14 @@ export default function BenefitCard({
   readonly = false,
 }) {
   const { t } = useTranslation()
+  useStore()
   const compact = variant === 'compact'
   const mediaSize = compact ? 'compact' : 'full'
+  // Merge in API-side media fields (posterUrl/videoUrl) when present.
+  const apiProvider = getProviderBySlug(provider.id) || {}
+  const poster = apiProvider.posterUrl || provider.posterUrl || categoryPoster(provider.category)
+  const apiVideo = apiProvider.videoUrl
+  const sources = apiVideo ? [apiVideo, ...providerVideoSources(provider)] : providerVideoSources(provider)
 
   return (
     <motion.div
@@ -55,7 +62,8 @@ export default function BenefitCard({
       <BenefitCardMedia
         category={provider.category}
         rating={provider.rating}
-        sources={providerVideoSources(provider)}
+        sources={sources}
+        poster={poster}
         size={mediaSize}
       />
 

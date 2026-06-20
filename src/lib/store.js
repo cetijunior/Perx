@@ -1,26 +1,19 @@
-// PERX reactive store — single localStorage-backed state object, no backend.
-// Reactivity via useSyncExternalStore. All mutations go through actions here.
+// PERX reactive store.
+// State shape kept stable for existing components; data is now sourced from
+// the backend API (server/) so the web app and iOS app share live state via
+// the same MongoDB Atlas cluster.
+//
+// - Login goes through `/auth/login` (JWT stored in localStorage).
+// - Providers, the current employee profile, and requests are pulled from the
+//   API and reshaped into the in-memory state that components already consume.
+// - Mutations (addToCart, requestApproval, decideRequest, …) call the API
+//   and reconcile state from the server response.
+// - A lightweight poll (on focus + every 8s while visible) keeps both clients
+//   roughly in sync without a websocket.
+
 import { useSyncExternalStore } from 'react'
-import { PROVIDERS, providerById } from './catalog'
-
-const KEY = 'perx:v1'
-const SESSION = 'perx:session'
-
-// ---- seed users ----
-const SEED_USERS = [
-  {
-    id: 'arta', email: 'arta.koci@perx.al', password: 'perx123', role: 'employee',
-    name: 'Arta Koçi', department: 'Marketing', company: 'TeamSystem Albania', budget: 45000,
-  },
-  {
-    id: 'blend', email: 'blend.hoxha@perx.al', password: 'perx123', role: 'employee',
-    name: 'Blend Hoxha', department: 'Engineering', company: 'TeamSystem Albania', budget: 60000,
-  },
-  {
-    id: 'admin', email: 'admin@perx.al', password: 'admin2026', role: 'admin',
-    name: 'Endrit Leka', department: 'People Ops', company: 'TeamSystem Albania', budget: 0,
-  },
-]
+import { PROVIDERS as LOCAL_PROVIDERS, providerById as localProviderById } from './catalog'
+import { api, setToken, getToken } from './api'
 
 const now = () => Date.now()
 const uid = () => Math.random().toString(36).slice(2, 9)
@@ -36,175 +29,255 @@ function freshEmployeeState() {
       dietary: [],
       notifications: { deals: true, approvals: true, streaks: true },
     },
-    games: { streak: 3, lastClaim: 0, scratchToday: false, spinsLeft: 1, tasks: [], history: [
-      { id: uid(), at: now() - 86400000 * 2, label: 'Welcome bonus', delta: 1500 },
-      { id: uid(), at: now() - 86400000, label: 'Daily streak ×3', delta: 300 },
-    ] },
+    games: { streak: 3, lastClaim: 0, scratchToday: false, spinsLeft: 1, tasks: [], history: [] },
   }
 }
 
 function defaultState() {
-  const employees = {}
-  SEED_USERS.filter((u) => u.role === 'employee').forEach((u) => { employees[u.id] = freshEmployeeState() })
-  // Pre-seed Blend with some activity so admin dashboards aren't empty.
-  employees.blend.activeBenefits = ['fitlife', 'kombi']
-  employees.blend.spent = 4300
-  employees.arta.activeBenefits = ['yogaflow']
-  employees.arta.spent = 3000
   return {
-    users: SEED_USERS,
-    employees,
-    requests: [
-      { id: uid(), userId: 'arta', items: ['aquaspa', 'greensalad'], total: 6200, status: 'pending', createdAt: now() - 3600000 },
-      { id: uid(), userId: 'blend', items: ['medicheck'], total: 2500, status: 'pending', createdAt: now() - 7200000 },
-    ],
-    activity: [
-      { id: uid(), at: now() - 3600000, text: 'Arta Koçi requested Aqua Spa + Green Salad Bar', kind: 'request' },
-      { id: uid(), at: now() - 7200000, text: 'Blend Hoxha requested MediCheck Clinic', kind: 'request' },
-      { id: uid(), at: now() - 90000000, text: 'Blend Hoxha activated FitLife Gym', kind: 'activate' },
-    ],
+    users: [],
+    employees: {},
+    requests: [],
+    activity: [],
+    providers: LOCAL_PROVIDERS,    // fallback catalog until /providers loads
     lang: 'sq',
+    currentUserId: null,
     seededAt: now(),
+    loading: false,
+    error: null,
   }
 }
 
-// ---- persistence ----
-function load() {
-  try {
-    const raw = localStorage.getItem(KEY)
-    if (!raw) { const s = defaultState(); localStorage.setItem(KEY, JSON.stringify(s)); return s }
-    return JSON.parse(raw)
-  } catch { return defaultState() }
-}
-
-let state = load()
+let state = defaultState()
 const listeners = new Set()
-function persist() { localStorage.setItem(KEY, JSON.stringify(state)); listeners.forEach((l) => l()) }
-function set(updater) { state = { ...state, ...updater(state) }; persist() }
+function persistSession() {
+  try { localStorage.setItem('perx:session', state.currentUserId || '') } catch {}
+}
+function emit() { listeners.forEach((l) => l()) }
+function set(updater) { state = { ...state, ...updater(state) }; emit() }
 
 export function subscribe(cb) { listeners.add(cb); return () => listeners.delete(cb) }
 export function getState() { return state }
 
-// ---- derived ----
+// ── catalog helpers (provider lookup goes through state, falls back to local) ──
+export function getProviderBySlug(slug) {
+  return state.providers.find((p) => (p.slug || p.id) === slug) || localProviderById(slug) || null
+}
+
+// Shim so the rest of the app can keep importing providerById from store.
+export const PROVIDERS = LOCAL_PROVIDERS
+
+// ── budget derived ──
 export function budgetFor(userId) {
   const u = state.users.find((x) => x.id === userId)
   const e = state.employees[userId]
   if (!u || !e) return { total: 0, spent: 0, bonus: 0, remaining: 0, pct: 0 }
-  const total = u.budget + e.bonus
-  const remaining = Math.max(0, total - e.spent)
-  return { total, base: u.budget, spent: e.spent, bonus: e.bonus, remaining, pct: total ? remaining / total : 0 }
+  const total = (u.budget || 0) + (e.bonus || 0)
+  const remaining = Math.max(0, total - (e.spent || 0))
+  return { total, base: u.budget || 0, spent: e.spent || 0, bonus: e.bonus || 0, remaining, pct: total ? remaining / total : 0 }
 }
 
-// ---- auth ----
-export function login(email, password) {
-  const u = state.users.find((x) => x.email.toLowerCase() === email.trim().toLowerCase() && x.password === password)
-  if (!u) return { ok: false, error: 'Invalid credentials' }
-  localStorage.setItem(SESSION, u.id)
-  listeners.forEach((l) => l())
-  return { ok: true, user: u }
+// ── normalisers (API → store shape) ──
+function reshapeEmployee(emp, providers) {
+  const cart = emp?.cart || []
+  const active = emp?.activeBenefits || []
+  const lookup = (slug) => providers.find((p) => (p.slug || p.id) === slug)
+  const spent = active.reduce((s, slug) => s + (lookup(slug)?.cost || 0), 0)
+  const base = freshEmployeeState()
+  return {
+    ...base,
+    cart,
+    activeBenefits: active,
+    bonus: emp?.bonus || 0,
+    spent,
+    preferences: { ...base.preferences, ...(emp?.preferences || {}) },
+    games: { ...base.games, ...(emp?.games || {}) },
+  }
 }
-export function logout() { localStorage.removeItem(SESSION); listeners.forEach((l) => l()) }
+
+// ── hydration ──
+async function loadProviders() {
+  try {
+    const { providers } = await api.providers()
+    set(() => ({ providers }))
+  } catch { /* leave fallback */ }
+}
+
+async function loadCurrentUserData() {
+  if (!getToken()) return
+  try {
+    const [{ providers }, requestsRes] = await Promise.all([
+      api.providers().catch(() => ({ providers: state.providers })),
+      api.listRequests().catch(() => ({ requests: [] })),
+    ])
+    let activeUserId = state.currentUserId
+    let users = state.users
+
+    if (!activeUserId) {
+      const { user } = await api.me()
+      activeUserId = user.id
+      users = mergeUsers(state.users, [user])
+    }
+
+    const me = users.find((u) => u.id === activeUserId) || state.users.find((u) => u.id === activeUserId)
+    let employeeUpdate = {}
+
+    if (me?.role === 'employee') {
+      try {
+        const { employee } = await api.employeeMe()
+        employeeUpdate = { [activeUserId]: reshapeEmployee(employee, providers) }
+      } catch {}
+    } else if (me?.role === 'admin') {
+      try {
+        const { users: allUsers, employees: allEmployees } = await api.adminOverview()
+        users = mergeUsers(users, allUsers)
+        for (const e of allEmployees) {
+          employeeUpdate[e.userId] = reshapeEmployee(e, providers)
+        }
+      } catch {}
+    }
+
+    set((s) => ({
+      providers,
+      requests: requestsRes.requests,
+      users,
+      currentUserId: activeUserId,
+      employees: { ...s.employees, ...employeeUpdate },
+    }))
+  } catch (err) {
+    console.warn('hydrate failed', err)
+  }
+}
+
+function mergeUsers(existing, incoming) {
+  const map = new Map(existing.map((u) => [u.id, u]))
+  for (const u of incoming) map.set(u.id, { ...map.get(u.id), ...u })
+  return Array.from(map.values())
+}
+
+// ── auth ──
+export async function login(email, password) {
+  set(() => ({ loading: true, error: null }))
+  try {
+    const { token, user } = await api.login(email, password)
+    setToken(token)
+    set((s) => ({
+      users: mergeUsers(s.users, [user]),
+      currentUserId: user.id,
+      loading: false,
+    }))
+    persistSession()
+    await loadCurrentUserData()
+    return { ok: true, user }
+  } catch (err) {
+    set(() => ({ loading: false, error: err.message }))
+    return { ok: false, error: err.message }
+  }
+}
+
+export function logout() {
+  setToken(null)
+  state = { ...defaultState(), providers: state.providers }
+  persistSession()
+  emit()
+}
+
 export function currentUser() {
-  const id = localStorage.getItem(SESSION)
-  return state.users.find((x) => x.id === id) || null
+  return state.users.find((x) => x.id === state.currentUserId) || null
 }
 
-// ---- employee actions ----
-function mutEmp(userId, fn) {
-  set((s) => {
-    const employees = { ...s.employees, [userId]: { ...s.employees[userId] } }
-    fn(employees[userId])
-    return { employees }
-  })
-}
-export const addToCart = (userId, pid) => mutEmp(userId, (e) => { if (!e.cart.includes(pid)) e.cart = [...e.cart, pid] })
-export const removeFromCart = (userId, pid) => mutEmp(userId, (e) => { e.cart = e.cart.filter((x) => x !== pid) })
-export const clearCart = (userId) => mutEmp(userId, (e) => { e.cart = [] })
-
-export function requestApproval(userId, items, label) {
-  const total = items.reduce((sum, id) => sum + (providerById(id)?.cost || 0), 0)
-  const user = state.users.find((u) => u.id === userId)
-  set((s) => ({
-    requests: [{ id: uid(), userId, items, total, status: 'pending', createdAt: now(), label }, ...s.requests],
-    activity: [{ id: uid(), at: now(), text: `${user.name} requested ${items.map((i) => providerById(i)?.name).join(' + ')}`, kind: 'request' }, ...s.activity],
-  }))
-  clearCart(userId)
+// ── employee mutations (write-through to API, optimistic update first) ──
+function applyEmployee(userId, mutator) {
+  const employees = { ...state.employees }
+  const e = { ...(employees[userId] || freshEmployeeState()) }
+  mutator(e)
+  employees[userId] = e
+  set(() => ({ employees }))
 }
 
-export function setPreferences(userId, prefs) { mutEmp(userId, (e) => { e.preferences = { ...e.preferences, ...prefs } }) }
+export async function addToCart(userId, slug) {
+  applyEmployee(userId, (e) => { if (!e.cart.includes(slug)) e.cart = [...e.cart, slug] })
+  try {
+    const { employee } = await api.addToCart(slug)
+    set((s) => ({ employees: { ...s.employees, [userId]: reshapeEmployee(employee, s.providers) } }))
+  } catch (err) { console.warn('addToCart failed', err) }
+}
+
+export async function removeFromCart(userId, slug) {
+  applyEmployee(userId, (e) => { e.cart = e.cart.filter((x) => x !== slug) })
+  try {
+    const { employee } = await api.removeFromCart(slug)
+    set((s) => ({ employees: { ...s.employees, [userId]: reshapeEmployee(employee, s.providers) } }))
+  } catch (err) { console.warn('removeFromCart failed', err) }
+}
+
+export async function clearCart(userId) {
+  const cart = state.employees[userId]?.cart || []
+  applyEmployee(userId, (e) => { e.cart = [] })
+  try { await Promise.all(cart.map((slug) => api.removeFromCart(slug))) } catch {}
+}
+
+export async function requestApproval(userId, items) {
+  try {
+    const { request } = await api.submitRequest(items)
+    set((s) => ({ requests: [request, ...s.requests] }))
+    await clearCart(userId)
+  } catch (err) { console.warn('requestApproval failed', err) }
+}
+
+export async function decideRequest(reqId, decision) {
+  try {
+    const { request } = await api.decideRequest(reqId, decision)
+    set((s) => ({ requests: s.requests.map((r) => (r.id === reqId ? request : r)) }))
+    // Approval changes employee state — refresh.
+    if (decision === 'approved') await loadCurrentUserData()
+  } catch (err) { console.warn('decideRequest failed', err) }
+}
+
+// ── still-local actions (no backend equivalent yet) ──
+export function setPreferences(userId, prefs) {
+  applyEmployee(userId, (e) => { e.preferences = { ...e.preferences, ...prefs } })
+  api.patchEmployee({ preferences: { ...state.employees[userId].preferences } }).catch(() => {})
+}
 
 export function awardBonus(userId, amount, label) {
-  mutEmp(userId, (e) => {
+  applyEmployee(userId, (e) => {
     e.bonus += amount
-    e.games = { ...e.games, history: [{ id: uid(), at: now(), label, delta: amount }, ...e.games.history] }
+    e.games = { ...e.games, history: [{ id: uid(), at: now(), label, delta: amount }, ...(e.games.history || [])] }
   })
 }
-export function setGames(userId, patch) { mutEmp(userId, (e) => { e.games = { ...e.games, ...patch } }) }
-
+export function setGames(userId, patch) {
+  applyEmployee(userId, (e) => { e.games = { ...e.games, ...patch } })
+}
 export function completeTask(userId, taskId, reward) {
-  mutEmp(userId, (e) => {
+  applyEmployee(userId, (e) => {
     if (e.games.tasks.includes(taskId)) return
     e.games = {
       ...e.games,
       tasks: [...e.games.tasks, taskId],
-      history: [{ id: uid(), at: now(), label: `Task: ${taskId}`, delta: reward }, ...e.games.history],
+      history: [{ id: uid(), at: now(), label: `Task: ${taskId}`, delta: reward }, ...(e.games.history || [])],
     }
     e.bonus += reward
   })
 }
 
-// ---- admin actions ----
-export function decideRequest(reqId, decision) {
-  set((s) => {
-    const req = s.requests.find((r) => r.id === reqId)
-    if (!req || req.status !== 'pending') return {}
-    const requests = s.requests.map((r) => (r.id === reqId ? { ...r, status: decision } : r))
-    const employees = { ...s.employees }
-    const user = s.users.find((u) => u.id === req.userId)
-    if (decision === 'approved') {
-      const e = { ...employees[req.userId] }
-      e.spent += req.total
-      e.activeBenefits = Array.from(new Set([...e.activeBenefits, ...req.items]))
-      employees[req.userId] = e
-    }
-    const activity = [{ id: uid(), at: now(), text: `${user.name}'s request ${decision}`, kind: decision }, ...s.activity]
-    return { requests, employees, activity }
-  })
-}
-
 export function setLang(lang) { set(() => ({ lang })) }
 
-// ---- daily surprise pop-up ----
+// ── daily surprise (still local-only) ──
 const SURPRISE_KEY = 'perx:daily-surprise'
 function todayStr() { return new Date().toISOString().slice(0, 10) }
-
 export function getDailySurprise() {
-  try {
-    const raw = localStorage.getItem(SURPRISE_KEY)
-    if (!raw) return null
-    return JSON.parse(raw) // { shownDate, gameType }
-  } catch { return null }
+  try { const raw = localStorage.getItem(SURPRISE_KEY); return raw ? JSON.parse(raw) : null } catch { return null }
 }
-
 export function markDailySurpriseShown(gameType) {
   localStorage.setItem(SURPRISE_KEY, JSON.stringify({ shownDate: todayStr(), gameType }))
 }
+export function isDailySurpriseShownToday() { return getDailySurprise()?.shownDate === todayStr() }
+export function pickTodayGame() { return new Date().getDate() % 2 === 0 ? 'scratch' : 'spin' }
 
-export function isDailySurpriseShownToday() {
-  const s = getDailySurprise()
-  return s?.shownDate === todayStr()
-}
+export function resetAll() { logout() }
 
-/** Pick scratch or spin deterministically for today (different each day) */
-export function pickTodayGame() {
-  // Use date digits to alternate: even day → scratch, odd → spin
-  const day = new Date().getDate()
-  return day % 2 === 0 ? 'scratch' : 'spin'
-}
-
-export function resetAll() { localStorage.removeItem(KEY); localStorage.removeItem(SESSION); state = defaultState(); persist() }
-
-// ---- hooks ----
+// ── hooks ──
 export function useStore(selector = (s) => s) {
   return useSyncExternalStore(subscribe, () => selector(state), () => selector(state))
 }
@@ -212,4 +285,20 @@ export function useCurrentUser() {
   return useSyncExternalStore(subscribe, currentUser, currentUser)
 }
 
-export { PROVIDERS }
+// ── boot: providers always, current user if a token exists, periodic refresh ──
+loadProviders()
+if (getToken()) {
+  loadCurrentUserData()
+}
+
+if (typeof window !== 'undefined') {
+  let timer = null
+  const tick = () => { if (document.visibilityState === 'visible' && getToken()) loadCurrentUserData() }
+  const start = () => { if (!timer) timer = setInterval(tick, 8000) }
+  const stop = () => { if (timer) { clearInterval(timer); timer = null } }
+  start()
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') { tick(); start() } else { stop() }
+  })
+  window.addEventListener('focus', tick)
+}

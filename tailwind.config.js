@@ -48,11 +48,10 @@ export default {
         gold: '0 4px 16px rgb(var(--gold) / 0.16)',
       },
       backgroundImage: {
-        'grad-ember': 'linear-gradient(135deg, #A78BFA 0%, #7C3AED 50%, #5B21B6 100%)',
-        'grad-dusk': 'linear-gradient(160deg, #FFFDF9 0%, #F1EBDF 100%)',
-        'grad-gold': 'linear-gradient(135deg, #F2C879 0%, #CA8A1C 100%)',
-        'grad-aurora':
-          'radial-gradient(120% 120% at 0% 0%, rgb(var(--ember) / 0.20), transparent 50%), radial-gradient(120% 120% at 100% 0%, rgb(var(--cat-travel) / 0.13), transparent 50%)',
+        'grad-ember': 'var(--grad-ember)',
+        'grad-dusk': 'var(--grad-dusk)',
+        'grad-gold': 'var(--grad-gold)',
+        'grad-aurora': 'var(--grad-aurora)',
       },
       keyframes: {
         shimmer: { '100%': { transform: 'translateX(100%)' } },

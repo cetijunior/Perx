@@ -4,7 +4,7 @@ import { Check } from 'lucide-react'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
 import { LogoChip } from '@/components/ui/Avatar'
 import Button from '@/components/ui/Button'
-import { packageVideoSources } from '@/lib/videos'
+import { packageVideoSources, categoryPoster } from '@/lib/videos'
 import { formatALL, cn } from '@/lib/utils'
 
 export default function PackageCard({ pkg, items, total, allInCart, onAdd, className }) {
@@ -19,6 +19,7 @@ export default function PackageCard({ pkg, items, total, allInCart, onAdd, class
       <BenefitCardMedia
         category={pkg.accent}
         sources={packageVideoSources(pkg)}
+        poster={categoryPoster(pkg.accent)}
         showChips={false}
       />
 

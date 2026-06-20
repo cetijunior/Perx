@@ -17,6 +17,7 @@ export default function BenefitCardMedia({
   category,
   rating,
   sources = [],
+  poster,
   size = 'full',
   overlay,
   playOnHover = true,
@@ -26,6 +27,7 @@ export default function BenefitCardMedia({
   const videoRef = useRef(null)
   const [srcIndex, setSrcIndex] = useState(0)
   const [ready, setReady] = useState(false)
+  const [posterFailed, setPosterFailed] = useState(false)
   const src = sources[srcIndex] ?? null
   const failed = srcIndex >= sources.length
 
@@ -57,13 +59,26 @@ export default function BenefitCardMedia({
       <div
         className="absolute inset-0 grid place-items-center"
         style={{ background: `linear-gradient(135deg, color-mix(in srgb, var(--cat-${category}) 32%, rgb(var(--bg-elevated-2))), rgb(var(--bg-elevated-2)))` }}
-      >
-        {size !== 'thumb' && (
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-bg-elevated/70 text-text shadow-e1 backdrop-blur transition-opacity duration-300 group-hover/media:opacity-0">
-            <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
-          </span>
-        )}
-      </div>
+      />
+
+      {poster && !posterFailed && (
+        <img
+          src={poster}
+          alt=""
+          loading="lazy"
+          onError={() => setPosterFailed(true)}
+          className={cn(
+            'absolute inset-0 h-full w-full object-cover transition-opacity duration-300',
+            ready ? 'opacity-0' : 'opacity-100',
+          )}
+        />
+      )}
+
+      {size !== 'thumb' && (
+        <span className="absolute left-1/2 top-1/2 z-[1] grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg-elevated/70 text-text shadow-e1 backdrop-blur transition-opacity duration-300 group-hover/media:opacity-0">
+          <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
+        </span>
+      )}
 
       {src && !failed && (
         <video

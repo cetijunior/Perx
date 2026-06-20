@@ -1,0 +1,36 @@
+name: Perx
+options:
+  bundleIdPrefix: al.perx
+  deploymentTarget:
+    iOS: "16.0"
+  developmentLanguage: en
+
+targets:
+  Perx:
+    type: application
+    platform: iOS
+    sources:
+      - path: Perx
+        excludes:
+          - "Info.plist"
+    resources:
+      - Perx/Assets.xcassets
+      - Perx/Preview Content
+    info:
+      path: Perx/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: al.perx.app
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.9"
+        ENABLE_PREVIEWS: "YES"
+        DEVELOPMENT_ASSET_PATHS: "\"Perx/Preview Content\""
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: "NO"
+        INFOPLIST_FILE: Perx/Info.plist
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
+        INFOPLIST_KEY_UILaunchScreen_Generation: "YES"
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor

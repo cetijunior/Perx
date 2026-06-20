@@ -3,10 +3,17 @@ import { motion } from 'framer-motion'
 import BenefitCardMedia from '@/components/employee/BenefitCardMedia'
 import { Countdown } from '@/components/ui/Badge'
 import { dealVideoSources } from '@/lib/videos'
+import { getProviderBySlug, useStore } from '@/lib/store'
 import { cn } from '@/lib/utils'
 
 export default function DealCard({ deal, provider, expiresAt, className }) {
   const nav = useNavigate()
+  useStore()
+  const apiProvider = provider ? getProviderBySlug(provider.id) : null
+  const poster = apiProvider?.posterUrl
+  const apiVideo = apiProvider?.videoUrl
+  const baseSources = dealVideoSources(deal, provider)
+  const sources = apiVideo ? [apiVideo, ...baseSources] : baseSources
 
   return (
     <motion.button
@@ -19,7 +26,8 @@ export default function DealCard({ deal, provider, expiresAt, className }) {
       <BenefitCardMedia
         category={deal.accent}
         rating={provider?.rating}
-        sources={dealVideoSources(deal, provider)}
+        sources={sources}
+        poster={poster}
         overlay={
           <div className="absolute right-3 top-3">
             <Countdown expiresAt={expiresAt} />

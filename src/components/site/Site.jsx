@@ -6,6 +6,7 @@ import { ArrowRight, Menu, X } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 import Button from '@/components/ui/Button'
 import LanguageToggle from '@/components/ui/LanguageToggle'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 import { fadeUp, stagger, EASE } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 
@@ -64,6 +65,7 @@ export function SiteNav() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle className="hidden sm:inline-flex" />
             <LanguageToggle className="hidden sm:inline-flex" />
             <Button as={Link} to="/login" size="sm" variant="secondary" className="hidden sm:inline-flex">{t('nav.login')}</Button>
             <Button as={Link} to="/login" size="sm" className="hidden lg:inline-flex">{t('nav.getStarted')} <ArrowRight className="h-4 w-4" /></Button>
@@ -99,7 +101,10 @@ export function SiteNav() {
                 </NavLink>
               ))}
               <div className="mt-2 flex items-center justify-between gap-2 border-t border-line pt-3">
-                <LanguageToggle />
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <LanguageToggle />
+                </div>
                 <Button as={Link} to="/login" size="sm" onClick={() => setOpen(false)}>{t('nav.getStarted')}</Button>
               </div>
             </nav>
@@ -164,7 +169,10 @@ export function SiteFooter() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-line pt-7 sm:flex-row">
           <p className="text-xs text-faint">© {year} PERX · {t('site.footer.rights')}</p>
-          <LanguageToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageToggle />
+          </div>
         </div>
       </div>
     </footer>
