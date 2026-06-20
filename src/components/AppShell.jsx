@@ -3,7 +3,7 @@ import { NavLink, useNavigate, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { LogOut } from 'lucide-react'
-import { logout, useCurrentUser, useStore, budgetFor } from '@/lib/store'
+import { logout, useCurrentUser, useStore, budgetFor, setGames, getState } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
 import Avatar from '@/components/ui/Avatar'
@@ -45,10 +45,17 @@ export default function AppShell({ items, basePath }) {
 
   useEffect(() => {
     if (!isEmployee) return
-    // MVP mode: always show on reload so the reward can be tested.
-    // For production, swap this back to the isDailySurpriseShownToday() guard.
+    // MVP mode: always show on reload, and reset whichever game is picked
+    // so it's always playable (not stuck in "already used" state).
+    // For production: wrap in isDailySurpriseShownToday() guard.
     const timer = setTimeout(() => {
       const game = Math.random() < 0.5 ? 'scratch' : 'spin'
+      // Reset that game's state so it's fresh and playable
+      const userId = getState().users.find(u => u.role === 'employee' && u.id === user.id)?.id
+      if (userId) {
+        if (game === 'scratch') setGames(userId, { scratchToday: false })
+        if (game === 'spin')    setGames(userId, { spinsLeft: 1 })
+      }
       setSurpriseGame(game)
     }, 800)
     return () => clearTimeout(timer)

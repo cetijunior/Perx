@@ -115,18 +115,30 @@ export default function DailySurpriseModal({ gameType, onClose }) {
 
   function handleSpinResult(w) {
     setGames(user.id, { spinsLeft: Math.max(0, spinsLeft - 1) })
-    let label = ''
-    if (w.id === 'bonus') {
-      awardBonus(user.id, 500, 'Spin wheel bonus')
-      label = 'JACKPOT! +500 LEK 🎊'
-    } else {
-      awardBonus(user.id, 100, `Spin: ${w.label} unlocked`)
-      label = `${w.label} unlocked! +100 LEK 🎁`
+
+    // Map wedge IDs to reward amounts
+    const rewards = {
+      lek100: 100, lek150: 150, lek200: 200,
+      lek300: 300, lek500: 500, lek750: 750,
+      bonus: 1000,
     }
+    const amount = rewards[w.id] ?? 0
+    let label = ''
+
+    if (w.id === 'tryagain') {
+      label = 'Better luck tomorrow! 🍀'
+    } else if (amount > 0) {
+      awardBonus(user.id, amount, `Spin: ${w.label}`)
+      label = `${w.label} — +${amount} LEK added! 🎉`
+    } else {
+      // perk wedges (spa, gym, disc20, disc15)
+      awardBonus(user.id, 100, `Spin perk: ${w.label}`)
+      label = `${w.label} unlocked! Check your benefits 🎁`
+    }
+
     setWinLabel(label)
-    setConfetti(true)
-    // delay done so wheel finishes spinning
-    setTimeout(() => setDone(true), 3500)
+    if (w.id !== 'tryagain') setConfetti(true)
+    setTimeout(() => setDone(true), 3700)
   }
 
   // Close on backdrop click
