@@ -9,7 +9,7 @@ import { fadeUp, stagger } from '@/lib/motion'
 import { PageHeader, SectionTitle } from '@/components/ui/Misc'
 import { LogoChip } from '@/components/ui/Avatar'
 import { CategoryChip } from '@/components/ui/Badge'
-import OfferCard from '@/components/employee/OfferCard'
+import BenefitCard from '@/components/employee/BenefitCard'
 import Button from '@/components/ui/Button'
 
 export default function Benefits() {
@@ -105,7 +105,7 @@ export default function Benefits() {
         ) : (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
-              <OfferCard key={p.id} provider={p} inCart={inCart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
+              <BenefitCard key={p.id} provider={p} inCart={inCart.includes(p.id)} onAdd={(id) => addToCart(user.id, id)} />
             ))}
           </div>
         )}

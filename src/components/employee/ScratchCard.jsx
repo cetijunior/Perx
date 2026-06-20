@@ -17,7 +17,7 @@ export default function ScratchCard({ disabled, prize, onReveal, label = 'Scratc
     c.width = w * dpr; c.height = h * dpr
     const ctx = c.getContext('2d'); ctx.scale(dpr, dpr)
     const grad = ctx.createLinearGradient(0, 0, w, h)
-    grad.addColorStop(0, '#D8421F'); grad.addColorStop(0.5, '#F4593B'); grad.addColorStop(1, '#E0A938')
+    grad.addColorStop(0, '#5B21B6'); grad.addColorStop(0.5, '#7C3AED'); grad.addColorStop(1, '#A78BFA')
     ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h)
     ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.font = '600 14px Inter, sans-serif'; ctx.textAlign = 'center'
     ctx.fillText(label, w / 2, h / 2 + 6)

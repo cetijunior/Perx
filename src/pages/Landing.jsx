@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { ArrowRight, Wallet, Compass, Sparkles, CheckCircle2, Users, Building2, Store, ChevronDown } from 'lucide-react'
-import Logo from '@/components/ui/Logo'
 import Button from '@/components/ui/Button'
-import LanguageToggle from '@/components/ui/LanguageToggle'
-import { fadeUp, stagger, EASE } from '@/lib/motion'
+import { SiteNav, SiteFooter, Reveal } from '@/components/site/Site'
+import { fadeUp, stagger } from '@/lib/motion'
 
 const Hero3D = lazy(() => import('@/components/three/Hero3D'))
 
@@ -14,31 +13,13 @@ export default function Landing() {
   const { t } = useTranslation()
   return (
     <div className="relative min-h-dvh bg-bg text-text">
-      <Nav t={t} />
+      <SiteNav />
       <Hero t={t} />
       <HowItWorks t={t} />
       <Personas t={t} />
       <FooterCTA t={t} />
+      <SiteFooter />
     </div>
-  )
-}
-
-function Nav({ t }) {
-  return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Logo />
-        <nav className="hidden items-center gap-7 text-sm text-muted md:flex">
-          <a href="#how" className="transition-colors hover:text-text">{t('nav.how')}</a>
-          <a href="#personas" className="transition-colors hover:text-text">{t('nav.employees')}</a>
-          <a href="#personas" className="transition-colors hover:text-text">{t('nav.companies')}</a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <LanguageToggle className="hidden sm:inline-flex" />
-          <Button as={Link} to="/login" size="sm" variant="secondary">{t('nav.login')}</Button>
-        </div>
-      </div>
-    </header>
   )
 }
 
@@ -101,20 +82,6 @@ const Stat = ({ value, label }) => (
   </div>
 )
 
-function Reveal({ children, className, delay = 0 }) {
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.5, ease: EASE, delay }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 function HowItWorks({ t }) {
   const steps = [
     { icon: Wallet, title: t('landing.how1Title'), body: t('landing.how1') },
@@ -173,7 +140,7 @@ function Personas({ t }) {
 
 function FooterCTA({ t }) {
   return (
-    <footer className="relative overflow-hidden border-t border-line">
+    <section className="relative overflow-hidden border-t border-line">
       <div className="pointer-events-none absolute inset-0 bg-grad-aurora opacity-60" />
       <div className="relative mx-auto max-w-6xl px-5 py-20 text-center">
         <Reveal>
@@ -182,12 +149,7 @@ function FooterCTA({ t }) {
             <Button as={Link} to="/login" size="lg">{t('landing.ctaPrimary')} <ArrowRight className="h-4 w-4" /></Button>
           </div>
         </Reveal>
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-line pt-8 sm:flex-row">
-          <Logo />
-          <p className="text-xs text-faint">{t('landing.footerNote')}</p>
-          <LanguageToggle />
-        </div>
       </div>
-    </footer>
+    </section>
   )
 }

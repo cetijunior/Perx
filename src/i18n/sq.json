@@ -8,6 +8,22 @@
     "login": "Hyr",
     "getStarted": "Fillo tani"
   },
+  "site": {
+    "nav": {
+      "features": "Veçoritë",
+      "about": "Rreth nesh",
+      "pricing": "Çmimet",
+      "contact": "Kontakt"
+    },
+    "footer": {
+      "product": "Produkti",
+      "company": "Kompania",
+      "legal": "Ligjore",
+      "privacy": "Politika e Privatësisë",
+      "terms": "Kushtet e Shërbimit",
+      "rights": "Të gjitha të drejtat e rezervuara."
+    }
+  },
   "landing": {
     "headline": "Përfitimet që dëshironi.",
     "headline2": "Talenti që meritoni.",

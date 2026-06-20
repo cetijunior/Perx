@@ -62,12 +62,12 @@ export default function Statistics() {
         <ChartCard title={t('admin.spendByCat')}>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={spendByCat} margin={{ left: -16, right: 8, top: 8 }}>
-              <CartesianGrid stroke="#1B2029" vertical={false} />
-              <XAxis dataKey="name" stroke="#6B7383" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="#6B7383" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
-              <Tooltip content={<DarkTooltip />} cursor={{ fill: '#181C2540' }} formatter={(v) => `${formatALL(v)} LEK`} />
+              <CartesianGrid stroke="#E4DBCA" vertical={false} />
+              <XAxis dataKey="name" stroke="#837B92" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis stroke="#837B92" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
+              <Tooltip content={<DarkTooltip />} cursor={{ fill: '#7C3AED14' }} formatter={(v) => `${formatALL(v)} LEK`} />
               <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                {spendByCat.map((e) => <Cell key={e.key} fill={COLORS[e.key] || '#F4593B'} />)}
+                {spendByCat.map((e) => <Cell key={e.key} fill={COLORS[e.key] || '#7C3AED'} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -76,13 +76,13 @@ export default function Statistics() {
         <ChartCard title={t('admin.engagement')}>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={engagement} margin={{ left: -16, right: 8, top: 8 }}>
-              <CartesianGrid stroke="#1B2029" vertical={false} />
-              <XAxis dataKey="day" stroke="#6B7383" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="#6B7383" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+              <CartesianGrid stroke="#E4DBCA" vertical={false} />
+              <XAxis dataKey="day" stroke="#837B92" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis stroke="#837B92" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
               <Tooltip content={<DarkTooltip />} />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Line type="monotone" dataKey="browse" stroke="#F4593B" strokeWidth={2.5} dot={false} />
-              <Line type="monotone" dataKey="requests" stroke="#E0A938" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="browse" stroke="#7C3AED" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="requests" stroke="#CA8A1C" strokeWidth={2.5} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -93,7 +93,7 @@ export default function Statistics() {
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie data={mostRequested} dataKey="count" nameKey="name" innerRadius={55} outerRadius={90} paddingAngle={3}>
-                {mostRequested.map((m) => <Cell key={m.id} fill={COLORS[m.category] || '#F4593B'} />)}
+                {mostRequested.map((m) => <Cell key={m.id} fill={COLORS[m.category] || '#7C3AED'} />)}
               </Pie>
               <Tooltip content={<DarkTooltip />} />
               <Legend wrapperStyle={{ fontSize: 11 }} />

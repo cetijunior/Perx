@@ -28,7 +28,7 @@ function BenefitCard({ color, label, glyph, radius, angle, y, speed }) {
     <group ref={ref}>
       <Billboard>
         <RoundedBox args={[1.7, 2.3, 0.08]} radius={0.12} smoothness={4}>
-          <meshStandardMaterial color="#12151C" metalness={0.4} roughness={0.35} emissive={color} emissiveIntensity={0.06} />
+          <meshStandardMaterial color="#FFFDF9" metalness={0.2} roughness={0.5} emissive={color} emissiveIntensity={0.04} />
         </RoundedBox>
         {/* colored glow rim */}
         <RoundedBox args={[1.74, 2.34, 0.04]} radius={0.13} smoothness={4} position={[0, 0, -0.04]}>
@@ -40,7 +40,7 @@ function BenefitCard({ color, label, glyph, radius, angle, y, speed }) {
           <meshBasicMaterial color={color} transparent opacity={0.18} />
         </mesh>
         <Text position={[0, 0.5, 0.07]} fontSize={0.42} color={color} anchorX="center" anchorY="middle">{glyph}</Text>
-        <Text position={[0, -0.55, 0.07]} fontSize={0.2} color="#F4F6FB" anchorX="center" anchorY="middle" maxWidth={1.4} letterSpacing={0.02}>
+        <Text position={[0, -0.55, 0.07]} fontSize={0.2} color="#221C30" anchorX="center" anchorY="middle" maxWidth={1.4} letterSpacing={0.02}>
           {label}
         </Text>
         <mesh position={[0, -0.85, 0.07]}>
@@ -72,7 +72,7 @@ function Particles({ count }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.05} color="#F4593B" transparent opacity={0.6} sizeAttenuation depthWrite={false} blending={THREE.AdditiveBlending} />
+      <pointsMaterial size={0.05} color="#7C3AED" transparent opacity={0.45} sizeAttenuation depthWrite={false} blending={THREE.NormalBlending} />
     </points>
   )
 }
@@ -108,11 +108,11 @@ export default function Hero3D() {
       frameloop="always"
     >
       <Suspense fallback={null}>
-        <fog attach="fog" args={['#0B0D12', 8, 18]} />
-        <ambientLight intensity={0.4} />
-        <pointLight position={[5, 4, 5]} intensity={120} color="#FF7A5C" distance={30} decay={1.6} />
-        <pointLight position={[-6, -2, -4]} intensity={90} color="#E0A938" distance={30} decay={1.6} />
-        <pointLight position={[0, 6, -2]} intensity={50} color="#A78BFA" distance={30} decay={1.6} />
+        <fog attach="fog" args={['#F7F3EA', 8, 18]} />
+        <ambientLight intensity={0.85} />
+        <pointLight position={[5, 4, 5]} intensity={110} color="#A78BFA" distance={30} decay={1.6} />
+        <pointLight position={[-6, -2, -4]} intensity={80} color="#C4B5FD" distance={30} decay={1.6} />
+        <pointLight position={[0, 6, -2]} intensity={60} color="#7C3AED" distance={30} decay={1.6} />
         <Cluster mobile={mobile} />
         <Particles count={particleCount} />
         <AdaptiveDpr pixelated />

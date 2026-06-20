@@ -27,29 +27,29 @@ export default function TiranaMap({ pins = [], selectedId, onSelect, scanning, o
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
         <defs>
           <pattern id="grid" width="5" height="5" patternUnits="userSpaceOnUse">
-            <path d="M 5 0 L 0 0 0 5" fill="none" stroke="#1B2029" strokeWidth="0.2" />
+            <path d="M 5 0 L 0 0 0 5" fill="none" stroke="#E4DBCA" strokeWidth="0.2" />
           </pattern>
           <radialGradient id="officeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#F4593B" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#F4593B" stopOpacity="0" />
+            <stop offset="0%" stopColor="#7C3AED" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
           </radialGradient>
         </defs>
         <rect width="100" height="100" fill="url(#grid)" />
         {/* faux blocks */}
-        {BLOCKS.map((b, i) => <rect key={i} x={b.x} y={b.y} width={b.w} height={b.h} fill="#12151C" stroke="#242A36" strokeWidth="0.2" rx="0.6" />)}
+        {BLOCKS.map((b, i) => <rect key={i} x={b.x} y={b.y} width={b.w} height={b.h} fill="#EFE8DB" stroke="#E4DBCA" strokeWidth="0.2" rx="0.6" />)}
         {/* rivers */}
         {RIVERS.map((d, i) => <path key={i} d={d} stroke="#A78BFA" strokeOpacity="0.25" strokeWidth="0.6" fill="none" />)}
         {/* office glow + marker */}
         <circle cx="50" cy="50" r="10" fill="url(#officeGlow)" />
-        <circle cx="50" cy="50" r="2" fill="#F4593B" />
-        <circle cx="50" cy="50" r="3.5" fill="none" stroke="#F4593B" strokeWidth="0.4" opacity="0.6" />
+        <circle cx="50" cy="50" r="2" fill="#7C3AED" />
+        <circle cx="50" cy="50" r="3.5" fill="none" stroke="#7C3AED" strokeWidth="0.4" opacity="0.6" />
 
         {/* radial scan */}
         {scanning && (
           <g>
-            <motion.circle cx="50" cy="50" r="6" fill="none" stroke="#F4593B" strokeWidth="0.5"
+            <motion.circle cx="50" cy="50" r="6" fill="none" stroke="#7C3AED" strokeWidth="0.5"
               animate={{ r: [6, 56], opacity: [0.6, 0] }} transition={{ duration: 1.8, repeat: Infinity }} />
-            <motion.circle cx="50" cy="50" r="6" fill="none" stroke="#E0A938" strokeWidth="0.5"
+            <motion.circle cx="50" cy="50" r="6" fill="none" stroke="#CA8A1C" strokeWidth="0.5"
               animate={{ r: [6, 56], opacity: [0.6, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 0.6 }} />
           </g>
         )}
@@ -64,7 +64,7 @@ export default function TiranaMap({ pins = [], selectedId, onSelect, scanning, o
       <AnimatePresence>
         {pins.map((p, i) => {
           const isSel = p.id === selectedId
-          const color = CATCOLOR[p.category] || '#F4593B'
+          const color = CATCOLOR[p.category] || '#7C3AED'
           return (
             <motion.button
               key={p.id}

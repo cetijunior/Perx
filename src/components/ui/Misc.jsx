@@ -18,6 +18,32 @@ export function PageHeader({ title, subtitle, action }) {
   )
 }
 
+// Single source of truth for every on/off toggle in the app.
+// Flex + padding keeps the knob inside the track; rem-based translate scales
+// with font size so it can never overflow the way a fixed-px translate could.
+export function Switch({ on, onChange, className }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      onClick={onChange}
+      className={cn(
+        'inline-flex h-6 w-11 shrink-0 items-center rounded-full p-0.5 transition-colors duration-200',
+        on ? 'bg-grad-ember' : 'bg-line',
+        className,
+      )}
+    >
+      <span
+        className={cn(
+          'h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200',
+          on ? 'translate-x-5' : 'translate-x-0',
+        )}
+      />
+    </button>
+  )
+}
+
 export function SectionTitle({ children, action }) {
   return (
     <div className="mb-3 flex items-center justify-between">

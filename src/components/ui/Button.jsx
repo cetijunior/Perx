@@ -9,9 +9,9 @@ const VARIANTS = {
   danger: 'bg-transparent text-danger border border-danger/40 hover:bg-danger/10',
 }
 const SIZES = {
-  sm: 'h-9 px-3 text-sm rounded-md gap-1.5',
-  md: 'h-11 px-4 text-sm rounded-md gap-2',
-  lg: 'h-13 px-6 text-base rounded-md gap-2 min-h-[52px]',
+  sm: 'h-9 px-3.5 text-[0.8125rem] rounded-md gap-1.5',
+  md: 'h-11 px-5 text-sm rounded-md gap-2',
+  lg: 'h-12 px-6 text-[0.9375rem] rounded-md gap-2',
   icon: 'h-11 w-11 rounded-md',
 }
 

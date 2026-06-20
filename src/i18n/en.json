@@ -8,6 +8,22 @@
     "login": "Log in",
     "getStarted": "Get started"
   },
+  "site": {
+    "nav": {
+      "features": "Features",
+      "about": "About",
+      "pricing": "Pricing",
+      "contact": "Contact"
+    },
+    "footer": {
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "rights": "All rights reserved."
+    }
+  },
   "landing": {
     "headline": "Përfitimet që dëshironi.",
     "headline2": "Talenti që meritoni.",

@@ -1,10 +1,9 @@
-import { NavLink, useLocation, useNavigate, Outlet } from 'react-router-dom'
+import { NavLink, useNavigate, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { LogOut } from 'lucide-react'
 import { logout, useCurrentUser, useStore, budgetFor } from '@/lib/store'
 import { formatALL, cn } from '@/lib/utils'
-import { pageTransition } from '@/lib/motion'
 import Logo from '@/components/ui/Logo'
 import Avatar from '@/components/ui/Avatar'
 
@@ -34,7 +33,6 @@ export default function AppShell({ items, basePath }) {
   const { t } = useTranslation()
   const user = useCurrentUser()
   const nav = useNavigate()
-  const loc = useLocation()
   if (!user) return null
   const isEmployee = user.role === 'employee'
 
@@ -78,11 +76,11 @@ export default function AppShell({ items, basePath }) {
       {/* ===== Content ===== */}
       <main className="md:pl-[260px]">
         <div className="mx-auto max-w-5xl px-4 pb-28 pt-4 md:px-8 md:pb-10 md:pt-8">
-          <AnimatePresence mode="wait">
-            <motion.div key={loc.pathname} {...pageTransition}>
-              <Outlet />
-            </motion.div>
-          </AnimatePresence>
+          {/* Render the route directly. Each page animates itself in on mount
+              (reliable without AnimatePresence); wrapping a keyed <Routes>/Outlet
+              in mode="wait" raced the mount and left heavier admin views stuck
+              at their initial opacity:0 until a manual reload. */}
+          <Outlet />
         </div>
       </main>
 
@@ -100,10 +98,9 @@ function NavItem({ item, t }) {
     <NavLink to={to} end={end} className="block">
       {({ isActive }) => (
         <span className={cn(
-          'relative flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors',
-          isActive ? 'bg-bg-elevated-2 font-medium text-text' : 'text-faint hover:bg-bg-elevated/60 hover:text-muted',
+          'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors',
+          isActive ? 'bg-bg-elevated-2 font-medium text-ember' : 'text-faint hover:bg-bg-elevated/60 hover:text-muted',
         )}>
-          {isActive && <motion.span layoutId="emberbar" className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-ember" />}
           <Icon className={cn('h-[18px] w-[18px]', isActive && 'text-ember')} />
           {t(label)}
         </span>

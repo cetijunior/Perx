@@ -9,37 +9,40 @@
 /*  Colors stored as "R G B" channels for Tailwind opacity support */
 /* ============================================================= */
 :root, .dark {
-  --bg: 11 13 18;
-  --bg-elevated: 18 21 28;
-  --bg-elevated-2: 24 28 37;
-  --surface-line: 36 42 54;
-  --surface-line-soft: 27 32 41;
+  /* Creamy-white base, purple brand. Surfaces are warm off-whites. */
+  --bg: 247 243 234;            /* creamy white app background */
+  --bg-elevated: 255 253 249;   /* cards, sheets (near-white, warm) */
+  --bg-elevated-2: 241 235 223; /* nested cards, inputs, hover */
+  --surface-line: 228 219 202;  /* hairline borders */
+  --surface-line-soft: 238 231 218;
 
-  --text: 244 246 251;
-  --text-muted: 164 173 190;
-  --text-faint: 107 115 131;
-  --text-on-accent: 11 13 18;
+  --text: 34 28 48;             /* dark slate, faint purple tint */
+  --text-muted: 92 85 104;
+  --text-faint: 131 123 146;
+  --text-on-accent: 251 248 242; /* creamy text on purple/brand fills */
 
-  --ember-400: 255 122 92;
-  --ember: 244 89 59;
-  --ember-600: 216 66 31;
+  /* Brand — Purple (primary action / accent) */
+  --ember-400: 167 139 250;     /* light purple — hover / glow */
+  --ember: 124 58 237;          /* primary purple */
+  --ember-600: 91 33 182;       /* pressed */
 
+  /* Reward accent — Gold (kept, used sparingly on elevated/gradients) */
   --gold-400: 242 200 121;
-  --gold: 224 169 56;
-  --gold-600: 185 132 42;
+  --gold: 202 138 28;
+  --gold-600: 162 108 18;
 
-  --cat-wellness: 52 211 153;
-  --cat-food: 245 158 11;
-  --cat-sport: 59 130 246;
-  --cat-travel: 167 139 250;
-  --cat-learning: 34 211 238;
-  --cat-selfcare: 244 114 182;
-  --cat-health: 45 212 191;
+  --cat-wellness: 16 185 129;
+  --cat-food: 217 119 6;
+  --cat-sport: 37 99 235;
+  --cat-travel: 124 58 237;
+  --cat-learning: 8 145 178;
+  --cat-selfcare: 219 39 119;
+  --cat-health: 13 148 136;
 
-  --success: 52 211 153;
-  --warning: 242 200 121;
-  --danger: 244 89 59;
-  --info: 96 165 250;
+  --success: 16 153 96;
+  --warning: 180 120 20;
+  --danger: 220 60 50;
+  --info: 37 99 235;
 }
 
 .light {

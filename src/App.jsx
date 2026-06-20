@@ -1,9 +1,15 @@
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useCurrentUser } from '@/lib/store'
 
 import Landing from '@/pages/Landing'
 import Login from '@/pages/Login'
+import Features from '@/pages/marketing/Features'
+import About from '@/pages/marketing/About'
+import Pricing from '@/pages/marketing/Pricing'
+import Contact from '@/pages/marketing/Contact'
+import Privacy from '@/pages/marketing/Privacy'
+import Terms from '@/pages/marketing/Terms'
+import { ScrollToTop } from '@/components/site/Site'
 import EmployeeLayout from '@/pages/employee/EmployeeLayout'
 import Dashboard from '@/pages/employee/Dashboard'
 import Benefits from '@/pages/employee/Benefits'
@@ -25,12 +31,22 @@ function Protected({ role, children }) {
 }
 
 export default function App() {
-  const location = useLocation()
+  // No top-level AnimatePresence: wrapping a keyed <Routes> in mode="wait"
+  // deadlocks against the nested AnimatePresence inside AppShell, so views
+  // (admin pages, post-logout login) wouldn't mount until a hard reload.
+  // Each page animates itself in on mount; route swaps now happen instantly.
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname.split('/').slice(0, 2).join('/')}>
+    <>
+    <ScrollToTop />
+      <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
 
         <Route path="/employee" element={<Protected role="employee"><EmployeeLayout /></Protected>}>
           <Route index element={<Dashboard />} />
@@ -50,6 +66,6 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </AnimatePresence>
+    </>
   )
 }

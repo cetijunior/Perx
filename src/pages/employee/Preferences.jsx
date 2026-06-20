@@ -6,7 +6,7 @@ import { useCurrentUser, useStore, getState, setPreferences } from '@/lib/store'
 import { CATEGORIES } from '@/lib/catalog'
 import { fadeUp, stagger } from '@/lib/motion'
 import { cn } from '@/lib/utils'
-import { PageHeader, SectionTitle } from '@/components/ui/Misc'
+import { PageHeader, SectionTitle, Switch } from '@/components/ui/Misc'
 import Icon from '@/components/ui/Icon'
 import LanguageToggle from '@/components/ui/LanguageToggle'
 
@@ -118,13 +118,5 @@ export default function Preferences() {
         )}
       </AnimatePresence>
     </motion.div>
-  )
-}
-
-function Switch({ on, onChange }) {
-  return (
-    <button onClick={onChange} className={cn('relative h-6 w-10 rounded-full transition-colors', on ? 'bg-grad-ember' : 'bg-bg-elevated')}>
-      <span className={cn('absolute top-0.5 h-5 w-5 rounded-full bg-text shadow transition-transform', on ? 'translate-x-[18px]' : 'translate-x-0.5')} />
-    </button>
   )
 }
