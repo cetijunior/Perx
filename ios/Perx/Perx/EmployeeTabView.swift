@@ -446,7 +446,7 @@ struct ScratchCardGameView: View {
                                 }
                             }
                         )
-                        .onChange(of: played) { newValue in
+                        .onChange(of: played) { _, newValue in
                             if !newValue { scratchedPoints = []; revealed = false; revealPct = 0 }
                         }
                     }
@@ -559,7 +559,7 @@ struct SpinWheelGameView: View {
             }
         }
         .perxCard()
-        .onChange(of: played) { newValue in
+        .onChange(of: played) { _, newValue in
             if !newValue { rotation = 0; isSpinning = false }
         }
     }
@@ -739,7 +739,7 @@ struct NumberGuessGameView: View {
             }
         }
         .perxCard()
-        .onChange(of: played) { newValue in
+        .onChange(of: played) { _, newValue in
             if !newValue {
                 target = Int.random(in: 1...10)
                 selected = 5; attemptsLeft = 3; hint = nil; gameOver = false
@@ -803,7 +803,7 @@ struct MemoryMatchGameView: View {
         }
         .perxCard()
         .onAppear { if cards.isEmpty { setupCards() } }
-        .onChange(of: played) { newValue in
+        .onChange(of: played) { _, newValue in
             if !newValue { flippedIds = []; matchedCount = 0; isChecking = false; setupCards() }
         }
     }

@@ -18,6 +18,7 @@ struct PerkyView: View {
     ]
     @State private var input = ""
     @State private var busy = false
+    @FocusState private var inputFocused: Bool
 
     private let prompts = ["Help me relax", "Find me a gym", "Plan a weekend trip", "What fits my budget?"]
 
@@ -39,10 +40,11 @@ struct PerkyView: View {
                         }
                         .padding(16)
                     }
-                    .onChange(of: messages.count) { _ in
+                    .scrollDismissesKeyboard(.interactively)
+                    .onChange(of: messages.count) {
                         withAnimation(.easeOut(duration: 0.25)) { proxy.scrollTo("bottom", anchor: .bottom) }
                     }
-                    .onChange(of: busy) { _ in
+                    .onChange(of: busy) {
                         withAnimation(.easeOut(duration: 0.25)) { proxy.scrollTo("bottom", anchor: .bottom) }
                     }
                 }
@@ -54,6 +56,12 @@ struct PerkyView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) { PerxLogoTitle() }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { inputFocused = false }
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(PerxTheme.ember)
+                }
             }
         }
     }
@@ -107,6 +115,9 @@ struct PerkyView: View {
         HStack(spacing: 8) {
             TextField("Ask Perky anything…", text: $input)
                 .font(.system(size: 14))
+                .focused($inputFocused)
+                .submitLabel(.send)
+                .onSubmit { send(input) }
                 .padding(.horizontal, 14).padding(.vertical, 11)
                 .background(PerxTheme.bgElevated2)
                 .clipShape(Capsule())
@@ -127,6 +138,7 @@ struct PerkyView: View {
     private func send(_ text: String) {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, !busy else { return }
+        inputFocused = false
         input = ""
         messages.append(PerkyMessage(role: .user, content: trimmed))
         busy = true
